@@ -5,8 +5,8 @@ import jakarta.persistence.*;
 public class Kaugummi {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "filmgenre_id") // die tatsächliche Spalte in der DB
     private Long id;
+
     @Column(name= "name")
     private String name;
     @Column(name = "imageUrl")
@@ -68,4 +68,5 @@ public class Kaugummi {
     public void setZuckerfrei(String zuckerfrei) {
         this.zuckerfrei = zuckerfrei;
     }
+
 }
