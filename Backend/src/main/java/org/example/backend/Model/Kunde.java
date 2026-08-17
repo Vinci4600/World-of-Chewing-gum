@@ -12,6 +12,10 @@ public class Kunde extends Benutzer {
 
     private String kundennummer;
 
+    public Kunde() {
+        super();
+    }
+
     public Kunde(Long id, String benutzername, String email, String passwort, Role role, String kundennummer) {
         super(id, benutzername, email, passwort, role);
         this.kundennummer = kundennummer;
