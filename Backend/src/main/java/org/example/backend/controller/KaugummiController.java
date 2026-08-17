@@ -1,0 +1,56 @@
+package org.example.backend.controller;
+
+import org.example.backend.Model.Bewertung;
+import org.example.backend.Model.Kaugummi;
+import org.example.backend.Model.Kommentar;
+import org.example.backend.service.KaugummiService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/kaugummi")
+public class KaugummiController {
+
+
+    private final KaugummiService kaugummiService;
+
+    public KaugummiController(KaugummiService kaugummiService) {
+        this.kaugummiService = kaugummiService;
+    }
+
+
+    @GetMapping
+    public ResponseEntity<List<Kaugummi>> alleKaugummisAnzeigen() {
+        return ResponseEntity.ok(kaugummiService.alleKaugummisAnzeigen());
+    }
+
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Kaugummi> kaugummiAnzeigen(@PathVariable Long id) {
+        return ResponseEntity.ok(kaugummiService.kaugummiAnzeigen(id));
+    }
+
+    @PostMapping("/{id}/bewertung")
+    public ResponseEntity<Bewertung> bewertungAbgeben(@PathVariable Long id,
+                                                      @RequestParam Long benutzerId,
+                                                      @RequestBody Bewertung bewertungData) {
+        return ResponseEntity.ok(kaugummiService.bewertungAbgeben(id, benutzerId, bewertungData));
+    }
+
+    @PostMapping("/{id}/kommentar")
+    public ResponseEntity<Kommentar> kommentarHinzufuegen(@PathVariable Long id,
+                                                          @RequestParam Long benutzerId,
+                                                          @RequestBody String text) {
+        return ResponseEntity.ok(kaugummiService.kommentarHinzufuegen(id, benutzerId, text));
+    }
+
+    @PostMapping("/{id}/favorit")
+    public ResponseEntity<Void> favoritHinzufuegen(@PathVariable Long id,
+                                                   @RequestParam Long benutzerId) {
+        kaugummiService.favoritHinzufuegen(id, benutzerId);
+        return ResponseEntity.ok().build();
+    }
+}
+
