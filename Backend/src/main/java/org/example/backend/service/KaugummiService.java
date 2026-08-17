@@ -1,7 +1,7 @@
 package org.example.backend.service;
 
 import org.example.backend.model.Bewertung;
-import org.example.backend.Model.Kaugummi;
+import org.example.backend.model.Kaugummi;
 import org.example.backend.model.Kommentar;
 import org.example.backend.repository.BenutzerRepository;
 import org.example.backend.repository.BewertungRepository;
@@ -50,7 +50,10 @@ public class KaugummiService {
         var benutzer = benutzerRepository.findById(benutzerId)
                 .orElseThrow(() -> new RuntimeException("Benutzer wurde nicht gefunden"));
 
-        Kommentar kommentar = new Kommentar(text, benutzer, kaugummi);
+        Kommentar kommentar = new Kommentar();
+        kommentar.setText(text);
+        kommentar.setBenutzer(benutzer);
+        kommentar.setKaugummi(kaugummi);
         return kommentarRepository.save(kommentar);
     }
 

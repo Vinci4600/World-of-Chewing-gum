@@ -1,8 +1,8 @@
 package org.example.backend.service;
 
-import org.example.backend.Model.Benutzer;
-import org.example.backend.Model.Kunde;
-import org.example.backend.Model.Role;
+import org.example.backend.model.Benutzer;
+import org.example.backend.model.Kunde;
+import org.example.backend.model.Role;
 import org.example.backend.repository.BenutzerRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

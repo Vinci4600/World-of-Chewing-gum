@@ -1,51 +1,43 @@
 package org.example.backend.model;
 
 import jakarta.persistence.*;
-import org.example.backend.Model.Benutzer;
-import org.example.backend.Model.Kaugummi;
-import org.example.backend.Model.Kunde;
-
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "bewertung")
 public class Bewertung {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private int sterne;
+    private Integer sterne;
 
-    private int geschmackSterne;
-    private int haltbarkeitSterne;
-    private int weichheitSterne;
-    private int preisLeistungSterne;
+    private Integer geschmackSterne;
 
+    private Integer haltbarkeitSterne;
 
-    @Column(nullable = false)
+    private Integer weichheitSterne;
+
+    private Integer preisLeistungSterne;
+
     private LocalDateTime datum;
 
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "benutzer_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "benutzer_id")
     private Benutzer benutzer;
 
+    @ManyToOne
+    @JoinColumn(name = "kunde_id")
+    private Kunde kunde;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "kunde_id", nullable = false)
-    private org.example.backend.Model.Kunde kunde;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "kaugummi_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "kaugummi_id")
     private Kaugummi kaugummi;
-
 
     public Bewertung() {
     }
 
-    public Bewertung(Long id, int sterne, int geschmackSterne, int haltbarkeitSterne, int weichheitSterne, int preisLeistungSterne,  LocalDateTime datum) {
+    public Bewertung(Long id, Integer sterne, Integer geschmackSterne, Integer haltbarkeitSterne, Integer weichheitSterne, Integer preisLeistungSterne, LocalDateTime datum) {
         this.id = id;
         this.sterne = sterne;
         this.geschmackSterne = geschmackSterne;
@@ -62,42 +54,44 @@ public class Bewertung {
     public void setId(Long id) {
         this.id = id;
     }
-    public int getSterne() {
+
+    public Integer getSterne() {
         return sterne;
     }
-    public void setSterne(int sterne) {
+
+    public void setSterne(Integer sterne) {
         this.sterne = sterne;
     }
 
-    public int getGeschmackSterne() {
+    public Integer getGeschmackSterne() {
         return geschmackSterne;
     }
 
-    public void setGeschmackSterne(int geschmackSterne) {
+    public void setGeschmackSterne(Integer geschmackSterne) {
         this.geschmackSterne = geschmackSterne;
     }
 
-    public int getHaltbarkeitSterne() {
+    public Integer getHaltbarkeitSterne() {
         return haltbarkeitSterne;
     }
 
-    public void setHaltbarkeitSterne(int haltbarkeitSterne) {
+    public void setHaltbarkeitSterne(Integer haltbarkeitSterne) {
         this.haltbarkeitSterne = haltbarkeitSterne;
     }
 
-    public int getWeichheitSterne() {
+    public Integer getWeichheitSterne() {
         return weichheitSterne;
     }
 
-    public void setWeichheitSterne(int weichheitSterne) {
+    public void setWeichheitSterne(Integer weichheitSterne) {
         this.weichheitSterne = weichheitSterne;
     }
 
-    public int getPreisLeistungSterne() {
+    public Integer getPreisLeistungSterne() {
         return preisLeistungSterne;
     }
 
-    public void setPreisLeistungSterne(int preisLeistungSterne) {
+    public void setPreisLeistungSterne(Integer preisLeistungSterne) {
         this.preisLeistungSterne = preisLeistungSterne;
     }
 
@@ -131,21 +125,5 @@ public class Bewertung {
 
     public void setKaugummi(Kaugummi kaugummi) {
         this.kaugummi = kaugummi;
-    }
-
-    @Override
-    public String toString() {
-        return "Bewertung{" +
-                "id=" + id +
-                ", sterne=" + sterne +
-                ", geschmackSterne=" + geschmackSterne +
-                ", haltbarkeitSterne=" + haltbarkeitSterne +
-                ", weichheitSterne=" + weichheitSterne +
-                ", preisLeistungSterne=" + preisLeistungSterne +
-                ", datum=" + datum +
-                ", benutzer=" + benutzer +
-                ", kunde=" + kunde +
-                ", kaugummi=" + kaugummi +
-                '}';
     }
 }
