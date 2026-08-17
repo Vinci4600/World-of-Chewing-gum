@@ -1,6 +1,9 @@
 package org.example.backend.model;
 
 import jakarta.persistence.*;
+import org.example.backend.Model.Benutzer;
+import org.example.backend.Model.Kaugummi;
+import org.example.backend.Model.Kunde;
 
 import java.time.LocalDateTime;
 
@@ -32,7 +35,7 @@ public class Bewertung {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "kunde_id", nullable = false)
-    private Kunde kunde;
+    private org.example.backend.Model.Kunde kunde;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "kaugummi_id", nullable = false)

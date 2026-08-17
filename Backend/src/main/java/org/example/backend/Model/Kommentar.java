@@ -1,6 +1,8 @@
 package org.example.backend.model;
 
 import jakarta.persistence.*;
+import org.example.backend.Model.Benutzer;
+import org.example.backend.Model.Kaugummi;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +23,8 @@ public class Kommentar {
     private Benutzer benutzer;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "parent_kommentar_id")
+
+
     private List<Kommentar> kommentare = new ArrayList<>();
 
     public Kommentar(Long id, String text, Benutzer benutzer) {

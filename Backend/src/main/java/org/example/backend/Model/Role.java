@@ -1,4 +1,4 @@
-package org.example.backend.model;
+package org.example.backend.Model;
 
 import org.springframework.security.core.GrantedAuthority;
 

@@ -1,6 +1,7 @@
-package org.example.backend.model;
+package org.example.backend.Model;
 
-import org.example.backend.model.Benutzer;
+import org.example.backend.Model.Role;
+import org.example.backend.Model.Benutzer;
 
 import jakarta.persistence.*;
 
@@ -16,10 +17,12 @@ public class Kunde extends Benutzer {
         super();
     }
 
-    public Kunde(Long id, String benutzername, String email, String passwort, Role role, String kundennummer) {
-        super(id, benutzername, email, passwort, role);
+    public Kunde(String username, String email, String hashedPassword, Role zugewieseneRolle, String kundennummer) {
+        super(username, email, hashedPassword, zugewieseneRolle);
         this.kundennummer = kundennummer;
     }
+
+
 
     public String getKundennummer() {
         return kundennummer;

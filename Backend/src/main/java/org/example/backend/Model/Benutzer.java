@@ -1,4 +1,4 @@
-package org.example.backend.model;
+package org.example.backend.Model;
 import jakarta.persistence.*;
 
 import java.util.*;
@@ -23,7 +23,7 @@ import java.util.*;
 
 
     @OneToMany(mappedBy = "benutzer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Kommentar> kommentare = new ArrayList<>();
+    private List<org.example.backend.model.Kommentar> kommentare = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
@@ -43,9 +43,11 @@ import java.util.*;
 
     }
 
+    public Benutzer(String username, String email, String hashedPassword, org.example.backend.Model.Role zugewieseneRolle) {
+    }
 
+    public Benutzer() {
 
-    protected Benutzer() {
     }
 
     public Long getId() {
@@ -76,10 +78,21 @@ import java.util.*;
         return passwort;
     }
 
+    public void setPasswort(String passwort) {
+        this.passwort = passwort;
+    }
+
     public Role getRole() {
         return role;
     }
 
+    public List<org.example.backend.model.Kommentar> getKommentare() {
+        return kommentare;
+    }
+
+    public void setKommentare(List<org.example.backend.model.Kommentar> kommentare) {
+        this.kommentare = kommentare;
+    }
 
     public Set<Kaugummi> getFavoriten() {
         return favoriten;
@@ -89,24 +102,8 @@ import java.util.*;
         this.favoriten = favoriten;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
-    }
 
-    public void setPasswort(String passwort) {
-        this.passwort = passwort;
-    }
-
-    @Override
-    public String toString() {
-        return "Benutzer{" +
-                "id=" + id +
-                ", benutzername='" + benutzername + '\'' +
-                ", email='" + email + '\'' +
-                ", passwort='" + passwort + '\'' +
-                ", role=" + role +
-                ", favoriten=" + favoriten +
-                '}';
+    public void setRole(org.example.backend.Model.Role role) {
     }
 }
 
