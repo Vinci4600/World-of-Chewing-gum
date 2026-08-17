@@ -1,8 +1,8 @@
 package org.example.backend.controller;
 
-import org.example.backend.Model.Bewertung;
+import org.example.backend.model.Bewertung;
 import org.example.backend.Model.Kaugummi;
-import org.example.backend.Model.Kommentar;
+import org.example.backend.model.Kommentar;
 import org.example.backend.service.KaugummiService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
