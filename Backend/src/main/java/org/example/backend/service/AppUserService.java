@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+import static org.example.backend.Model.Role.User;
+
 @Service
 @Transactional
 public class AppUserService {
@@ -57,7 +59,7 @@ public class AppUserService {
             user.setBenutzername(dto.getUsername());
             user.setEmail(dto.getEmail());
             user.setPasswort(passwordEncoder.encode(dto.getPassword()));
-            user.setRole(Role.User);
+             user.setRole(User); // Typischerweise Enum-Werte in GROSSBUCHSTABEN
 
         // 2. Echte User-Instanz speichern
         return benutzerRepository.save(user);

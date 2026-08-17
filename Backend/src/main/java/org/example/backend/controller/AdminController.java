@@ -15,16 +15,35 @@ public class AdminController {
         this.adminService = adminService;
     }
 
+
+    /**
+     * Neuer Kaugummi hinzufügen
+     * @param kaugummiData
+     * @return
+     */
     @PostMapping("/kaugummi")
     public ResponseEntity<Kaugummi> kaugummiErstellen(@RequestBody Kaugummi kaugummiData) {
         return ResponseEntity.ok(adminService.kaugummiErstellen(kaugummiData));
     }
+
+    /**
+     * Kaugummi hinzufügen
+     * @param id
+     * @param kaugummiData
+     * @return
+     */
 
     @PutMapping("/kaugummi/{id}")
     public ResponseEntity<Kaugummi> kaugummiBearbeiten(@PathVariable Long id,
                                                        @RequestBody Kaugummi kaugummiData) {
         return ResponseEntity.ok(adminService.kaugummiBearbeiten(id, kaugummiData));
     }
+
+    /**
+     * Kaugummi löschen
+     * @param id
+     * @return
+     */
 
     @DeleteMapping("/kaugummi/{id}")
     public ResponseEntity<Void> kaugummiLoeschen(@PathVariable Long id) {
