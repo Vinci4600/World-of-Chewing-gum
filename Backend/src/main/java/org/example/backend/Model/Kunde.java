@@ -1,4 +1,5 @@
 package org.example.backend.model;
 
-public class Kunde {
+public class Kunde extends Benutzer {
+    // zusätzliche Eigenschaften des Kunden
 }
