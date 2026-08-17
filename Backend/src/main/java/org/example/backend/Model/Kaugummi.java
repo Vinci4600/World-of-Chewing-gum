@@ -1,4 +1,4 @@
-package org.example.backend.model;
+package org.example.backend.Model;
 import jakarta.persistence.*;
 @Entity
 @Table(name = "kaugummis")

@@ -1,4 +1,4 @@
-package org.example.backend.model;
+package org.example.backend.Model;
 
 public class Admin {
 }
