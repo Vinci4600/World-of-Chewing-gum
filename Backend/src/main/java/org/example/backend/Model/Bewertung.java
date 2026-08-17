@@ -1,6 +1,7 @@
-package org.example.backend.Model;
+package org.example.backend.model;
 
 import jakarta.persistence.*;
+import org.example.backend.model.Kunde;
 
 import java.time.LocalDateTime;
 
@@ -36,7 +37,7 @@ public class Bewertung {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "kaugummi_id", nullable = false)
-    private Kaugummi kaugummi;
+    private org.example.backend.Model.Kaugummi kaugummi;
 
 
     public Bewertung() {
@@ -114,11 +115,11 @@ public class Bewertung {
         this.benutzer = benutzer;
     }
 
-    public Kaugummi getKaugummi() {
+    public org.example.backend.Model.Kaugummi getKaugummi() {
         return kaugummi;
     }
 
-    public void setKaugummi(Kaugummi kaugummi) {
+    public void setKaugummi(org.example.backend.Model.Kaugummi kaugummi) {
         this.kaugummi = kaugummi;
     }
 
