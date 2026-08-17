@@ -1,4 +1,4 @@
 package org.example.backend.model;
 
-public class Admin {
+public class Admin extends Benutzer   {
 }
