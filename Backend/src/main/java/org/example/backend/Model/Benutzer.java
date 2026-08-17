@@ -18,7 +18,7 @@ import jakarta.persistence.InheritanceType;
         private String email;
         private String passwort;
 
-        public Benutzer() {
+        protected Benutzer() {
         }
 
         public Long getId() {

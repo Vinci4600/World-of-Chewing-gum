@@ -1,7 +1,7 @@
 package org.example.backend.service;
 
-import org.example.backend.Model.AppUser;
-import org.example.backend.Model.Role;
+import org.example.backend.model.Benutzer;
+import org.example.backend.model.Kunde;
 import org.example.backend.repository.BenutzerRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,7 +22,7 @@ public class AppUserDetailsService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public AppUser registrieren(String username, String email, String rawPassword, Role rolle) {
+    public Benutzer registrieren(String username, String email, String rawPassword) {
         if (benutzerRepository.existsByBenutzername(username)) {
             throw new IllegalArgumentException("Benutzername '" + username + "' ist bereits vergeben");
         }
@@ -32,30 +32,32 @@ public class AppUserDetailsService implements UserDetailsService {
         }
 
         String hashedPassword = passwordEncoder.encode(rawPassword);
-        Role zugewieseneRolle = (rolle != null) ? rolle : Role.User;
 
-        // Normales Objekt erstellen – OHNE anonyme Overrides
-        AppUser newUser = new AppUser(username, email, hashedPassword, zugewieseneRolle);
+        // Kunde als konkrete Implementierung von Benutzer erstellen
+        Kunde newUser = new Kunde();
+        newUser.setBenutzername(username);
+        newUser.setEmail(email);
+        newUser.setPasswort(hashedPassword);
 
         return benutzerRepository.save(newUser);
     }
 
-    public Optional<AppUser> findByUsernameOrEmail(String usernameOrEmail) {
+    public Optional<Benutzer> findByUsernameOrEmail(String usernameOrEmail) {
         return benutzerRepository.findByBenutzernameOrEmail(usernameOrEmail, usernameOrEmail);
     }
 
-    public Optional<AppUser> authenticateUser(AppUser user, String rawPassword) {
-        if (passwordEncoder.matches(rawPassword, user.getPassword())) {
+    public Optional<Benutzer> authenticateUser(Benutzer user, String rawPassword) {
+        if (passwordEncoder.matches(rawPassword, user.getPasswort())) {
             return Optional.of(user);
         }
         return Optional.empty();
     }
 
-    public Optional<AppUser> findByBenutzername(String username) {
+    public Optional<Benutzer> findByBenutzername(String username) {
         return benutzerRepository.findByBenutzername(username);
     }
 
-    public Optional<AppUser> findByEmail(String email) {
+    public Optional<Benutzer> findByEmail(String email) {
         return benutzerRepository.findByEmail(email);
     }
 
