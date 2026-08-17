@@ -1,7 +1,7 @@
 package org.example.backend.service;
 
 import org.example.backend.model.Bewertung;
-import org.example.backend.model.Kaugummi;
+import org.example.backend.Model.Kaugummi;
 import org.example.backend.model.Kommentar;
 import org.example.backend.repository.BenutzerRepository;
 import org.example.backend.repository.BewertungRepository;

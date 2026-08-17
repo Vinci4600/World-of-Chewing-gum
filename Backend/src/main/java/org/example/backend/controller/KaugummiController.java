@@ -1,8 +1,6 @@
 package org.example.backend.controller;
 
-import org.example.backend.Model.Bewertung;
 import org.example.backend.Model.Kaugummi;
-import org.example.backend.Model.Kommentar;
 import org.example.backend.service.KaugummiService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,16 +31,16 @@ public class KaugummiController {
     }
 
     @PostMapping("/{id}/bewertung")
-    public ResponseEntity<Bewertung> bewertungAbgeben(@PathVariable Long id,
-                                                      @RequestParam Long benutzerId,
-                                                      @RequestBody Bewertung bewertungData) {
+    public ResponseEntity<org.example.backend.model.Bewertung> bewertungAbgeben(@PathVariable Long id,
+                                                                                @RequestParam Long benutzerId,
+                                                                                @RequestBody org.example.backend.model.Bewertung bewertungData) {
         return ResponseEntity.ok(kaugummiService.bewertungAbgeben(id, benutzerId, bewertungData));
     }
 
     @PostMapping("/{id}/kommentar")
-    public ResponseEntity<Kommentar> kommentarHinzufuegen(@PathVariable Long id,
-                                                          @RequestParam Long benutzerId,
-                                                          @RequestBody String text) {
+    public ResponseEntity<org.example.backend.model.Kommentar> kommentarHinzufuegen(@PathVariable Long id,
+                                                                                    @RequestParam Long benutzerId,
+                                                                                    @RequestBody String text) {
         return ResponseEntity.ok(kaugummiService.kommentarHinzufuegen(id, benutzerId, text));
     }
 

@@ -1,6 +1,5 @@
 package org.example.backend.repository;
 
-import org.example.backend.Model.Kommentar;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -9,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-public interface Kommentarrepository extends JpaRepository<Kommentar,Long> {
+public interface Kommentarrepository extends JpaRepository<org.example.backend.model.Kommentar,Long> {
 
     /**
      * Methode um KOmmentar upzudaten anhand Id
