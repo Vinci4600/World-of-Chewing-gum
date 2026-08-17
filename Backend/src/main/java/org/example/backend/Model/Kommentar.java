@@ -36,6 +36,9 @@ public class Kommentar {
     public Kommentar(String text, Benutzer benutzer, Kaugummi kaugummi) {
     }
 
+    public Kommentar() {
+
+    }
 
 
     public Long getId() {
