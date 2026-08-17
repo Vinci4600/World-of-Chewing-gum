@@ -1,6 +1,6 @@
 package org.example.backend.controller;
 
-import org.example.backend.Model.Kaugummi;
+import org.example.backend.model.Kaugummi;
 import org.example.backend.service.KaugummiService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,42 +1,34 @@
 package org.example.backend.model;
 
 import jakarta.persistence.*;
-import org.example.backend.Model.Benutzer;
-import org.example.backend.Model.Kaugummi;
 
-import java.util.ArrayList;
-import java.util.List;
 @Entity
-@Table(name="kommentar")
+@Table(name = "kommentar")
 public class Kommentar {
-
-    // Einzelner Kommentar
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(columnDefinition = "TEXT")
     private String text;
-
 
     @ManyToOne
     @JoinColumn(name = "benutzer_id")
     private Benutzer benutzer;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "parent_kommentar_id")
 
+    @ManyToOne
+    @JoinColumn(name = "kaugummi_id")
+    private Kaugummi kaugummi;
 
-    private List<Kommentar> kommentare = new ArrayList<>();
+    public Kommentar() {
+    }
 
-    public Kommentar(Long id, String text, Benutzer benutzer) {
+    public Kommentar(Long id, String text, Benutzer benutzer, Kaugummi kaugummi) {
         this.id = id;
         this.text = text;
         this.benutzer = benutzer;
+        this.kaugummi = kaugummi;
     }
-
-    public Kommentar(String text, Benutzer benutzer, Kaugummi kaugummi) {
-    }
-
-
 
     public Long getId() {
         return id;
@@ -50,6 +42,10 @@ public class Kommentar {
         return text;
     }
 
+    public void setText(String text) {
+        this.text = text;
+    }
+
     public Benutzer getBenutzer() {
         return benutzer;
     }
@@ -58,25 +54,11 @@ public class Kommentar {
         this.benutzer = benutzer;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public Kaugummi getKaugummi() {
+        return kaugummi;
     }
 
-    public List<Kommentar> getKommentare() {
-        return kommentare;
-    }
-
-    public void setKommentare(List<Kommentar> kommentare) {
-        this.kommentare = kommentare;
-    }
-
-    @Override
-    public String toString() {
-        return "Kommentar{" +
-                "id=" + id +
-                ", text='" + text + '\'' +
-                ", benutzer=" + benutzer +
-                ", kommentare=" + kommentare +
-                '}';
+    public void setKaugummi(Kaugummi kaugummi) {
+        this.kaugummi = kaugummi;
     }
 }

@@ -1,21 +1,17 @@
-package org.example.backend.Model;
+package org.example.backend.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("ADMIN")
+@DiscriminatorValue("Admin")
 public class Admin extends Benutzer {
-
-
-
-    public Admin() {
+    
+    protected Admin() {
         super();
-        setRole(Role.ADMIN); // Falls Role ein Enum ist, direkt im Konstruktor setzen
     }
 
-
-
-
-    // zusätzliche Eigenschaften des Kunden
-
+    public Admin(Long id, String benutzername, String email, String passwort, Role role) {
+        super(id, benutzername, email, passwort, role);
+    }
 }

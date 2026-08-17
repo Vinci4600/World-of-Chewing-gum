@@ -1,6 +1,6 @@
 package org.example.backend.service;
 
-import org.example.backend.Model.Kaugummi;
+import org.example.backend.model.Kaugummi;
 import org.example.backend.model.Kommentar;
 import org.example.backend.repository.KaugummiRepository;
 import org.example.backend.repository.Kommentarrepository;

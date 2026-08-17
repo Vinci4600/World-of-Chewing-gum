@@ -1,7 +1,8 @@
 package org.example.backend.service;
 
-import org.example.backend.Model.Benutzer;
-import org.example.backend.Model.Role;
+import org.example.backend.model.Benutzer;
+import org.example.backend.model.Kunde;
+import org.example.backend.model.Role;
 import org.example.backend.dto.LoginRequestDTO;
 import org.example.backend.dto.RegisterRequestDTO;
 import org.example.backend.repository.BenutzerRepository;
@@ -10,8 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-
-import static org.example.backend.Model.Role.User;
 
 @Service
 @Transactional
@@ -25,18 +24,11 @@ public class AppUserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    /**
-     * Registriert einen neuen Benutzer und speichert das Passwort gehasht.
-     */
-
-
     @Transactional
     public Benutzer login(LoginRequestDTO dto) {
-        // 1. Benutzer suchen
         Benutzer user = benutzerRepository.findByBenutzernameOrEmail(dto.getUsernameOrEmail(), dto.getUsernameOrEmail())
                 .orElseThrow(() -> new IllegalArgumentException("Ungültige Anmeldedaten"));
 
-        // 2. Passwort prüfen (Klartext aus DTO, Hash aus der DB)
         if (!passwordEncoder.matches(dto.getPassword(), user.getPasswort())) {
             throw new IllegalArgumentException("Ungültige Anmeldedaten");
         }
@@ -54,17 +46,14 @@ public class AppUserService {
         if (benutzerRepository.existsByEmail(dto.getEmail())) {
             throw new IllegalArgumentException("E-Mail ist bereits vergeben!");
         }
-            // 1. Echte Instanz erstellen (ohne {{ ... }})
-            Benutzer user = new Benutzer();
-            user.setBenutzername(dto.getUsername());
-            user.setEmail(dto.getEmail());
-            user.setPasswort(passwordEncoder.encode(dto.getPassword()));
-             user.setRole(User); // Typischerweise Enum-Werte in GROSSBUCHSTABEN
 
-        // 2. Echte User-Instanz speichern
+        Kunde user = new Kunde();
+        user.setBenutzername(dto.getUsername());
+        user.setEmail(dto.getEmail());
+        user.setPasswort(passwordEncoder.encode(dto.getPassword()));
+        user.setRole(Role.KUNDE);
+
         return benutzerRepository.save(user);
-
-
     }
 
     @Transactional
@@ -82,20 +71,10 @@ public class AppUserService {
         return benutzerRepository.findByEmail(email);
     }
 
-    /**
-     * Sucht den Benutzer wahlweise per Benutzername oder E-Mail.
-     */
-
-    /**
-     * Prüft das rohe Passwort gegen den BCrypt-Hash aus der Datenbank.
-     */
     public Optional<Benutzer> authenticateUser(Benutzer user, String rawPassword) {
         if (passwordEncoder.matches(rawPassword, user.getPasswort())) {
             return Optional.of(user);
         }
         return Optional.empty();
     }
-
-
-
 }
