@@ -1,4 +1,6 @@
-package org.example.backend.Model;
+package org.example.backend.model;
+
+import org.example.backend.model.Benutzer;
 
 import jakarta.persistence.*;
 
