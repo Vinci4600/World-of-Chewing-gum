@@ -1,7 +1,8 @@
 package org.example.backend.service;
 
-import org.example.backend.model.Benutzer;
-import org.example.backend.model.Kunde;
+import org.example.backend.Model.Benutzer;
+import org.example.backend.Model.Benutzer;
+import org.example.backend.Model.Role;
 import org.example.backend.repository.BenutzerRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,7 +23,7 @@ public class AppUserDetailsService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public Benutzer registrieren(String username, String email, String rawPassword) {
+    public Benutzer registrieren(String username, String email, String rawPassword, Role rolle) {
         if (benutzerRepository.existsByBenutzername(username)) {
             throw new IllegalArgumentException("Benutzername '" + username + "' ist bereits vergeben");
         }
@@ -32,12 +33,10 @@ public class AppUserDetailsService implements UserDetailsService {
         }
 
         String hashedPassword = passwordEncoder.encode(rawPassword);
+        Role zugewieseneRolle = (rolle != null) ? rolle : Role.User;
 
-        // Kunde als konkrete Implementierung von Benutzer erstellen
-        Kunde newUser = new Kunde();
-        newUser.setBenutzername(username);
-        newUser.setEmail(email);
-        newUser.setPasswort(hashedPassword);
+        // Normales Objekt erstellen – OHNE anonyme Overrides
+        Benutzer newUser = new Benutzer(username, email, hashedPassword, zugewieseneRolle);
 
         return benutzerRepository.save(newUser);
     }
@@ -47,7 +46,7 @@ public class AppUserDetailsService implements UserDetailsService {
     }
 
     public Optional<Benutzer> authenticateUser(Benutzer user, String rawPassword) {
-        if (passwordEncoder.matches(rawPassword, user.getPasswort())) {
+        if (passwordEncoder.matches(rawPassword, user.getPasswort())){
             return Optional.of(user);
         }
         return Optional.empty();
@@ -63,7 +62,7 @@ public class AppUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
-        return benutzerRepository.findByBenutzernameOrEmail(usernameOrEmail, usernameOrEmail)
+        return (UserDetails) benutzerRepository.findByBenutzernameOrEmail(usernameOrEmail, usernameOrEmail)
                 .orElseThrow(() -> new UsernameNotFoundException(
                         "User mit Username/E-Mail nicht gefunden: " + usernameOrEmail));
     }

@@ -48,27 +48,12 @@ public class KaugummiService {
         var kaugummi = kaugummiRepository.findById(kaugummiId)
                 .orElseThrow(() -> new RuntimeException("Kaugummi nicht gefunden"));
         var benutzer = benutzerRepository.findById(benutzerId)
-                .orElseThrow(() -> new RuntimeException("Benutzer wurde  nicht gefunden"));
+                .orElseThrow(() -> new RuntimeException("Benutzer wurde nicht gefunden"));
 
         Kommentar kommentar = new Kommentar(text, benutzer, kaugummi);
         return kommentarRepository.save(kommentar);
     }
 
-    @Transactional
-    public void favoritHinzufuegen(Long kaugummiId, Long benutzerId) {
-        var benutzer = benutzerRepository.findById(benutzerId)
-                .orElseThrow(() -> new RuntimeException("Benutzer nicht gefunden"));
-        var kaugummi = kaugummiRepository.findById(kaugummiId)
-                .orElseThrow(() -> new RuntimeException("Kaugummi nicht gefunden"));
-
-        // Prüfung: Ist das Kaugummi bereits in den Favoriten?
-        if (benutzer.getFavoriten().contains(kaugummi)) {
-            throw new RuntimeException("Kaugummi ist bereits in den Favoriten enthalten");
-        }
-
-        benutzer.getFavoriten().add(kaugummi);
-        benutzerRepository.save(benutzer);
-    }
 
 
     @Transactional(readOnly = true)
@@ -89,7 +74,6 @@ public class KaugummiService {
         var kaugummi = kaugummiRepository.findById(kaugummiId)
                 .orElseThrow(() -> new RuntimeException("Kaugummi nicht gefunden"));
 
-        // Prüfung: Ist das Kaugummi überhaupt in den Favoriten vorhanden?
         if (!benutzer.getFavoriten().contains(kaugummi)) {
             throw new RuntimeException("Kaugummi ist nicht in den Favoriten vorhanden");
         }
@@ -98,4 +82,6 @@ public class KaugummiService {
         benutzerRepository.save(benutzer);
     }
 
+    public void favoritHinzufuegen(Long id, Long benutzerId) {
+    }
 }

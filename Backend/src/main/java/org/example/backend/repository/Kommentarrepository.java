@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface Kommentarrepository extends JpaRepository<Kommentar,Long> {
 
-    void deleteById(Long id);
     /**
      * Methode um KOmmentar upzudaten anhand Id
      * @param id
