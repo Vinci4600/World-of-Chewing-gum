@@ -1,7 +1,8 @@
 package org.example.backend.service;
 
-import org.example.backend.Model.Benutzer;
-import org.example.backend.Model.Role;
+import org.example.backend.model.Benutzer;
+import org.example.backend.model.Kunde;
+import org.example.backend.model.Role;
 import org.example.backend.dto.LoginRequestDTO;
 import org.example.backend.dto.RegisterRequestDTO;
 import org.example.backend.repository.BenutzerRepository;
@@ -52,12 +53,11 @@ public class AppUserService {
         if (benutzerRepository.existsByEmail(dto.getEmail())) {
             throw new IllegalArgumentException("E-Mail ist bereits vergeben!");
         }
-            // 1. Echte Instanz erstellen (ohne {{ ... }})
-            Benutzer user = new Benutzer();
-            user.setBenutzername(dto.getUsername());
-            user.setEmail(dto.getEmail());
-            user.setPasswort(passwordEncoder.encode(dto.getPassword()));
-            user.setRole(Role.User);
+        // 1. Echte Instanz erstellen (ohne {{ ... }})
+        Kunde user = new Kunde();
+        user.setBenutzername(dto.getUsername());
+        user.setEmail(dto.getEmail());
+        user.setPasswort(passwordEncoder.encode(dto.getPassword()));
 
         // 2. Echte User-Instanz speichern
         return benutzerRepository.save(user);
@@ -79,10 +79,6 @@ public class AppUserService {
     public Optional<Benutzer> findByEmail(String email) {
         return benutzerRepository.findByEmail(email);
     }
-
-    /**
-     * Sucht den Benutzer wahlweise per Benutzername oder E-Mail.
-     */
 
     /**
      * Prüft das rohe Passwort gegen den BCrypt-Hash aus der Datenbank.

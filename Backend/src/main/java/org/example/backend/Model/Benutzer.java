@@ -1,4 +1,4 @@
-package org.example.backend.Model;
+package org.example.backend.model;
 import jakarta.persistence.*;
 
 import java.util.*;
@@ -45,10 +45,7 @@ import java.util.*;
 
 
 
-    public Benutzer() {
-    }
-
-    public Benutzer(String username, String email, String hashedPassword, Role rolle) {
+    protected Benutzer() {
     }
 
     public Long getId() {

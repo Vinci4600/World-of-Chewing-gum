@@ -1,8 +1,8 @@
 package org.example.backend.service;
 
-import org.example.backend.Model.Benutzer;
-import org.example.backend.Model.Benutzer;
-import org.example.backend.Model.Role;
+import org.example.backend.model.Benutzer;
+import org.example.backend.model.Kunde;
+import org.example.backend.model.Role;
 import org.example.backend.repository.BenutzerRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -33,10 +33,12 @@ public class AppUserDetailsService implements UserDetailsService {
         }
 
         String hashedPassword = passwordEncoder.encode(rawPassword);
-        Role zugewieseneRolle = (rolle != null) ? rolle : Role.User;
 
-        // Normales Objekt erstellen – OHNE anonyme Overrides
-        Benutzer newUser = new Benutzer(username, email, hashedPassword, zugewieseneRolle);
+        // Kunde als konkrete Implementierung von Benutzer erstellen
+        Kunde newUser = new Kunde();
+        newUser.setBenutzername(username);
+        newUser.setEmail(email);
+        newUser.setPasswort(hashedPassword);
 
         return benutzerRepository.save(newUser);
     }
