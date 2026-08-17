@@ -28,7 +28,7 @@ public class Bewertung {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "benutzer_id", nullable = false)
-    private AppUser benutzer;
+    private Admin admin;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -107,12 +107,12 @@ public class Bewertung {
         this.datum = datum;
     }
 
-    public AppUser getBenutzer() {
-        return benutzer;
+    public Admin getBenutzer() {
+        return admin;
     }
 
-    public void setBenutzer(AppUser benutzer) {
-        this.benutzer = benutzer;
+    public void setBenutzer(Admin benutzer) {
+        this.admin = benutzer;
     }
 
     public org.example.backend.Model.Kaugummi getKaugummi() {
@@ -133,7 +133,7 @@ public class Bewertung {
                 ", weichheitSterne=" + weichheitSterne +
                 ", preisLeistungSterne=" + preisLeistungSterne +
                 ", datum=" + datum +
-                ", benutzer=" + benutzer +
+                ", benutzer=" + admin +
                 ", kaugummi=" + kaugummi +
                 '}';
     }
