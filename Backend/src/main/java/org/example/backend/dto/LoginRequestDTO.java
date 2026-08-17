@@ -38,7 +38,7 @@ public class LoginRequestDTO {
 
     // Alias für getUsernameOrEmail() – Kompatibilität mit bestehendem AppUserService
     /** Getter-Methode */
-    public String getEmail() {
+    public String getemail() {
         return usernameOrEmail;
     }
 
