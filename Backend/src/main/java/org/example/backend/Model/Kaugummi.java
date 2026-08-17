@@ -23,7 +23,8 @@ public class Kaugummi {
     private String geschmack;
     @Column(name = "zuckerfrei")
     private String zuckerfrei;
-
+    @Column (name = "inhaltsstoffe")
+    private String inhaltsstoffe;
 
     @ManyToMany(mappedBy = "favoriten")
     @JsonIgnore
