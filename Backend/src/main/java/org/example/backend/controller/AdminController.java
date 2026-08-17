@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/admin")
 public class AdminController {
 
+    /**
+     * Admin Service with Dependency Injection
+     */
     private final AdminService adminService;
 
     public AdminController(AdminService adminService) {
@@ -25,6 +28,19 @@ public class AdminController {
     public ResponseEntity<Kaugummi> kaugummiErstellen(@RequestBody Kaugummi kaugummiData) {
         return ResponseEntity.ok(adminService.kaugummiErstellen(kaugummiData));
     }
+
+
+    /**
+     * Kaugummi wird angezeigt anhand der Id
+     * @param id
+     * @return Kaugumi Liste
+     */
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Kaugummi> kaugummiAnzeigen(@PathVariable Long id) {
+        return ResponseEntity.ok(adminService.kaugummianzeigen(id));
+    }
+
 
     /**
      * Kaugummi hinzufügen
@@ -51,6 +67,13 @@ public class AdminController {
         return ResponseEntity.noContent().build();
     }
 
+
+    /**
+     * EInzelner Kommentar anhand Attrivur kommentarId löschen
+     * @param kommentarId
+     * @return  Kommentarid
+     *
+     */
     @DeleteMapping("/kommentar/{kommentarId}")
     public ResponseEntity<Void> kommentarLoeschen(@PathVariable Long kommentarId) {
         adminService.kommentarLoeschen(kommentarId);
