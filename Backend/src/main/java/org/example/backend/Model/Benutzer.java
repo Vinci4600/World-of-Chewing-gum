@@ -1,58 +1,121 @@
-package org.example.backend.model;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
+package org.example.backend.Model;
+import jakarta.persistence.*;
 
-    @Entity
-    @Inheritance(strategy = InheritanceType.JOINED)
-    public abstract class Benutzer {
+import java.util.*;
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long id;
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING)
+    public class Benutzer {
 
-        private String benutzername;
-        private String email;
-        private String passwort;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-        public Benutzer() {
-        }
+    private String benutzername;
+    private String email;
+    private String passwort;
 
-        public Long getId() {
-            return id;
-        }
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
-        public void setId(Long id) {
-            this.id = id;
-        }
 
-        public String getBenutzername() {
-            return benutzername;
-        }
 
-        public void setBenutzername(String benutzername) {
-            this.benutzername = benutzername;
-        }
 
-        public String getEmail() {
-            return email;
-        }
+    @OneToMany(mappedBy = "benutzer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Kommentar> kommentare = new ArrayList<>();
 
-        public void setEmail(String email) {
-            this.email = email;
-        }
+    @ManyToMany
+    @JoinTable(
+            name = "benutzer_favoriten",
+            joinColumns = @JoinColumn(name = "benutzer_id"),
+            inverseJoinColumns = @JoinColumn(name = "kaugummi_id")
+    )
 
-        public String getPasswort() {
-            return passwort;
-        }
+    private Set<Kaugummi> favoriten = new HashSet<>();
 
-        public void setPasswort(String passwort) {
-            this.passwort = passwort;
-        }
+    public Benutzer(Long id, String benutzername, String email, String passwort, Role role) {
+        this.id = id;
+        this.benutzername = benutzername;
+        this.email = email;
+        this.passwort = passwort;
+        this.role = role;
+
     }
+
+
+
+    public Benutzer() {
+    }
+
+    public Benutzer(String username, String email, String hashedPassword, Role rolle) {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getBenutzername() {
+        return benutzername;
+    }
+
+    public void setBenutzername(String benutzername) {
+        this.benutzername = benutzername;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPasswort() {
+        return passwort;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+
+    public Set<Kaugummi> getFavoriten() {
+        return favoriten;
+    }
+
+    public void setFavoriten(Set<Kaugummi> favoriten) {
+        this.favoriten = favoriten;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public void setPasswort(String passwort) {
+        this.passwort = passwort;
+    }
+
+    @Override
+    public String toString() {
+        return "Benutzer{" +
+                "id=" + id +
+                ", benutzername='" + benutzername + '\'' +
+                ", email='" + email + '\'' +
+                ", passwort='" + passwort + '\'' +
+                ", role=" + role +
+                ", favoriten=" + favoriten +
+                '}';
+    }
+}
+
+
+
+
 
 
 

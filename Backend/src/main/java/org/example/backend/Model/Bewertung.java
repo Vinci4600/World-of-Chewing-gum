@@ -27,7 +27,7 @@ public class Bewertung {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "benutzer_id", nullable = false)
-    private AppUser benutzer;
+    private Benutzer benutzer;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -106,12 +106,20 @@ public class Bewertung {
         this.datum = datum;
     }
 
-    public AppUser getBenutzer() {
+    public Benutzer getBenutzer() {
         return benutzer;
     }
 
-    public void setBenutzer(AppUser benutzer) {
+    public void setBenutzer(Benutzer benutzer) {
         this.benutzer = benutzer;
+    }
+
+    public Kunde getKunde() {
+        return kunde;
+    }
+
+    public void setKunde(Kunde kunde) {
+        this.kunde = kunde;
     }
 
     public Kaugummi getKaugummi() {
@@ -133,6 +141,7 @@ public class Bewertung {
                 ", preisLeistungSterne=" + preisLeistungSterne +
                 ", datum=" + datum +
                 ", benutzer=" + benutzer +
+                ", kunde=" + kunde +
                 ", kaugummi=" + kaugummi +
                 '}';
     }

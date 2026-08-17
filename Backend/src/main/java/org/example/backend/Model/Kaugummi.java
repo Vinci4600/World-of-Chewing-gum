@@ -1,5 +1,10 @@
 package org.example.backend.Model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "kaugummis")
 public class Kaugummi {
@@ -18,8 +23,15 @@ public class Kaugummi {
     @Column(name = "zuckerfrei")
     private String zuckerfrei;
 
+
+    @ManyToMany(mappedBy = "favoriten")
+    @JsonIgnore
+    private Set<Benutzer> favorisiertVon = new HashSet<>();
     //Getter und Setter
 
+    public  Kaugummi() {
+
+    }
 
     public Long getId() {
         return id;
@@ -53,6 +65,14 @@ public class Kaugummi {
         this.marke = marke;
     }
 
+    public Set<Benutzer> getFavorisiertVon() {
+        return favorisiertVon;
+    }
+
+    public void setFavorisiertVon(Set<Benutzer> favorisiertVon) {
+        this.favorisiertVon = favorisiertVon;
+    }
+
     public String getGeschmack() {
         return geschmack;
     }
@@ -68,5 +88,6 @@ public class Kaugummi {
     public void setZuckerfrei(String zuckerfrei) {
         this.zuckerfrei = zuckerfrei;
     }
+
 
 }
