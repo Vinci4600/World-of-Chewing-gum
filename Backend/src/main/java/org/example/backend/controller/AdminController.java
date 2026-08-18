@@ -1,12 +1,12 @@
 package org.example.backend.controller;
 
 
-import org.example.backend.model.Kaugummi;
+import org.example.backend.Model.Kaugummi;
 
 
 
 
-import org.example.backend.model.Kaugummi;
+import org.example.backend.Model.Kaugummi;
 
 import org.example.backend.service.AdminService;
 import org.springframework.http.HttpStatus;
@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/admin")
+@CrossOrigin(origins = "http://localhost:5173") // Für React Frontend
+
 public class AdminController {
 
     /**
@@ -77,18 +79,18 @@ public class AdminController {
 
 
     @PutMapping("/kommentar/{kommentarId}")
-    public ResponseEntity<org.example.backend.model.Kommentar> kommentarBearbeiten(@PathVariable Long kommentarId,
+    public ResponseEntity<org.example.backend.Model.Kommentar> kommentarBearbeiten(@PathVariable Long kommentarId,
                                                                                    @RequestParam Long benutzerId,
                                                                                    @RequestBody String neuerText) {
-        org.example.backend.model.Kommentar aktualisierterKommentar = adminService.kommentarBearbeitenUndSpeichern(kommentarId, benutzerId, neuerText);
+        org.example.backend.Model.Kommentar aktualisierterKommentar = adminService.kommentarBearbeitenUndSpeichern(kommentarId, benutzerId, neuerText);
         return ResponseEntity.ok(aktualisierterKommentar);
     }
 
     @PostMapping("/kommentar/{id}")
-    public ResponseEntity<org.example.backend.model.Kommentar> kommentarHinzufuegen(@PathVariable Long id,
+    public ResponseEntity<org.example.backend.Model.Kommentar> kommentarHinzufuegen(@PathVariable Long id,
                                                                                     @RequestParam Long benutzerId,
                                                                                     @RequestBody String text) {
-        org.example.backend.model.Kommentar neuerKommentar = adminService.kommentarHinzufuegen(id, benutzerId, text);
+        org.example.backend.Model.Kommentar neuerKommentar = adminService.kommentarHinzufuegen(id, benutzerId, text);
         return ResponseEntity.status(HttpStatus.CREATED).body(neuerKommentar);
     }
 

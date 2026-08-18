@@ -1,7 +1,7 @@
 package org.example.backend.controller;
 
 import jakarta.validation.Valid;
-import org.example.backend.model.Benutzer;
+import org.example.backend.Model.Benutzer;
 import org.example.backend.dto.LoginRequestDTO;
 import org.example.backend.dto.LoginResponseDTO;
 import org.example.backend.dto.RegisterRequestDTO;
@@ -18,6 +18,8 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")
+@CrossOrigin(origins = "http://localhost:5173") // Für React Frontend
+
 public class AuthController {
 
 

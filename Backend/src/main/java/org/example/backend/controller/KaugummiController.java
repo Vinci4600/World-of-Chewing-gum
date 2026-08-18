@@ -1,6 +1,6 @@
 package org.example.backend.controller;
 
-import org.example.backend.model.Kaugummi;
+import org.example.backend.Model.Kaugummi;
 import org.example.backend.service.KaugummiService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +9,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/kaugummi")
+@CrossOrigin(origins = "http://localhost:5173") // Für React Frontend
+
 public class KaugummiController {
 
 
@@ -39,9 +41,9 @@ public class KaugummiController {
 
 
     @PostMapping("/{id}/bewertung")
-    public ResponseEntity<org.example.backend.model.Bewertung> bewertungAbgeben(@PathVariable Long id,
+    public ResponseEntity<org.example.backend.Model.Bewertung> bewertungAbgeben(@PathVariable Long id,
                                                                                 @RequestParam Long benutzerId,
-                                                                                @RequestBody org.example.backend.model.Bewertung bewertungData) {
+                                                                                @RequestBody org.example.backend.Model.Bewertung bewertungData) {
         return ResponseEntity.ok(kaugummiService.bewertungAbgeben(id, benutzerId, bewertungData));
     }
 
@@ -53,7 +55,7 @@ public class KaugummiController {
      * @return
      */
     @PostMapping("/{id}/kommentar")
-    public ResponseEntity<org.example.backend.model.Kommentar> kommentarHinzufuegen(@PathVariable Long id,
+    public ResponseEntity<org.example.backend.Model.Kommentar> kommentarHinzufuegen(@PathVariable Long id,
                                                                                     @RequestParam Long benutzerId,
                                                                                     @RequestBody String text) {
         return ResponseEntity.ok(kaugummiService.kommentarHinzufuegen(id, benutzerId, text));

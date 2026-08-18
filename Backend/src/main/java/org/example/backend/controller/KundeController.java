@@ -1,6 +1,6 @@
 package org.example.backend.controller;
 
-import org.example.backend.model.Kaugummi;
+import org.example.backend.Model.Kaugummi;
 import org.example.backend.model.Kunde;
 import org.example.backend.service.KaugummiService;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/kunde")
+@CrossOrigin(origins = "http://localhost:5173") // Für React Frontend
 public class KundeController {
 
     private final KaugummiService kaugummiService;
