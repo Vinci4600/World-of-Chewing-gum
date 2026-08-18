@@ -1,14 +1,13 @@
 package org.example.backend.controller;
 
-<<<<<<< HEAD
-import org.example.backend.Model.Kaugummi;
 
-
-||||||| 248477e
-import org.example.backend.Model.Kaugummi;
-=======
 import org.example.backend.model.Kaugummi;
->>>>>>> 3488a3369dffc11db7640f3a70cbdd394ee35cc9
+
+
+
+
+import org.example.backend.model.Kaugummi;
+
 import org.example.backend.service.AdminService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

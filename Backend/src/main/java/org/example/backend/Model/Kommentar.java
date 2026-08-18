@@ -20,33 +20,11 @@ public class Kommentar {
     @JoinColumn(name = "kaugummi_id")
     private Kaugummi kaugummi;
 
-    public Kommentar() {
-    }
-
-    public Kommentar(Long id, String text, Benutzer benutzer, Kaugummi kaugummi) {
-        this.id = id;
-        this.text = text;
-        this.benutzer = benutzer;
-        this.kaugummi = kaugummi;
-    }
-
-<<<<<<< HEAD
-    public Kommentar(String text, Benutzer benutzer, Kaugummi kaugummi) {
-    }
-
-    public Kommentar() {
-
-    }
-
-
-||||||| 248477e
-    public Kommentar(String text, Benutzer benutzer, Kaugummi kaugummi) {
-    }
 
 
 
-=======
->>>>>>> 3488a3369dffc11db7640f3a70cbdd394ee35cc9
+
+
     public Long getId() {
         return id;
     }
