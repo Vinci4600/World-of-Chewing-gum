@@ -1,41 +1,45 @@
-package org.example.backend.Model;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
-import org.example.backend.Model.Benutzer;
+package org.example.backend.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(name = "kaugummis")
+@Table(name = "kaugummi")
 public class Kaugummi {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name= "name")
+    @Column(nullable = false)
     private String name;
-    @Column(name = "imageUrl")
+
     private String imageUrl;
-    @Column(name = "marke")
+
     private String marke;
-    @Column(name = "geschmack")
+
     private String geschmack;
-    @Column(name = "zuckerfrei")
-    private String zuckerfrei;
-    @Column (name = "inhaltsstoffe")
+
+    private Boolean zuckerfrei;
+
     private String inhaltsstoffe;
 
+    @OneToMany(mappedBy = "kaugummi", cascade = CascadeType.ALL)
+    private List<Bewertung> bewertungen;
+
     @ManyToMany(mappedBy = "favoriten")
-    @JsonIgnore
-    private Set<Benutzer> favorisiertVon = new HashSet<>();
-    //Getter und Setter
+    private List<Benutzer> favorisiertVon;
 
-    public  Kaugummi() {
-
+    public Kaugummi() {
     }
 
-
+    public Kaugummi(Long id, String name, String imageUrl, String marke, String geschmack, Boolean zuckerfrei) {
+        this.id = id;
+        this.name = name;
+        this.imageUrl = imageUrl;
+        this.marke = marke;
+        this.geschmack = geschmack;
+        this.zuckerfrei = zuckerfrei;
+    }
 
     public Long getId() {
         return id;
@@ -69,14 +73,6 @@ public class Kaugummi {
         this.marke = marke;
     }
 
-    public Set<Benutzer> getFavorisiertVon() {
-        return favorisiertVon;
-    }
-
-    public void setFavorisiertVon(Set<Benutzer> favorisiertVon) {
-        this.favorisiertVon = favorisiertVon;
-    }
-
     public String getGeschmack() {
         return geschmack;
     }
@@ -85,13 +81,35 @@ public class Kaugummi {
         this.geschmack = geschmack;
     }
 
-    public String getZuckerfrei() {
+    public Boolean getZuckerfrei() {
         return zuckerfrei;
     }
 
-    public void setZuckerfrei(String zuckerfrei) {
+    public void setZuckerfrei(Boolean zuckerfrei) {
         this.zuckerfrei = zuckerfrei;
     }
 
+    public String getInhaltsstoffe() {
+        return inhaltsstoffe;
+    }
 
+    public void setInhaltsstoffe(String inhaltsstoffe) {
+        this.inhaltsstoffe = inhaltsstoffe;
+    }
+
+    public List<Bewertung> getBewertungen() {
+        return bewertungen;
+    }
+
+    public void setBewertungen(List<Bewertung> bewertungen) {
+        this.bewertungen = bewertungen;
+    }
+
+    public List<Benutzer> getFavorisiertVon() {
+        return favorisiertVon;
+    }
+
+    public void setFavorisiertVon(List<Benutzer> favorisiertVon) {
+        this.favorisiertVon = favorisiertVon;
+    }
 }

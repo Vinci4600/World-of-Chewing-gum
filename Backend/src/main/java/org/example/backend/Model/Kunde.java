@@ -1,28 +1,23 @@
-package org.example.backend.Model;
+package org.example.backend.model;
 
-import org.example.backend.Model.Role;
-import org.example.backend.Model.Benutzer;
-
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("KUNDE")
-
+@DiscriminatorValue("Kunde")
 public class Kunde extends Benutzer {
-    // zusätzliche Eigenschaften des Kunden
-
+    @Column(unique = true)
     private String kundennummer;
 
     public Kunde() {
         super();
     }
 
-    public Kunde(String username, String email, String hashedPassword, Role zugewieseneRolle, String kundennummer) {
-        super(username, email, hashedPassword, zugewieseneRolle);
+    public Kunde(Long id, String benutzername, String email, String passwort, Role role, String kundennummer) {
+        super(id, benutzername, email, passwort, role);
         this.kundennummer = kundennummer;
     }
-
-
 
     public String getKundennummer() {
         return kundennummer;
@@ -30,12 +25,5 @@ public class Kunde extends Benutzer {
 
     public void setKundennummer(String kundennummer) {
         this.kundennummer = kundennummer;
-    }
-
-    @Override
-    public String toString() {
-        return "Kunde{" +
-                "kundennummer='" + kundennummer + '\'' +
-                '}';
     }
 }

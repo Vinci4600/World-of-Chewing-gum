@@ -1,38 +1,43 @@
-package org.example.backend.Model;
-import jakarta.persistence.*;
+package org.example.backend.model;
 
-import java.util.*;
+import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
+@Table(name = "benutzer")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING)
-    public class Benutzer {
-
+@DiscriminatorColumn(name = "dtype", discriminatorType = DiscriminatorType.STRING)
+public abstract class Benutzer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true)
     private String benutzername;
+
+    @Column(nullable = false, unique = true)
     private String email;
+
+    @Column(nullable = false)
     private String passwort;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Role role;
 
+    @OneToMany(mappedBy = "benutzer", cascade = CascadeType.ALL)
+    private List<Kommentar> kommentare;
 
-
-
-    @OneToMany(mappedBy = "benutzer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<org.example.backend.model.Kommentar> kommentare = new ArrayList<>();
-
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "benutzer_favoriten",
             joinColumns = @JoinColumn(name = "benutzer_id"),
             inverseJoinColumns = @JoinColumn(name = "kaugummi_id")
     )
+    private List<Kaugummi> favoriten;
 
-    private Set<Kaugummi> favoriten = new HashSet<>();
+    protected Benutzer() {
+    }
 
     public Benutzer(Long id, String benutzername, String email, String passwort, Role role) {
         this.id = id;
@@ -40,14 +45,6 @@ import java.util.*;
         this.email = email;
         this.passwort = passwort;
         this.role = role;
-
-    }
-
-    public Benutzer(String username, String email, String hashedPassword, org.example.backend.Model.Role zugewieseneRolle) {
-    }
-
-    public Benutzer() {
-
     }
 
     public Long getId() {
@@ -86,33 +83,23 @@ import java.util.*;
         return role;
     }
 
-    public List<org.example.backend.model.Kommentar> getKommentare() {
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public List<Kommentar> getKommentare() {
         return kommentare;
     }
 
-    public void setKommentare(List<org.example.backend.model.Kommentar> kommentare) {
+    public void setKommentare(List<Kommentar> kommentare) {
         this.kommentare = kommentare;
     }
 
-    public Set<Kaugummi> getFavoriten() {
+    public List<Kaugummi> getFavoriten() {
         return favoriten;
     }
 
-    public void setFavoriten(Set<Kaugummi> favoriten) {
+    public void setFavoriten(List<Kaugummi> favoriten) {
         this.favoriten = favoriten;
     }
-
-
-    public void setRole(org.example.backend.Model.Role role) {
-    }
 }
-
-
-
-
-
-
-
-
-
-
