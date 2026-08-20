@@ -1,19 +1,19 @@
 import {useState} from 'react'
 
-import './App.css'
+import './components/Styles/Home.css'
 
-function App() {
+function HomePage() {
     const [count, setCount] = useState(0)
 
     return (
-        <>
+
             <div className="Background">
 
                 <div className="Titel">World of Chewing gum</div>
 
             </div>
-        </>
-    )
+
+    );
 }
 
 export default HomePage
