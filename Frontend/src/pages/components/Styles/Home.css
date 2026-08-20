@@ -1,3 +1,47 @@
-html, body {
-    background-color: #17152B;
+.Background {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
+
+    background-color: #17152b;
+    background-image:
+        /* blauer Nebel */
+            radial-gradient(
+                    circle at 20% 25%,
+                    #7209B7,
+                    transparent 35%
+            ),
+
+                /* violetter Nebel */
+            radial-gradient(
+                    circle at 80% 75%,
+                    #F72585,
+                    transparent 35%
+            )
+}
+.Titel {
+    position: relative;
+    text-shadow:
+            0 0 10px #1a1a2a,
+            0 0 25px #1a1a2f,
+            0 0 50px #1a1a2e;
+
+    margin-top: 300px;
+
+    font-family: Georgia, serif;
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: bold;
+
+    opacity: 0;
+
+    animation:
+            Titel 1.4s cubic-bezier(.17,.67,.32,1.3)
+            2.5s forwards;
 }
