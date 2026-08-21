@@ -6,7 +6,7 @@ import org.example.backend.model.Kaugummi;
 
 
 
-import org.example.backend.model.Kaugummi;
+
 
 import org.example.backend.service.AdminService;
 import org.springframework.http.HttpStatus;
@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/admin")
+@CrossOrigin(origins = "http://localhost:5173") // Für React Frontend
+
 public class AdminController {
 
     /**

@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/kunde")
+@CrossOrigin(origins = "http://localhost:5173") // Für React Frontend
 public class KundeController {
 
     private final KaugummiService kaugummiService;

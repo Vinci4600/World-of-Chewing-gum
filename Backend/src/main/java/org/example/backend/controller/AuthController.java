@@ -18,6 +18,8 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")
+@CrossOrigin(origins = "http://localhost:5173") // Für React Frontend
+
 public class AuthController {
 
 
