@@ -7,7 +7,8 @@ function HomePage() {
 
     return (
 
-            <div className="Background">
+            <div className="Background-Intro">
+
 
                 <div className="Titel">World of Chewing gum</div>
 
