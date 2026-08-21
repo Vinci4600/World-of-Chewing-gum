@@ -31,29 +31,24 @@ body,
   color: white;
 }}
 
-nav {
-    position: relative;
-    z-index: 10;
 
-    padding: 16px 20px;
-}
-
-nav a {
-    color: white;
-    text-decoration: none;
-}
-
-nav a:hover {
-    text-decoration: underline;
-}
-
-nav button {
-    color: white;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    font-size: inherit;
-}
 Body {
     background-color: black;
 }
+nav {
+    background: linear-gradient(
+            90deg,
+            rgba(5, 4, 25, 0.92),
+            rgba(25, 5, 45, 0.88),
+            rgba(5, 4, 25, 0.92)
+    );
+
+    border-bottom: 1px solid rgba(247, 37, 133, 0.45);
+
+    box-shadow:
+            0 4px 25px rgba(0, 0, 0, 0.45),
+            0 1px 10px rgba(247, 37, 133, 0.12);
+
+    backdrop-filter: blur(12px);
+}
+
