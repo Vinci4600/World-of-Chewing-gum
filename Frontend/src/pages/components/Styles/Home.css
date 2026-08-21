@@ -1,33 +1,74 @@
-.Background {
+.Background-Intro {
     position: relative;
-    min-height: 100vh;
     width: 100%;
+    height: 100vh;
 
-    background-color: #17152b;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
+
+    background-color: #020217;
 
     background-image:
+        /* blauer Nebel */
             radial-gradient(
                     circle at 20% 25%,
-                    #7209B7,
+                    rgba(80, 80, 255, 0.18),
                     transparent 35%
             ),
+
+                /* violetter Nebel */
             radial-gradient(
                     circle at 80% 75%,
-                    #F72585,
+                    rgba(180, 50, 255, 0.12),
                     transparent 35%
-            );
+            )
 
-    background-attachment: fixed;
-    background-size: cover;
 
-    color: white;
+
+
+
+
+
+
 }
-.Titel {
-    position: relative;
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: #05051a;
+    overflow: hidden;
+}
+.img-one{
     text-shadow:
-            0 0 10px #1a1a2a,
-            0 0 25px #1a1a2f,
-            0 0 50px #1a1a2e;
+            0 0 10px #2bd8ff,
+            0 0 25px #2bd8ff,
+            0 0 50px #2bd8ff;
+    position: absolute;
+
+    font-family: Arial, sans-serif;
+    font-size: 35rem;
+    font-weight: 800;
+    line-height: 1;
+
+    opacity: 0;
+    left: 25%;
+}
+.img-one {
+    animation: showOne 1.5s ease-out forwards;
+}
+
+
+
+
+.Titel-text {
+    text-shadow:
+            0 0 10px #36ff2b,
+            0 0 25px #36ff2b,
+            0 0 50px #36ff2b;
+    position: relative;
 
     margin-top: 300px;
 
@@ -38,6 +79,50 @@
     opacity: 0;
 
     animation:
-            Titel 1.4s cubic-bezier(.17,.67,.32,1.3)
+            birthdayText 1.4s cubic-bezier(.17,.67,.32,1.3)
             2.5s forwards;
+}
+/* Animation Bild */
+@keyframes showOne {
+
+    0% {
+        opacity: 0;
+        transform: scale(2.5) translateX(-100px);
+        filter: blur(20px);
+    }
+
+    30% {
+        opacity: 0.25;
+    }
+
+    70% {
+        opacity: 0.18;
+    }
+
+    100% {
+        opacity: 0.08;
+        transform: scale(1) translateX(0);
+        filter: blur(0);
+    }
+}
+/*Titel animation */
+@keyframes birthdayText {
+
+    0% {
+        opacity: 0;
+        transform: translateY(80px) scale(0.8);
+        filter: blur(15px);
+    }
+
+    60% {
+        opacity: 1;
+        transform: translateY(-8px) scale(1.03);
+        filter: blur(0);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
 }
