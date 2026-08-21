@@ -8,9 +8,11 @@ function HomePage() {
     return (
 
             <div className="Background-Intro">
+                <div className="img-one">#</div>
+                <div className="Titel-text">World of Chewing gum</div>
 
 
-                <div className="Titel">World of Chewing gum</div>
+
 
             </div>
 
