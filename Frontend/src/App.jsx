@@ -2,6 +2,7 @@ import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import HomePage from "./pages/HomePage.jsx";
+import LoginPage from "./pages/LoginPage.jsx";
 
 function App() {
     const [token, setToken] = useState(localStorage.getItem("token"));
@@ -29,6 +30,7 @@ function App() {
             <div className="content">
                 <Routes>
                     <Route path="/" element={<HomePage />} />
+                    <Route path="/login" element={<LoginPage />} />
                 </Routes>
             </div>
         </div>
