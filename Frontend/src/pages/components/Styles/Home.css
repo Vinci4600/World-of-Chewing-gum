@@ -43,22 +43,25 @@ body {
 }
 .img-one{
     text-shadow:
-            0 0 10px #2bd8ff,
-            0 0 25px #2bd8ff,
-            0 0 50px #2bd8ff;
+            0 0 10px #00BFFF,
+            0 0 25px #00BFFF,
+            0 0 50px #00BFFF;
     position: absolute;
 
     font-family: Arial, sans-serif;
     font-size: 35rem;
     font-weight: 800;
     line-height: 1;
+    object-fit: contain;
+    filter: brightness(1.25);
 
     opacity: 0;
-    left: 25%;
+
 }
 .img-one {
     animation: showOne 1.5s ease-out forwards;
 }
+
 
 
 
