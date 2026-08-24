@@ -22,10 +22,10 @@ public class Kaugummi {
     private Boolean zuckerfrei;
 
     private String inhaltsstoffe;
-
+// Ein Kaugummi kann mehrere Bewertungen haben
     @OneToMany(mappedBy = "kaugummi", cascade = CascadeType.ALL)
     private List<Bewertung> bewertungen;
-
+// Viele Kaugummis können viele Favoriten haben
     @ManyToMany(mappedBy = "favoriten")
     private List<Benutzer> favorisiertVon;
 
@@ -40,7 +40,7 @@ public class Kaugummi {
         this.geschmack = geschmack;
         this.zuckerfrei = zuckerfrei;
     }
-
+// Getter und Setter
     public Long getId() {
         return id;
     }
