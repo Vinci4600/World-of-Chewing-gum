@@ -3,7 +3,7 @@ import { Link, Routes, Route, useNavigate } from "react-router-dom";
 import HomePage from "./pages/HomePage.jsx";
 import LoginPage from "./pages/Loginpage.jsx";
 import RegistrierungPage from "./pages/Registerpage.jsx";
-import Forgotpassword from "./pages/Forgotpassword.jsx";
+
 import KaugummiAddPage from "./pages/KaugummiAddPage.jsx";
 
 function App() {
@@ -34,7 +34,7 @@ function App() {
                         {" | "}
                         <Link to="/register">Registrieren</Link>
                         <Link to="/kaugummiadd">Kaugummi hinzufügen</Link>
-                        <Link to="/forgotpassword">Password vergessen?</Link>
+
                     </>
                 )}
             </nav>
@@ -45,7 +45,7 @@ function App() {
                     <Route path="/login" element={<LoginPage setToken={setToken} />} />
                     <Route path="/register" element={<RegistrierungPage />} />
                     <Route path="/kaugummiadd" element={<KaugummiAddPage />} />
-                    <Route path="/forgotpassword" element={<Forgotpassword />} />
+
                 </Routes>
             </div>
         </div>
