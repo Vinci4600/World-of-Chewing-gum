@@ -71,11 +71,11 @@ function Loginpage() {
     };
 
     return (
-        <div className="lg-page">
+        <div className="Background-Intro">
 
 
-            <div className="lg-card">
-                <h1 className="lg-title">Login</h1>
+            <div className="kaugummi-form-container">
+                <h1>Login</h1>
                 <p className="lg-sub">Melde dich an, um fortzufahren</p>
 
                 {error && <div className="lg-error" role="alert">{error}</div>}
