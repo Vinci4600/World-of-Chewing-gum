@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./components/Styles/Home.css";
+import "./components/Styles/Add.css";
 
 function KaugummiAddPage() {
     const [kaugummi, setKaugummi] = useState([]);
