@@ -10,6 +10,7 @@ function Loginpage() {
 
         <div className="Background-Intro">
             <div className="Login-card">
+                <h2>Hallo</h2>
 
                 <h1 className="he1">Login</h1>
                 <button className="Button1">Login</button>
