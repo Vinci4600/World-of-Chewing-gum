@@ -1,6 +1,5 @@
-import {useState} from "react";
-import {useNavigate, Link} from "react-router-dom";
-
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 
 function RegistrierungPage() {
     const [username, setUsername] = useState("");
@@ -8,9 +7,28 @@ function RegistrierungPage() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [email, setEmail] = useState("");
     const [error, setError] = useState("");
+
+    // Getrennte Toggles für Passwörter
     const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const navigate = useNavigate();
+
+    // Validierungsregeln
+    const passwordRequirements = [
+        { label: "Mindestens 8 Zeichen lang", valid: password.length >= 8 },
+        { label: "Mindestens 1 Großbuchstabe (A-Z)", valid: /[A-Z]/.test(password) },
+        { label: "Mindestens 1 Kleinbuchstabe (a-z)", valid: /[a-z]/.test(password) },
+        { label: "Mindestens 1 Zahl (0-9)", valid: /\d/.test(password) },
+        { label: "Mindestens 1 Sonderzeichen (!@#$%^&* usw.)", valid: /[!@#$%^&*(),.?":{}|<>]/.test(password) },
+        { label: "Passwörter stimmen überein", valid: password.length > 0 && password === confirmPassword },
+    ];
+
+    const emailRequirements = [
+        { label: "Muss ein @ enthalten", valid: email.includes("@") },
+        { label: "Muss eine Domain enthalten (z.B. .de, .com, .ch)", valid: /\.[a-zA-Z]{2,}$/.test(email) },
+        { label: "Muss eine gültige E-Mail-Adresse sein", valid: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) },
+    ];
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -35,7 +53,6 @@ function RegistrierungPage() {
             if (!response.ok) {
                 const errorData = await response.json();
                 throw new Error(errorData.error || errorData || "Registrierung fehlgeschlagen");
-                alert("Bitte erneut registrieren!");
             }
 
             navigate("/login");
@@ -61,7 +78,7 @@ function RegistrierungPage() {
                         <input
                             className="lg-input"
                             type="text"
-                            placeholder="Username"
+                            placeholder="Username eingeben..."
                             autoComplete="username"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
@@ -89,7 +106,7 @@ function RegistrierungPage() {
                             autoComplete="new-password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            style={{paddingRight: "70px"}}
+                            style={{ paddingRight: "70px" }}
                             required
                         />
                         <button
@@ -104,21 +121,20 @@ function RegistrierungPage() {
                     <div className="lg-field">
                         <input
                             className="lg-input"
-                            type={showPassword ? "text" : "password"}
+                            type={showConfirmPassword ? "text" : "password"}
                             placeholder="Confirm Passwort"
                             autoComplete="new-password"
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
-                            style={{paddingRight: "70px"}}
+                            style={{ paddingRight: "70px" }}
                             required
                         />
-
                         <button
                             type="button"
                             className="lg-toggle"
-                            onClick={() => setShowPassword(!showPassword)}
+                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                         >
-                            {showPassword ? "Hide" : "Show"}
+                            {showConfirmPassword ? "Hide" : "Show"}
                         </button>
                     </div>
 
@@ -127,26 +143,53 @@ function RegistrierungPage() {
                     </button>
                 </form>
 
-                {/* Navigation zur Login-Seite */}
                 <div style={{ marginTop: "20px", textAlign: "center" }}>
                     <p>Bereits ein Konto? <Link to="/login">Hier anmelden</Link></p>
                 </div>
 
+                {/* Dynamische Liste mit Rot/Grün Indikator */}
                 <div className="rg-card" style={{ marginTop: "20px" }}>
                     <h3>Anforderungen:</h3>
+
                     <p>Passwort-Anforderungen:</p>
-                    <ul>
-                        <li className="rg-item">Mindestens 8 Zeichen lang</li>
-                        <li className="rg-item">Mindestens 1 Großbuchstabe (A-Z)</li>
-                        <li className="rg-item">Mindestens 1 Kleinbuchstabe (a-z)</li>
-                        <li className="rg-item">Mindestens 1 Zahl (0-9)</li>
-                        <li className="rg-item">Mindestens 1 Sonderzeichen (!@#$%^&* usw.)</li>
+                    <ul style={{ listStyle: "none", paddingLeft: 0 }}>
+                        {passwordRequirements.map((req, index) => (
+                            <li
+                                key={index}
+                                className="rg-item"
+                                style={{
+                                    color: req.valid ? "#2e7d32" : "#d32f2f",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: "8px",
+                                    marginBottom: "4px"
+                                }}
+                            >
+                                <span>{req.valid ? "✓" : "✗"}</span>
+                                <span>{req.label}</span>
+                            </li>
+                        ))}
                     </ul>
+
                     <p>E-Mail-Anforderungen:</p>
-                    <ul>
-                        <li className="rg-item">Muss eine gültige E-Mail-Adresse sein</li>
-                        <li className="rg-item">Muss ein @ enthalten</li>
-                        <li className="rg-item">Muss eine Domain enthalten (z.B. .de, .com, .ch)</li>
+                    <ul style={{ listStyle: "none", paddingLeft: 0 }}>
+                        {emailRequirements.map((req, index) => (
+                            <li
+                                key={index}
+                                className="rg-item"
+                                style={{
+                                    color: req.valid ? "#2e7d32" : "#d32f2f",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: "8px",
+                                    marginBottom: "4px"
+                                }}
+                            >
+                                <span>{req.valid ? "✓" : "✗"}</span>
+                                <span>{req.label}</span>
+                                <span>{req.label}</span>
+                            </li>
+                        ))}
                     </ul>
                 </div>
             </div>
