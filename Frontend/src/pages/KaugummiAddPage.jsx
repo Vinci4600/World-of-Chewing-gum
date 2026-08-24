@@ -1,9 +1,7 @@
-import {useState} from 'react'
+import { useState } from "react";
+import "./components/Styles/Home.css";
 
-import './components/Styles/Home.css'
-
-
- function KaugummiAddPage() {
+function KaugummiAddPage() {
     const [kaugummi, setKaugummi] = useState([]);
     const [name, setName] = useState("");
     const [imageUrl, setImageUrl] = useState("");
@@ -12,8 +10,7 @@ import './components/Styles/Home.css'
     const [zuckerfrei, setZuckerfrei] = useState(false);
     const [inhaltsstoffe, setInhaltsstoffe] = useState("");
 
-
-    // Daten die ins Backend Geschickt werden
+    // Daten, die ins Backend geschickt werden
     const kaugummiData = {
         name: name,
         imageUrl: imageUrl,
@@ -22,37 +19,39 @@ import './components/Styles/Home.css'
         zuckerfrei: zuckerfrei,
         inhaltsstoffe: inhaltsstoffe
     };
-// Post Funktion
-     const kaugummiHinzufuegen = async () => {
-    try {
-        const response = await fetch(
-            "http://localhost:8080/api/kaugummi/add",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(kaugummiData)
+
+    // POST-Funktion
+    const kaugummiHinzufuegen = async () => {
+        try {
+            const response = await fetch(
+                "http://localhost:8080/api/kaugummi/add",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(kaugummiData)
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error("Kaugummi konnte nicht hinzugefügt werden");
             }
-        );
 
-        if (!response.ok) {
-            throw new Error("Kaugummi konnte nicht hinzugefügt werden");
+            const data = await response.json();
+
+            console.log("Erfolgreich hinzugefügt:", data);
+
+        } catch (error) {
+            console.error("Fehler:", error);
         }
-        const data = await response.json();
+    };
 
-        console.log("Erfolgreich hinzugefügt:", data);
+    return (
+        <div className="Background-Intro">
 
+        </div>
+    );
+}
 
-        return (
-
-            <div className="Background-Intro">
-
-
-            </div>
-
-        );
-
-
-        export default KaugummiAddPage;
-
+export default KaugummiAddPage;
