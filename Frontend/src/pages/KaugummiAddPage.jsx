@@ -49,6 +49,112 @@ function KaugummiAddPage() {
 
     return (
         <div className="Background-Intro">
+            <div className="kaugummi-form-container">
+
+                <h1>Kaugummi hinzufügen</h1>
+
+                <form onSubmit={kaugummiHinzufuegen}>
+
+                    {/* Name */}
+                    <div className="form-group">
+                        <label htmlFor="name">
+                            Name
+                        </label>
+
+                        <input
+                            id="name"
+                            type="text"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            placeholder="z.B. Airwaves"
+                            required
+                        />
+                    </div>
+
+                    {/* Bild URL */}
+                    <div className="form-group">
+                        <label htmlFor="imageUrl">
+                            Bild-URL
+                        </label>
+
+                        <input
+                            id="imageUrl"
+                            type="url"
+                            value={imageUrl}
+                            onChange={(e) => setImageUrl(e.target.value)}
+                            placeholder="https://..."
+                        />
+                    </div>
+
+                    {/* Marke */}
+                    <div className="form-group">
+                        <label htmlFor="marke">
+                            Marke
+                        </label>
+
+                        <input
+                            id="marke"
+                            type="text"
+                            value={marke}
+                            onChange={(e) => setMarke(e.target.value)}
+                            placeholder="z.B. Airwaves"
+                            required
+                        />
+                    </div>
+
+                    {/* Geschmack */}
+                    <div className="form-group">
+                        <label htmlFor="geschmack">
+                            Geschmack
+                        </label>
+
+                        <input
+                            id="geschmack"
+                            type="text"
+                            value={geschmack}
+                            onChange={(e) => setGeschmack(e.target.value)}
+                            placeholder="z.B. Minze"
+                            required
+                        />
+                    </div>
+
+                    {/* Zuckerfrei */}
+                    <div className="form-group checkbox-group">
+                        <input
+                            id="zuckerfrei"
+                            type="checkbox"
+                            checked={zuckerfrei}
+                            onChange={(e) => setZuckerfrei(e.target.checked)}
+                        />
+
+                        <label htmlFor="zuckerfrei">
+                            Zuckerfrei
+                        </label>
+                    </div>
+
+                    {/* Inhaltsstoffe */}
+                    <div className="form-group">
+                        <label htmlFor="inhaltsstoffe">
+                            Inhaltsstoffe
+                        </label>
+
+                        <textarea
+                            id="inhaltsstoffe"
+                            value={inhaltsstoffe}
+                            onChange={(e) => setInhaltsstoffe(e.target.value)}
+                            placeholder="z.B. Sorbit, Kaumasse, Aromen..."
+                            rows="5"
+                        />
+                    </div>
+
+                    {/* Absenden */}
+                    <button type="submit">
+                        Kaugummi hinzufügen
+                    </button>
+
+                </form>
+            </div>
+
 
         </div>
     );
