@@ -9,6 +9,7 @@ import org.example.backend.repository.KaugummiRepository;
 import org.example.backend.repository.Kommentarrepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.example.backend.dto.KaugummiDTO;
 
 import java.util.List;
 
@@ -86,5 +87,29 @@ public class KaugummiService {
     }
 
     public void favoritHinzufuegen(Long id, Long benutzerId) {
+    }
+    @Transactional
+    public KaugummiDTO createKaugummi(KaugummiDTO kaugummiDTO) {
+
+        Kaugummi kaugummi = new Kaugummi();
+
+        kaugummi.setName(kaugummiDTO.name());
+        kaugummi.setImageUrl(kaugummiDTO.imageUrl());
+        kaugummi.setMarke(kaugummiDTO.marke());
+        kaugummi.setGeschmack(kaugummiDTO.geschmack());
+        kaugummi.setZuckerfrei(kaugummiDTO.zuckerfrei());
+        kaugummi.setInhaltsstoffe(kaugummiDTO.inhaltsstoffe());
+
+        Kaugummi savedKaugummi = kaugummiRepository.save(kaugummi);
+
+        return new KaugummiDTO(
+                savedKaugummi.getId(),
+                savedKaugummi.getName(),
+                savedKaugummi.getImageUrl(),
+                savedKaugummi.getMarke(),
+                savedKaugummi.getGeschmack(),
+                savedKaugummi.getZuckerfrei(),
+                savedKaugummi.getInhaltsstoffe()
+        );
     }
 }
