@@ -13,6 +13,7 @@ body,
 
   background-color: #17152b;
 
+
   background-image:
           radial-gradient(
                   circle at 20% 25%,
@@ -30,6 +31,90 @@ body,
 
   color: white;
 }}
+
+.Background:hover {
+    background-color: #F72585;
+    --grad1-x: 35%;
+    --grad1-y: 40%;
+    --grad2-x: 65%;
+    --grad2-y: 60%;
+    text-shadow: #36ff2b 1px 1px 1px;
+}
+
+
+.lg-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #17152b;
+}
+
+.lg-card {
+    position: relative;
+    text-align: center;
+    background-color: #70e000;
+    padding: 2rem 2rem 5rem 2rem; /* Platz unten für den Button */
+    text-shadow: #f72585 1px 1px 1px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    font-family: "Arial Black", sans-serif;
+    box-sizing: border-box;
+}
+
+/* Texte */
+.lg-title {
+    margin: 0;
+    color: #17152b;
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.lg-sub {
+    margin: 0.5rem 0 1.5rem 0;
+    color: #17152b;
+    font-size: 0.9rem;
+}
+
+.lg-error {
+    background-color: #f72585;
+    color: #ffffff;
+    padding: 0.5rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    text-shadow: none;
+}
+
+/* Formular & Inputs */
+.lg-field {
+    margin-bottom: 1rem;
+}
+
+.lg-input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #17152b;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+/* Button (Absolut am unteren Rand zentriert) */
+.lg-btn {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #42f542;
+    border: 2px solid #17152b;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
 
 
 Body {
