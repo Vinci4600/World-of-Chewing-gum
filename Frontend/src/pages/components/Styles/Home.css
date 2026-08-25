@@ -7,6 +7,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
+
 
     overflow: hidden;
 
@@ -26,6 +28,8 @@
                     rgba(180, 50, 255, 0.12),
                     transparent 35%
             )
+
+
 
 
 
@@ -197,4 +201,17 @@ h1{
             0 0 25px #F72585,
             0 0 50px #F72585;
 
+}
+p{
+    text-shadow:
+            0 0 10px #3A86FF,
+            0 0 25px #3A86FF,
+            0 0 50px #3A86FF;
+
+}
+h3{
+    text-shadow:
+            0 0 10px #F72585,
+            0 0 25px #F72585,
+            0 0 50px #F72585;
 }

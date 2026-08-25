@@ -130,10 +130,10 @@ function Loginpage() {
                 </form>
 
                 <div className="lg-footer">
-                    Passwort vergessen? <Link to="/forgotpassword">Passwort vergessen</Link>
+                    <p>Passwort vergessen?</p> <Link to="/forgotpassword">Passwort vergessen?</Link>
                 </div>
                 <div className="lg-footer">
-                    Noch kein Konto vorhanden? <Link to="/register">Registrieren</Link>
+                    <p>Noch kein Konto vorhanden?</p> <Link to="/register">Registrieren</Link>
                 </div>
             </div>
         </div>

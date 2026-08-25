@@ -143,9 +143,9 @@ function RegistrierungPage() {
                     </button>
                 </form>
 
-                <div style={{ marginTop: "20px", textAlign: "center" }}>
-                    <p>Bereits ein Konto? <Link to="/login">Hier anmelden</Link></p>
-                </div>
+
+                    <p>Bereits ein Konto? </p><Link to="/login">Hier anmelden</Link>
+
 
                 {/* Dynamische Liste mit Rot/Grün Indikator */}
                 <div className="rg-card" style={{ marginTop: "20px" }}>
