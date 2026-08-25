@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-
+import './components/Styles/Home.css'
 function RegistrierungPage() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -63,9 +63,9 @@ function RegistrierungPage() {
     };
 
     return (
-        <div className="lg-page">
-            <div className="lg-card">
-                <h1 className="lg-title">Registrierung</h1>
+        <div className="Background-Intro">
+            <div className="kaugummi-form-container">
+                <h1>Registrierung</h1>
 
                 {error && (
                     <div className="lg-error" role="alert">
