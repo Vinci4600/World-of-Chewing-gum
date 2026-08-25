@@ -42,6 +42,10 @@ body,
 }
 
 
+.lg-remember{
+    text-shadow: #F72585 1px 1px 1px;
+}
+
 .lg-page {
     display: flex;
     justify-content: center;
@@ -70,6 +74,18 @@ body,
     color: #17152b;
     font-size: 1.8rem;
     font-weight: bold;
+}
+
+.rg-card {
+    position: relative;
+    background-color: #FFBE0B; /* Buttergelb */
+    color: #1a1a1a;           /* Dunkler Text für guten Kontrast */
+    padding: 20px;
+    width: 100%;
+    overflow: hidden;         /* Schneidet überstehende Kind-Elemente ab */
+    box-sizing: border-box;   /* WICHTIG: Verhindert, dass Padding die Breite vergrößert *//* Passt sich exakt dem Container an */
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .lg-sub {
@@ -101,8 +117,42 @@ body,
     font-family: sans-serif;
 }
 
+.chewing-gum{
+    display: flex;
+    flex-direction: column; /* Oder 'row' für nebeneinander */
+    align-items: center;    /* Zentriert Inhalte horizontal */
+
+    /* Syntax: offset-x | offset-y | blur-radius | color */
+    text-shadow: 2px 2px 4px indianred;
+}
+
 /* Button (Absolut am unteren Rand zentriert) */
 
+.lg-btn{
+
+
+    background-color: #eb4634;
+    color: #ffffff;
+    border-radius: 12px;
+    text-shadow: #FFBE0B 1px 1px 1px;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+    box-sizing: border-box;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    transition: all 0.5s ease-in-out;
+
+
+
+}
+
+.lg-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
 
 
 Body {

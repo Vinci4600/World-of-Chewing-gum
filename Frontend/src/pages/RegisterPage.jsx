@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import './components/Styles/Home.css'
+import '../App.css';
 function RegistrierungPage() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -144,11 +145,11 @@ function RegistrierungPage() {
                 </form>
 
 
-                    <p>Bereits ein Konto? </p><Link to="/login">Hier anmelden</Link>
+                    <p className="lg-sub">Bereits ein Konto? </p><Link to="/login">Hier anmelden</Link>
 
 
                 {/* Dynamische Liste mit Rot/Grün Indikator */}
-                <div className="rg-card" style={{ marginTop: "20px" }}>
+                <div className="rg-card">
                     <h3>Anforderungen:</h3>
 
                     <p>Passwort-Anforderungen:</p>
@@ -161,6 +162,7 @@ function RegistrierungPage() {
                                     color: req.valid ? "#2e7d32" : "#d32f2f",
                                     display: "flex",
                                     alignItems: "center",
+
                                     gap: "8px",
                                     marginBottom: "4px"
                                 }}
