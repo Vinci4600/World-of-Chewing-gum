@@ -14,42 +14,31 @@
 
     background-color: #020217;
 
-    background-image:
-        /* blauer Nebel */
-            radial-gradient(
-                    circle at 20% 25%,
-                    rgba(80, 80, 255, 0.18),
-                    transparent 35%
-            ),
-
-                /* violetter Nebel */
-            radial-gradient(
-                    circle at 80% 75%,
-                    rgba(180, 50, 255, 0.12),
-                    transparent 35%
-            )
-
-
-
-
-
-
-
-
+    background-image: /* blauer Nebel */ radial-gradient(
+            circle at 20% 25%,
+            rgba(80, 80, 255, 0.18),
+            transparent 35%
+    ),
+        /* violetter Nebel */ radial-gradient(
+            circle at 80% 75%,
+            rgba(180, 50, 255, 0.12),
+            transparent 35%
+    )
 
 
 }
+
 body {
     margin: 0;
     min-height: 100vh;
     background: #05051a;
     overflow: hidden;
 }
-.img-one{
-    text-shadow:
-            0 0 10px #00BFFF,
-            0 0 25px #00BFFF,
-            0 0 50px #00BFFF;
+
+.img-one {
+    text-shadow: 0 0 10px #00BFFF,
+    0 0 25px #00BFFF,
+    0 0 50px #00BFFF;
     position: absolute;
 
     font-family: Arial, sans-serif;
@@ -62,19 +51,16 @@ body {
     opacity: 0;
 
 }
+
 .img-one {
     animation: showOne 1.5s ease-out forwards;
 }
 
 
-
-
-
 .Titel-text {
-    text-shadow:
-            0 0 10px #ff2bd6,
-            0 0 25px #ff2bd6,
-            0 0 50px #ff2bd6;
+    text-shadow: 0 0 10px #ff2bd6,
+    0 0 25px #ff2bd6,
+    0 0 50px #ff2bd6;
     position: relative;
 
     margin-top: 300px;
@@ -85,10 +71,9 @@ body {
 
     opacity: 0;
 
-    animation:
-            birthdayText 1.4s cubic-bezier(.17,.67,.32,1.3)
-            2.5s forwards;
+    animation: birthdayText 1.4s cubic-bezier(.17, .67, .32, 1.3) 2.5s forwards;
 }
+
 /* Animation Bild */
 @keyframes showOne {
 
@@ -112,6 +97,7 @@ body {
         filter: blur(0);
     }
 }
+
 /*Titel animation */
 @keyframes birthdayText {
 
@@ -133,6 +119,7 @@ body {
     }
 
 }
+
 /*Login /Register Page styles*/
 .Login-card {
     width: min(90%, 450px);
@@ -148,30 +135,30 @@ body {
     border: 2px solid #36ff2b;
     border-radius: 25px;
 
-    box-shadow:
-            0 0 10px #2bfbff,
-            0 0 25px #2b6eff,
-            0 0 50px rgba(43, 198, 255, 0.5);
+    box-shadow: 0 0 10px #2bfbff,
+    0 0 25px #2b6eff,
+    0 0 50px rgba(43, 198, 255, 0.5);
 
     backdrop-filter: blur(3px);
 
     box-sizing: border-box;
 }
-.he1{
-    text-shadow:
-            0 0 10px #672bff,
-            0 0 25px #a72bff,
-            0 0 50px #fb2bff;
+
+.he1 {
+    text-shadow: 0 0 10px #672bff,
+    0 0 25px #a72bff,
+    0 0 50px #fb2bff;
     position: relative;
     display: inline-block;
     margin-right: 15px;
 }
-.Button1{
-    text-shadow:
-            0 0 10px #672bff,
-            0 0 25px #a72bff,
-            0 0 50px #fb2bff;
+
+.Button1 {
+    text-shadow: 0 0 10px #672bff,
+    0 0 25px #a72bff,
+    0 0 50px #fb2bff;
 }
+
 .kaugummi-form-container {
     width: min(90%, 450px);
     height: 700px;
@@ -186,30 +173,59 @@ body {
     border: 2px solid #F72585;
     border-radius: 25px;
 
-    box-shadow:
-            0 0 10px #7209b7,
-            0 0 25px #7209b7,
-            0 0 50px rgb(114 9 183);
+    box-shadow: 0 0 10px #7209b7,
+    0 0 25px #7209b7,
+    0 0 50px rgb(114 9 183);
 
     backdrop-filter: blur(3px);
 
     box-sizing: border-box;
 }
-h1{
-    text-shadow:
-            0 0 10px #F72585,
-            0 0 25px #F72585,
-            0 0 50px #F72585;
+
+h1 {
+    text-shadow: 0 0 10px #F72585,
+    0 0 25px #F72585,
+    0 0 50px #F72585;
 
 }
-p{
-    text-shadow:
-            0 0 10px #3A86FF,
-            0 0 25px #3A86FF,
-            0 0 50px #3A86FF;
+
+p {
+    text-shadow: 0 0 10px #3A86FF,
+    0 0 25px #3A86FF,
+    0 0 50px #3A86FF;
 
 }
-h3{
+
+h3 {
+    text-shadow: 0 0 10px #F72585,
+    0 0 25px #F72585,
+    0 0 50px #F72585;
+}
+
+input {
+    display: inline-block;
+
+    color: #ff7ad9;
+
+    background: #15152b;
+
+    border: 2px solid #ff00aa;
+
+    border-radius: 10px;
+
+    padding: 6px 12px;
+
+    box-shadow: 0 0 5px #ff00aa,
+    0 0 10px rgba(255, 0, 170, 0.6);
+
+    font-size: 16px;
+
+    transition: 0.3s;
+}
+
+label {
+    color: #F72585;
+
     text-shadow:
             0 0 10px #F72585,
             0 0 25px #F72585,
