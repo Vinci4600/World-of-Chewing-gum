@@ -149,7 +149,7 @@ function KaugummiAddPage() {
                     </div>
 
                     {/* Absenden */}
-                    <button type="submit">
+                    <button className="button1" type="submit">
                         Kaugummi hinzufügen
                     </button>
 

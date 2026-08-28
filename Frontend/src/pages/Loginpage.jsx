@@ -125,7 +125,7 @@ function Loginpage() {
                     </label>
                     <br></br>
 
-                    <button type="submit" className="lg-btn" disabled={loading}>
+                    <button type="submit" className="button1" disabled={loading}>
                         {loading ? "Wird geladen..." : "Login"}
                     </button>
                 </form>

@@ -241,7 +241,7 @@ function RegistrierungPage() {
                     {/* Registrieren */}
                     <button
                         type="submit"
-                        className="lg-btn"
+                        className="button1"
                     >
                         Registrieren
                     </button>
