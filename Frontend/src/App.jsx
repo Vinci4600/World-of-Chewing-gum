@@ -44,6 +44,9 @@ function App() {
                         <>
                             <Link to="/login">Login</Link>
                             <Link to="/register">Registrieren</Link>
+                            <Link to="/kaugummiadd">
+                                Kaugummi hinzufügen
+                            </Link>
                         </>
                     )}
                 </div>
