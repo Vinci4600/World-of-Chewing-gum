@@ -202,26 +202,31 @@ h3 {
     0 0 50px #F72585;
 }
 
-input {
-    display: inline-block;
+input:not([type="checkbox"]) {
+    display: block;
+
+    width: 300px;
+    height: 42px;
 
     color: #ff7ad9;
-
     background: #15152b;
 
     border: 2px solid #ff00aa;
-
     border-radius: 10px;
 
     padding: 6px 12px;
+    box-sizing: border-box;
 
-    box-shadow: 0 0 5px #ff00aa,
-    0 0 10px rgba(255, 0, 170, 0.6);
+    box-shadow:
+            0 0 5px #ff00aa,
+            0 0 10px rgba(255, 0, 170, 0.6);
 
     font-size: 16px;
-
     transition: 0.3s;
+
+    margin: 0 auto;
 }
+
 
 label {
     color: #F72585;
