@@ -10,6 +10,7 @@ function KaugummiAddPage() {
     const [geschmack, setGeschmack] = useState("");
     const [zuckerfrei, setZuckerfrei] = useState(false);
     const [inhaltsstoffe, setInhaltsstoffe] = useState("");
+    const [shopUrl, setShopUrl] = useState("");
 
     // Daten, die ins Backend geschickt werden
     const kaugummiData = {
@@ -18,7 +19,8 @@ function KaugummiAddPage() {
         marke: marke,
         geschmack: geschmack,
         zuckerfrei: zuckerfrei,
-        inhaltsstoffe: inhaltsstoffe
+        inhaltsstoffe: inhaltsstoffe,
+        shop: shopUrl
     };
 
     // POST-Funktion
@@ -147,9 +149,24 @@ function KaugummiAddPage() {
                             rows="5"
                         />
                     </div>
+                    {/* shopUrl */}
+                    <div className="form-group">
+                        <label htmlFor="geschmack">
+                            shopUrl
+                        </label>
+
+                        <input
+                            id="shopUrl"
+                            type="text"
+                            value={geschmack}
+                            onChange={(e) => setShopUrl(e.target.value)}
+                            placeholder="Gütigster verkaufs Url"
+                            required
+                        />
+                    </div>
 
                     {/* Absenden */}
-                    <button type="submit">
+                    <button className="button1" type="submit">
                         Kaugummi hinzufügen
                     </button>
 

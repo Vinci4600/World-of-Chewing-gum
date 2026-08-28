@@ -22,25 +22,37 @@ public class Kaugummi {
     private Boolean zuckerfrei;
 
     private String inhaltsstoffe;
+
+    private String shopUrl;
 // Ein Kaugummi kann mehrere Bewertungen haben
     @OneToMany(mappedBy = "kaugummi", cascade = CascadeType.ALL)
-    private List<Bewertung> bewertungen;
+    private List<org.example.backend.model.Bewertung> bewertungen;
 // Viele Kaugummis können viele Favoriten haben
     @ManyToMany(mappedBy = "favoriten")
-    private List<Benutzer> favorisiertVon;
+    private List<org.example.backend.model.Benutzer> favorisiertVon;
 
     public Kaugummi() {
     }
 
-    public Kaugummi(Long id, String name, String imageUrl, String marke, String geschmack, Boolean zuckerfrei) {
+    public Kaugummi(Long id, String name, String imageUrl, String marke, String geschmack, Boolean zuckerfrei, String shopUrl) {
         this.id = id;
         this.name = name;
         this.imageUrl = imageUrl;
         this.marke = marke;
         this.geschmack = geschmack;
         this.zuckerfrei = zuckerfrei;
+        this.shopUrl = shopUrl;
     }
-// Getter und Setter
+
+    public String getShopUrl() {
+        return shopUrl;
+    }
+
+    public void setShopUrl(String shopUrl) {
+        this.shopUrl = shopUrl;
+    }
+
+    // Getter und Setter
     public Long getId() {
         return id;
     }
@@ -97,19 +109,19 @@ public class Kaugummi {
         this.inhaltsstoffe = inhaltsstoffe;
     }
 
-    public List<Bewertung> getBewertungen() {
+    public List<org.example.backend.model.Bewertung> getBewertungen() {
         return bewertungen;
     }
 
-    public void setBewertungen(List<Bewertung> bewertungen) {
+    public void setBewertungen(List<org.example.backend.model.Bewertung> bewertungen) {
         this.bewertungen = bewertungen;
     }
 
-    public List<Benutzer> getFavorisiertVon() {
+    public List<org.example.backend.model.Benutzer> getFavorisiertVon() {
         return favorisiertVon;
     }
 
-    public void setFavorisiertVon(List<Benutzer> favorisiertVon) {
+    public void setFavorisiertVon(List<org.example.backend.model.Benutzer> favorisiertVon) {
         this.favorisiertVon = favorisiertVon;
     }
 }
