@@ -148,7 +148,7 @@ function RegistrierungPage() {
                     <p className="lg-sub">Bereits ein Konto? </p><Link to="/login">Hier anmelden</Link>
 
 
-                {/* Dynamische Liste mit Rot/Grün Indikator */}
+
                 <div className="rg-card">
                     <h3>Anforderungen:</h3>
 
