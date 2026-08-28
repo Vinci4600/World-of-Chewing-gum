@@ -1,8 +1,11 @@
 package org.example.backend.controller;
 
+import jakarta.validation.Valid;
+import org.example.backend.dto.KaugummiDTO;
 import org.example.backend.model.Kaugummi;
 import org.example.backend.service.KaugummiService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -74,5 +77,16 @@ public class KaugummiController {
         kaugummiService.favoritHinzufuegen(id, benutzerId);
         return ResponseEntity.ok().build();
     }
+    @PostMapping("/add")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<KaugummiDTO> createKaugummi(
+            @Valid @RequestBody KaugummiDTO kaugummiDTO) {
+
+        KaugummiDTO createdKaugummi =
+                kaugummiService.createKaugummi(kaugummiDTO);
+
+        return ResponseEntity.ok(createdKaugummi);
+    }
+
 }
 

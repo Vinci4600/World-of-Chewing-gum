@@ -6,7 +6,7 @@ public record KaugummiDTO(
         String imageUrl,
         String marke,
         String geschmack,
-        String zuckerfrei,
+        Boolean zuckerfrei,
         String inhaltsstoffe
 ) {
 

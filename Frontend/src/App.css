@@ -13,6 +13,7 @@ body,
 
   background-color: #17152b;
 
+
   background-image:
           radial-gradient(
                   circle at 20% 25%,
@@ -31,24 +32,199 @@ body,
   color: white;
 }}
 
+.Background:hover {
+    background-color: #F72585;
+    --grad1-x: 35%;
+    --grad1-y: 40%;
+    --grad2-x: 65%;
+    --grad2-y: 60%;
+    text-shadow: #36ff2b 1px 1px 1px;
+}
+
+
+.lg-remember{
+    text-shadow: #F72585 1px 1px 1px;
+}
+
+.lg-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #17152b;
+}
+
+.lg-card {
+    position: relative;
+    text-align: center;
+    background-color: #70e000;
+    padding: 2rem 2rem 5rem 2rem; /* Platz unten für den Button */
+    text-shadow: #f72585 1px 1px 1px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    font-family: "Arial Black", sans-serif;
+    box-sizing: border-box;
+}
+
+/* Texte */
+.lg-title {
+    margin: 0;
+    color: #17152b;
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.rg-card {
+    position: relative;
+    background-color: #FFBE0B; /* Buttergelb */
+    color: #1a1a1a;           /* Dunkler Text für guten Kontrast */
+    padding: 20px;
+    width: 100%;
+    overflow: hidden;         /* Schneidet überstehende Kind-Elemente ab */
+    box-sizing: border-box;   /* WICHTIG: Verhindert, dass Padding die Breite vergrößert *//* Passt sich exakt dem Container an */
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.lg-sub {
+    margin: 0.5rem 0 1.5rem 0;
+    color: #17152b;
+    font-size: 0.9rem;
+}
+
+.lg-error {
+    background-color: #f72585;
+    color: #ffffff;
+    padding: 0.5rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    text-shadow: none;
+}
+
+/* Formular & Inputs */
+.lg-field {
+    margin-bottom: 1rem;
+}
+
+.lg-input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #17152b;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+.chewing-gum{
+    display: flex;
+    flex-direction: column; /* Oder 'row' für nebeneinander */
+    align-items: center;    /* Zentriert Inhalte horizontal */
+
+    /* Syntax: offset-x | offset-y | blur-radius | color */
+    text-shadow: 2px 2px 4px indianred;
+}
+
+/* Button (Absolut am unteren Rand zentriert) */
+
+.lg-btn{
+
+
+    background-color: #eb4634;
+    color: #ffffff;
+    border-radius: 12px;
+    text-shadow: #FFBE0B 1px 1px 1px;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+    box-sizing: border-box;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    transition: all 0.5s ease-in-out;
+
+
+
+}
+
+.lg-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
 
 Body {
     background-color: black;
 }
-nav {
-    background: linear-gradient(
-            90deg,
-            rgba(5, 4, 25, 0.92),
-            rgba(25, 5, 45, 0.88),
-            rgba(5, 4, 25, 0.92)
-    );
 
-    border-bottom: 1px solid rgba(247, 37, 133, 0.45);
 
-    box-shadow:
-            0 4px 25px rgba(0, 0, 0, 0.45),
-            0 1px 10px rgba(247, 37, 133, 0.12);
 
-    backdrop-filter: blur(12px);
+   .navbar {
+       display: flex;
+
+       align-items: center;
+
+       padding: 15px 30px;
+
+       background-color: #3886FF;
+       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+       position: sticky;
+       top: 0;
+       z-index: 1000;
+   }
+
+.navbar-logo a {
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
 }
+.navbar-logo img {
+    width: 60px;
+    height: auto;
+    display: block;
+    object-fit: contain;
+}
+
+.navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.navbar-links a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+
+    transition: color 0.2s;
+}
+
+.navbar-links a:hover {
+    color: #e85aad;
+}
+
+.logout-button {
+    border: none;
+    background-color: #e85aad;
+    color: white;
+
+    padding: 8px 16px;
+    border-radius: 8px;
+
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.logout-button:hover {
+    background-color: #d63f99;
+}
+
+
+
+
+
 
