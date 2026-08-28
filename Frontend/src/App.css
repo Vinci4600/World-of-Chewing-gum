@@ -78,14 +78,23 @@ body,
 
 .rg-card {
     position: relative;
-    background-color: #FFBE0B; /* Buttergelb */
-    color: #1a1a1a;           /* Dunkler Text für guten Kontrast */
+
+    background-color: #15152b;
+    color: white;
+
     padding: 20px;
     width: 100%;
-    overflow: hidden;         /* Schneidet überstehende Kind-Elemente ab */
-    box-sizing: border-box;   /* WICHTIG: Verhindert, dass Padding die Breite vergrößert *//* Passt sich exakt dem Container an */
+
+    box-sizing: border-box;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+    /* Neon-Glow um die Card */
+    box-shadow:
+            0 0 10px #ff00aa,
+            0 0 25px #ff00aa,
+            0 0 50px rgba(114, 9, 183, 0.8);
+
+    border: 2px solid #ff00aa;
 }
 
 .lg-sub {

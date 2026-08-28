@@ -10,7 +10,7 @@
     text-align: center;
 
 
-    overflow: hidden;
+    overflow: visible;
 
     background-color: #020217;
 
@@ -32,7 +32,7 @@ body {
     margin: 0;
     min-height: 100vh;
     background: #05051a;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .img-one {
