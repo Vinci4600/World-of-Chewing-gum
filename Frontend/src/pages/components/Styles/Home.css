@@ -336,3 +336,34 @@ label {
 
     color: white;
 }
+
+.kaugummi-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(250px, 1fr));
+
+    gap: 25px;
+}
+
+
+/* Eine einzelne Box */
+
+.kaugummi-card {
+    background: #15152b;
+
+    border-radius: 5px;
+
+    overflow: hidden;
+
+    cursor: pointer;
+
+    box-shadow:
+            0 0 10px #ff00aa,
+            0 0 20px #ff00aa,
+            0 0 30px #7209b7;
+
+    transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+}

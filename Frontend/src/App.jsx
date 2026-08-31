@@ -5,6 +5,7 @@ import LoginPage from "./pages/Loginpage.jsx";
 import RegistrierungPage from "./pages/Registerpage.jsx";
 import lastpng from './pages/components/Bilder/Last.png'
 import KaugummiAddPage from "./pages/KaugummiAddPage.jsx";
+import KaugummiPage from "./pages/KaugummiPage.jsx";
 
 
 function App() {
@@ -47,6 +48,7 @@ function App() {
                             <Link to="/kaugummiadd">
                                 Kaugummi hinzufügen
                             </Link>
+                            <Link to="/kaugummiPage">Kaugummis</Link>
                         </>
                     )}
                 </div>
@@ -58,6 +60,7 @@ function App() {
                     <Route path="/login" element={<LoginPage setToken={setToken} />} />
                     <Route path="/register" element={<RegistrierungPage />} />
                     <Route path="/kaugummiadd" element={<KaugummiAddPage />} />
+                    <Route path="/kaugummiPage" element={<KaugummiPage />} />
                 </Routes>
             </div>
 
