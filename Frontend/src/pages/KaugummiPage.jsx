@@ -5,6 +5,7 @@ import "./components/Styles/Home.css";
 import "./components/Styles/Add.css";
 
 function KaugummiPage() {
+    //Ersetzt durch das vom Unterem Test daten dann mit dem Backend verbunden
     /**
      * function KaugummiPage() {
      *     const [kaugummi, setKaugummi] = useState([]);
