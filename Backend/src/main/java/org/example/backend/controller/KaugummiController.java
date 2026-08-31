@@ -24,7 +24,7 @@ public class KaugummiController {
     }
 
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<Kaugummi>> alleKaugummisAnzeigen() {
         return ResponseEntity.ok(kaugummiService.alleKaugummisAnzeigen());
     }
