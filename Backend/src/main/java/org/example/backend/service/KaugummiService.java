@@ -109,7 +109,8 @@ public class KaugummiService {
                 savedKaugummi.getMarke(),
                 savedKaugummi.getGeschmack(),
                 savedKaugummi.getZuckerfrei(),
-                savedKaugummi.getInhaltsstoffe()
+                savedKaugummi.getInhaltsstoffe(),
+                savedKaugummi.getShopUrl()
         );
     }
 }
