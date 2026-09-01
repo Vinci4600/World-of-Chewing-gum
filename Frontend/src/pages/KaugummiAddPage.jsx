@@ -151,14 +151,14 @@ function KaugummiAddPage() {
                     </div>
                     {/* shopUrl */}
                     <div className="form-group">
-                        <label htmlFor="geschmack">
+                        <label htmlFor="shopUrl">
                             shopUrl
                         </label>
 
                         <input
                             id="shopUrl"
                             type="text"
-                            value={geschmack}
+                            value={shopUrl}
                             onChange={(e) => setShopUrl(e.target.value)}
                             placeholder="Gütigster verkaufs Url"
                             required
