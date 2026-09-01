@@ -1,4 +1,4 @@
-package org.example.backend.config;
+  package org.example.backend.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,7 +8,6 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Configuration
 @EnableWebSecurity
@@ -19,21 +18,39 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
         http
                 .csrf(AbstractHttpConfigurer::disable)
+
                 .authorizeHttpRequests(auth -> auth
-                        // Gib ALLE Pfade frei, unter denen Registrierung/Login erreichbar sind:
-                        .requestMatchers("/register", "/login", "/api/auth/**").permitAll()
+
+                        // Registrierung und Login
+                        .requestMatchers(
+                                "/register",
+                                "/login",
+                                "/api/auth/**"
+                        ).permitAll()
+
+                        // Kaugummis ansehen
+                        // GET /api/kaugummi/all
+                        // GET /api/kaugummi/1
+                        // GET /api/kaugummi/2
+                        .requestMatchers(
+                                "/api/kaugummi/all",
+                                "/api/kaugummi/*",
+                                "/api/kaugummi/add"
+                        ).permitAll()
+
+                        // ALLES andere benötigt Login
                         .anyRequest().authenticated()
                 )
+
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable);
 
         return http.build();
     }
-
 }
+
