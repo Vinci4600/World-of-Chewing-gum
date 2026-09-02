@@ -367,3 +367,8 @@ label {
             transform 0.2s ease,
             box-shadow 0.2s ease;
 }
+.kaugummi-image {
+    width: 180px;
+    height: 180px;
+    object-fit: contain;
+}
