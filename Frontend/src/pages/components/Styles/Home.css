@@ -1,0 +1,374 @@
+.Background-Intro {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+
+    overflow: visible;
+
+    background-color: #020217;
+
+    background-image: /* blauer Nebel */ radial-gradient(
+            circle at 20% 25%,
+            rgba(80, 80, 255, 0.18),
+            transparent 35%
+    ),
+        /* violetter Nebel */ radial-gradient(
+            circle at 80% 75%,
+            rgba(180, 50, 255, 0.12),
+            transparent 35%
+    )
+
+
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: #05051a;
+    overflow: visible;
+}
+
+.img-one {
+    text-shadow: 0 0 10px #00BFFF,
+    0 0 25px #00BFFF,
+    0 0 50px #00BFFF;
+    position: absolute;
+
+    font-family: Arial, sans-serif;
+    font-size: 35rem;
+    font-weight: 800;
+    line-height: 1;
+    object-fit: contain;
+    filter: brightness(1.25);
+
+    opacity: 0;
+
+}
+
+.img-one {
+    animation: showOne 1.5s ease-out forwards;
+}
+
+
+.Titel-text {
+    text-shadow: 0 0 10px #ff2bd6,
+    0 0 25px #ff2bd6,
+    0 0 50px #ff2bd6;
+    position: relative;
+
+    margin-top: 300px;
+
+    font-family: Georgia, serif;
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: bold;
+
+    opacity: 0;
+
+    animation: birthdayText 1.4s cubic-bezier(.17, .67, .32, 1.3) 2.5s forwards;
+}
+
+/* Animation Bild */
+@keyframes showOne {
+
+    0% {
+        opacity: 0;
+        transform: scale(2.5) translateX(-100px);
+        filter: blur(20px);
+    }
+
+    30% {
+        opacity: 0.25;
+    }
+
+    70% {
+        opacity: 0.18;
+    }
+
+    100% {
+        opacity: 0.08;
+        transform: scale(1) translateX(0);
+        filter: blur(0);
+    }
+}
+
+/*Titel animation */
+@keyframes birthdayText {
+
+    0% {
+        opacity: 0;
+        transform: translateY(80px) scale(0.8);
+        filter: blur(15px);
+    }
+
+    60% {
+        opacity: 1;
+        transform: translateY(-8px) scale(1.03);
+        filter: blur(0);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+}
+
+/*Login /Register Page styles*/
+.Login-card {
+    width: min(90%, 450px);
+    height: 700px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background: rgba(255, 255, 255, 0.03);
+
+    border: 2px solid #36ff2b;
+    border-radius: 25px;
+
+    box-shadow: 0 0 10px #2bfbff,
+    0 0 25px #2b6eff,
+    0 0 50px rgba(43, 198, 255, 0.5);
+
+    backdrop-filter: blur(3px);
+
+    box-sizing: border-box;
+}
+
+.he1 {
+    text-shadow: 0 0 10px #672bff,
+    0 0 25px #a72bff,
+    0 0 50px #fb2bff;
+    position: relative;
+    display: inline-block;
+    margin-right: 15px;
+}
+
+.Button1 {
+    text-shadow: 0 0 10px #672bff,
+    0 0 25px #a72bff,
+    0 0 50px #fb2bff;
+}
+
+.kaugummi-form-container {
+    width: min(90%, 450px);
+    height: 700px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background: rgba(255, 255, 255, 0.03);
+
+    border: 2px solid #F72585;
+    border-radius: 25px;
+
+    box-shadow: 0 0 10px #7209b7,
+    0 0 25px #7209b7,
+    0 0 50px rgb(114 9 183);
+
+    backdrop-filter: blur(3px);
+
+    box-sizing: border-box;
+}
+
+h1 {
+    text-shadow: 0 0 10px #F72585,
+    0 0 25px #F72585,
+    0 0 50px #F72585;
+
+}
+
+p {
+    text-shadow: 0 0 10px #3A86FF,
+    0 0 25px #3A86FF,
+    0 0 50px #3A86FF;
+
+}
+
+h3 {
+    text-shadow: 0 0 10px #F72585,
+    0 0 25px #F72585,
+    0 0 50px #F72585;
+}
+
+input:not([type="checkbox"]) {
+    display: block;
+
+    width: 300px;
+    height: 42px;
+
+    color: #ff7ad9;
+    background: #15152b;
+
+    border: 2px solid #ff00aa;
+    border-radius: 10px;
+
+    padding: 6px 12px;
+    box-sizing: border-box;
+
+    box-shadow:
+            0 0 5px #ff00aa,
+            0 0 10px rgba(255, 0, 170, 0.6);
+
+    font-size: 16px;
+    transition: 0.3s;
+
+    margin: 0 auto;
+}
+
+
+label {
+    color: #F72585;
+
+    text-shadow:
+            0 0 10px #F72585,
+            0 0 25px #F72585,
+            0 0 50px #F72585;
+}
+.requirements-button {
+    background: #15152b;
+    color: #ff7ad9;
+    border: 2px solid #ff00aa;
+    border-radius: 10px;
+    padding: 10px 18px;
+    cursor: pointer;
+
+    box-shadow:
+            0 0 5px #ff00aa,
+            0 0 10px rgba(255, 0, 170, 0.6);
+
+    font-size: 15px;
+}
+
+.requirements-button:hover {
+    box-shadow:
+            0 0 10px #ff00aa,
+            0 0 20px #ff00aa;
+}
+
+/* Dunkler Hintergrund hinter dem Popup */
+.popup-overlay {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.75);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 2000;
+}
+
+/* Das eigentliche Popup */
+.popup-overlay .rg-card {
+    position: relative;
+
+    width: 90%;
+    max-width: 450px;
+    max-height: 80vh;
+
+    overflow-y: auto;
+
+    background: #15152b;
+    color: white;
+
+    border: 2px solid #ff00aa;
+    border-radius: 12px;
+
+    box-shadow:
+            0 0 10px #ff00aa,
+            0 0 30px #ff00aa,
+            0 0 60px #7209b7;
+
+    padding: 25px;
+}
+
+/* X oben rechts */
+.popup-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    background: transparent;
+    color: #ff00aa;
+
+    border: none;
+    font-size: 22px;
+
+    cursor: pointer;
+}
+.button1 {
+    background: #15152b;
+    color: #ff7ad9;
+
+    border: 2px solid #ff00aa;
+    border-radius: 10px;
+
+    padding: 10px 18px;
+
+    font-size: 15px;
+    cursor: pointer;
+
+    box-shadow:
+            0 0 5px #ff00aa,
+            0 0 10px rgba(255, 0, 170, 0.6);
+
+    transition: 0.3s;
+}
+
+.button1:hover {
+    box-shadow:
+            0 0 10px #ff00aa,
+            0 0 20px #ff00aa,
+            0 0 30px #7209b7;
+
+    color: white;
+}
+
+.kaugummi-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(250px, 1fr));
+
+    gap: 25px;
+}
+
+
+/* Eine einzelne Box */
+
+.kaugummi-card {
+    background: #15152b;
+
+    border-radius: 5px;
+
+    overflow: hidden;
+
+    cursor: pointer;
+
+    box-shadow:
+            0 0 10px #ff00aa,
+            0 0 20px #ff00aa,
+            0 0 30px #7209b7;
+
+    transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+}
+.kaugummi-image {
+    width: 180px;
+    height: 180px;
+    object-fit: contain;
+}
