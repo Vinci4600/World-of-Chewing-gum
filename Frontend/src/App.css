@@ -54,6 +54,12 @@ body,
     background-color: #17152b;
 }
 
+
+.navbar-logo{
+    height: 80px;  /* Passe diese Größe nach Wunsch an (30px, 40px, 50px, 60px) */
+    width: auto;
+    object-fit: contain;
+}
 .lg-card {
     position: relative;
     text-align: center;
