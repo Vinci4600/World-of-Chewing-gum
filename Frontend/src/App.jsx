@@ -3,7 +3,7 @@ import { Link, Routes, Route, useNavigate } from "react-router-dom";
 import HomePage from "./pages/HomePage.jsx";
 import LoginPage from "./pages/Loginpage.jsx";
 import RegistrierungPage from "./pages/Registerpage.jsx";
-
+import Chewinggum from "../public/Last.png";
 import KaugummiAddPage from "./pages/KaugummiAddPage.jsx";
 
 function App() {
@@ -21,6 +21,8 @@ function App() {
         <div className="Background">
             <nav>
                 <Link to="/">Home</Link>
+                <img src={Chewinggum} alt="Chewinggum" className="navbar-logo"/>
+
 
                 {token ? (
                     <>
