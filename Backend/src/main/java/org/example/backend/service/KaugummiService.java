@@ -1,12 +1,12 @@
 package org.example.backend.service;
 
-import org.example.backend.model.Bewertung;
-import org.example.backend.model.Kaugummi;
-import org.example.backend.model.Kommentar;
-import org.example.backend.repository.BenutzerRepository;
-import org.example.backend.repository.BewertungRepository;
-import org.example.backend.repository.KaugummiRepository;
-import org.example.backend.repository.Kommentarrepository;
+import jakarta.persistence.EntityNotFoundException;
+import org.example.backend.Model.Benutzer;
+import org.example.backend.Model.Bewertung;
+import org.example.backend.Model.Kaugummi;
+import org.example.backend.Model.Kommentar;
+import org.example.backend.repository.*;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.example.backend.dto.KaugummiDTO;
@@ -21,15 +21,31 @@ public class KaugummiService {
     private final BewertungRepository bewertungRepository;
     private final Kommentarrepository kommentarRepository;
     private final BenutzerRepository benutzerRepository;
+    private  final KaugummiMapper kaugummimapper;
 
-    public KaugummiService(KaugummiRepository kaugummiRepository,
-                           BewertungRepository bewertungRepository,
-                           Kommentarrepository kommentarRepository,
-                           BenutzerRepository benutzerRepository) {
+    public KaugummiService(KaugummiRepository kaugummiRepository, BewertungRepository bewertungRepository, Kommentarrepository kommentarRepository, BenutzerRepository benutzerRepository, KaugummiMapper kaugummimapper) {
         this.kaugummiRepository = kaugummiRepository;
         this.bewertungRepository = bewertungRepository;
         this.kommentarRepository = kommentarRepository;
         this.benutzerRepository = benutzerRepository;
+        this.kaugummimapper = kaugummimapper;
+    }
+
+    @Transactional
+    public KaugummiDTO updateKaugummi(Long id, KaugummiDTO kaugummiDTO) {
+        // 1. Entity aus der Datenbank laden oder Exception werfen, falls nicht gefunden
+        Kaugummi kaugummi = kaugummiRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Kaugummi mit ID " + id + " wurde nicht gefunden"));
+
+        // 2. Felder aus dem DTO auf das Entity übertragen
+        kaugummi.setName(kaugummiDTO.name());
+        kaugummi.setGeschmack(kaugummiDTO.geschmack());
+        kaugummi.setInhaltsstoffe(kaugummiDTO.inhaltsstoffe());
+
+
+        // 3. Entity speichern und das aktualisierte DTO zurückgeben
+        Kaugummi editierterKaugummis = kaugummiRepository.save(kaugummi);
+        return kaugummimapper.toDto(editierterKaugummis);
     }
 
     @Transactional
@@ -69,6 +85,19 @@ public class KaugummiService {
     public Kaugummi kaugummiAnzeigen(Long id) {
         return kaugummiRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Kaugummi mit ID " + id + " nicht gefunden"));
+    }
+
+
+    @Transactional
+    public void addFavoritToKaugummi(Long kaugummiId, Long userId) {
+        Kaugummi kaugummi = kaugummiRepository.findById(kaugummiId)
+                .orElseThrow(() -> new EntityNotFoundException("Kaugummi nicht gefunden mit ID: " + kaugummiId));
+
+        Benutzer  user = benutzerRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User nicht gefunden mit ID: " + userId));
+
+        // Hilfsmethode hält beide Seiten im Speicher synchron
+        kaugummi.addFavorisiertVon(user);
     }
 
     @Transactional

@@ -2,14 +2,14 @@ package org.example.backend.service;
 
 
 import jakarta.persistence.EntityNotFoundException;
-import org.example.backend.model.Benutzer;
-import org.example.backend.model.Kaugummi;
+import org.example.backend.Model.Benutzer;
+import org.example.backend.Model.Kaugummi;
 
 
 
 
 
-import org.example.backend.model.Kommentar;
+import org.example.backend.Model.Kommentar;
 import org.example.backend.repository.BenutzerRepository;
 import org.example.backend.repository.KaugummiRepository;
 import org.example.backend.repository.Kommentarrepository;

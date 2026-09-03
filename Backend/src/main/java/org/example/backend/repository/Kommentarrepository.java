@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-public interface Kommentarrepository extends JpaRepository<org.example.backend.model.Kommentar,Long> {
+public interface Kommentarrepository extends JpaRepository<org.example.backend.Model.Kommentar,Long> {
 
     /**
      * Methode um KOmmentar upzudaten anhand Id

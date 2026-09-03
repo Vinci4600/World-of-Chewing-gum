@@ -1,6 +1,6 @@
 package org.example.backend.repository;
 
-import org.example.backend.model.Kaugummi;
+import org.example.backend.Model.Kaugummi;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package org.example.backend.model;
+package org.example.backend.Model;
 
 import jakarta.persistence.*;
 import java.util.List;
@@ -23,10 +23,11 @@ public abstract class Benutzer {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Role role;
+    private org.example.backend.model.Role role;
+
 
     @OneToMany(mappedBy = "benutzer", cascade = CascadeType.ALL)
-    private List<Kommentar> kommentare;
+    private List<org.example.backend.Model.Kommentar> kommentare;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
@@ -34,12 +35,12 @@ public abstract class Benutzer {
             joinColumns = @JoinColumn(name = "benutzer_id"),
             inverseJoinColumns = @JoinColumn(name = "kaugummi_id")
     )
-    private List<Kaugummi> favoriten;
+    private List<org.example.backend.Model.Kaugummi> favoriten;
 
     protected Benutzer() {
     }
 
-    public Benutzer(Long id, String benutzername, String email, String passwort, Role role) {
+    public Benutzer(Long id, String benutzername, String email, String passwort, org.example.backend.model.Role role) {
         this.id = id;
         this.benutzername = benutzername;
         this.email = email;
@@ -50,6 +51,11 @@ public abstract class Benutzer {
     public Long getId() {
         return id;
     }
+
+
+// In der Klasse User.java:
+
+    // Kaugummi zu den eigenen Favoriten hinzufügen
 
     public void setId(Long id) {
         this.id = id;
@@ -79,27 +85,27 @@ public abstract class Benutzer {
         this.passwort = passwort;
     }
 
-    public Role getRole() {
+    public org.example.backend.model.Role getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(org.example.backend.model.Role role) {
         this.role = role;
     }
 
-    public List<Kommentar> getKommentare() {
+    public List<org.example.backend.Model.Kommentar> getKommentare() {
         return kommentare;
     }
 
-    public void setKommentare(List<Kommentar> kommentare) {
+    public void setKommentare(List<org.example.backend.Model.Kommentar> kommentare) {
         this.kommentare = kommentare;
     }
 
-    public List<Kaugummi> getFavoriten() {
+    public List<org.example.backend.Model.Kaugummi> getFavoriten() {
         return favoriten;
     }
 
-    public void setFavoriten(List<Kaugummi> favoriten) {
+    public void setFavoriten(List<org.example.backend.Model.Kaugummi> favoriten) {
         this.favoriten = favoriten;
     }
 }

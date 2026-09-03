@@ -1,19 +1,19 @@
 package org.example.backend.service;
 
-import org.example.backend.model.Benutzer;
-import org.example.backend.model.Kunde;
-import org.example.backend.model.Role;
+import org.example.backend.Model.Benutzer;
+import org.example.backend.Model.Kunde;
 import org.example.backend.repository.BenutzerRepository;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.Optional;
 
-@Service
-public class AppUserDetailsService implements UserDetailsService {
+public class AppUserDetailsService  implements UserDetailsService {
+
 
     private final BenutzerRepository benutzerRepository;
     private final PasswordEncoder passwordEncoder;
@@ -23,7 +23,7 @@ public class AppUserDetailsService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public Benutzer registrieren(String username, String email, String rawPassword, Role rolle) {
+    public Benutzer registrieren(String username, String email, String rawPassword, org.example.backend.model.Role rolle) {
         if (benutzerRepository.existsByBenutzername(username)) {
             throw new IllegalArgumentException("Benutzername '" + username + "' ist bereits vergeben");
         }
@@ -34,7 +34,6 @@ public class AppUserDetailsService implements UserDetailsService {
 
         String hashedPassword = passwordEncoder.encode(rawPassword);
 
-        // Kunde als konkrete Implementierung von Benutzer erstellen
         Kunde newUser = new Kunde();
         newUser.setBenutzername(username);
         newUser.setEmail(email);
@@ -48,7 +47,7 @@ public class AppUserDetailsService implements UserDetailsService {
     }
 
     public Optional<Benutzer> authenticateUser(Benutzer user, String rawPassword) {
-        if (passwordEncoder.matches(rawPassword, user.getPasswort())){
+        if (passwordEncoder.matches(rawPassword, user.getPasswort())) {
             return Optional.of(user);
         }
         return Optional.empty();
@@ -64,8 +63,16 @@ public class AppUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
-        return (UserDetails) benutzerRepository.findByBenutzernameOrEmail(usernameOrEmail, usernameOrEmail)
+        //  Benutzer aus DB laden
+        Benutzer benutzer = benutzerRepository.findByBenutzernameOrEmail(usernameOrEmail, usernameOrEmail)
                 .orElseThrow(() -> new UsernameNotFoundException(
                         "User mit Username/E-Mail nicht gefunden: " + usernameOrEmail));
+
+        //  Korrektes Mapping zu Spring Security UserDetails (verhindert den Absturz)
+        return User.builder()
+                .username(benutzer.getBenutzername())
+                .password(benutzer.getPasswort())
+                .authorities(Collections.emptyList()) // Hier ggf. Rollen/GrantedAuthorities übergeben
+                .build();
     }
 }

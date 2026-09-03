@@ -1,16 +1,20 @@
-package org.example.backend.model;
+package org.example.backend.Model;
 
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "kaugummi")
 public class Kaugummi {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String name;
 
     private String imageUrl;
@@ -24,35 +28,48 @@ public class Kaugummi {
     private String inhaltsstoffe;
 
     private String shopUrl;
-// Ein Kaugummi kann mehrere Bewertungen haben
-    @OneToMany(mappedBy = "kaugummi", cascade = CascadeType.ALL)
-    private List<org.example.backend.model.Bewertung> bewertungen;
-// Viele Kaugummis können viele Favoriten haben
-    @ManyToMany(mappedBy = "favoriten")
-    private List<org.example.backend.model.Benutzer> favorisiertVon;
 
+    // Ein Kaugummi kann mehrere Bewertungen haben
+    @OneToMany(
+            mappedBy = "kaugummi",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Bewertung> bewertungen = new ArrayList<>();
+
+    // Viele Benutzer können einen Kaugummi favorisieren
+    @ManyToMany(mappedBy = "favoriten")
+    private Set<Benutzer> favorisiertVon = new HashSet<>();
+
+
+    // Standard-Konstruktor für JPA
     public Kaugummi() {
     }
 
-    public Kaugummi(Long id, String name, String imageUrl, String marke, String geschmack, Boolean zuckerfrei, String shopUrl) {
+    // Konstruktor
+    public Kaugummi(
+            Long id,
+            String name,
+            String imageUrl,
+            String marke,
+            String geschmack,
+            Boolean zuckerfrei,
+            String inhaltsstoffe,
+            String shopUrl
+    ) {
         this.id = id;
         this.name = name;
         this.imageUrl = imageUrl;
         this.marke = marke;
         this.geschmack = geschmack;
         this.zuckerfrei = zuckerfrei;
+        this.inhaltsstoffe = inhaltsstoffe;
         this.shopUrl = shopUrl;
     }
 
-    public String getShopUrl() {
-        return shopUrl;
-    }
-
-    public void setShopUrl(String shopUrl) {
-        this.shopUrl = shopUrl;
-    }
 
     // Getter und Setter
+
     public Long getId() {
         return id;
     }
@@ -60,6 +77,7 @@ public class Kaugummi {
     public void setId(Long id) {
         this.id = id;
     }
+
 
     public String getName() {
         return name;
@@ -69,6 +87,7 @@ public class Kaugummi {
         this.name = name;
     }
 
+
     public String getImageUrl() {
         return imageUrl;
     }
@@ -76,6 +95,7 @@ public class Kaugummi {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
 
     public String getMarke() {
         return marke;
@@ -85,6 +105,7 @@ public class Kaugummi {
         this.marke = marke;
     }
 
+
     public String getGeschmack() {
         return geschmack;
     }
@@ -92,6 +113,7 @@ public class Kaugummi {
     public void setGeschmack(String geschmack) {
         this.geschmack = geschmack;
     }
+
 
     public Boolean getZuckerfrei() {
         return zuckerfrei;
@@ -101,6 +123,7 @@ public class Kaugummi {
         this.zuckerfrei = zuckerfrei;
     }
 
+
     public String getInhaltsstoffe() {
         return inhaltsstoffe;
     }
@@ -109,19 +132,44 @@ public class Kaugummi {
         this.inhaltsstoffe = inhaltsstoffe;
     }
 
-    public List<org.example.backend.model.Bewertung> getBewertungen() {
+
+    public String getShopUrl() {
+        return shopUrl;
+    }
+
+    public void setShopUrl(String shopUrl) {
+        this.shopUrl = shopUrl;
+    }
+
+
+    public List<Bewertung> getBewertungen() {
         return bewertungen;
     }
 
-    public void setBewertungen(List<org.example.backend.model.Bewertung> bewertungen) {
+    public void setBewertungen(List<Bewertung> bewertungen) {
         this.bewertungen = bewertungen;
     }
 
-    public List<org.example.backend.model.Benutzer> getFavorisiertVon() {
+
+    public Set<Benutzer> getFavorisiertVon() {
         return favorisiertVon;
     }
 
-    public void setFavorisiertVon(List<org.example.backend.model.Benutzer> favorisiertVon) {
+    public void setFavorisiertVon(Set<Benutzer> favorisiertVon) {
         this.favorisiertVon = favorisiertVon;
+    }
+
+
+    // Benutzer als Favorit hinzufügen
+    public void addFavorisiertVon(Benutzer user) {
+        this.favorisiertVon.add(user);
+        user.getFavoriten().add(this);
+    }
+
+
+    // Benutzer aus Favoriten entfernen
+    public void removeFavorisiertVon(Benutzer user) {
+        this.favorisiertVon.remove(user);
+        user.getFavoriten().remove(this);
     }
 }

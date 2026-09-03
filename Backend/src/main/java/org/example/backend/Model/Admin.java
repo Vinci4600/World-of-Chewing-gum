@@ -1,4 +1,4 @@
-package org.example.backend.model;
+package org.example.backend.Model;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
@@ -11,7 +11,7 @@ public class Admin extends Benutzer {
         super();
     }
 
-    public Admin(Long id, String benutzername, String email, String passwort, Role role) {
+    public Admin(Long id, String benutzername, String email, String passwort, org.example.backend.model.Role role) {
         super(id, benutzername, email, passwort, role);
     }
 }

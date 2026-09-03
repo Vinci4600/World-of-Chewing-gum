@@ -1,6 +1,7 @@
-package org.example.backend.model;
+package org.example.backend.Model;
 
 import jakarta.persistence.*;
+
 
 @Entity
 @Table(name = "kommentar")
@@ -21,9 +22,16 @@ public class Kommentar {
     private Kaugummi kaugummi;
 
 
+    public Kommentar(Long id,  String text,Benutzer benutzer,Kaugummi kaugummi) {
+        this.id = id;
+        this.text = text;
+        this.benutzer = benutzer;
+        this.kaugummi = kaugummi;
+    }
 
+    public Kommentar() {
 
-
+    }
 
     public Long getId() {
         return id;
@@ -32,6 +40,7 @@ public class Kommentar {
     public void setId(Long id) {
         this.id = id;
     }
+
 
     public String getText() {
         return text;

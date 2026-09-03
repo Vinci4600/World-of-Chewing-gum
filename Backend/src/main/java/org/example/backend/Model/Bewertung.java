@@ -1,4 +1,4 @@
-package org.example.backend.model;
+package org.example.backend.Model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
@@ -28,7 +28,7 @@ public class Bewertung {
 
     @ManyToOne
     @JoinColumn(name = "kunde_id")
-    private Kunde kunde;
+    private org.example.backend.Model.Kunde kunde;
 
     @ManyToOne
     @JoinColumn(name = "kaugummi_id")
@@ -111,11 +111,11 @@ public class Bewertung {
         this.benutzer = benutzer;
     }
 
-    public Kunde getKunde() {
+    public org.example.backend.Model.Kunde getKunde() {
         return kunde;
     }
 
-    public void setKunde(Kunde kunde) {
+    public void setKunde(org.example.backend.Model.Kunde kunde) {
         this.kunde = kunde;
     }
 

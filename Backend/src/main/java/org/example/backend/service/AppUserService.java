@@ -1,7 +1,7 @@
 package org.example.backend.service;
 
-import org.example.backend.model.Benutzer;
-import org.example.backend.model.Kunde;
+import org.example.backend.Model.Benutzer;
+import org.example.backend.Model.Kunde;
 import org.example.backend.model.Role;
 import org.example.backend.dto.LoginRequestDTO;
 import org.example.backend.dto.RegisterRequestDTO;
