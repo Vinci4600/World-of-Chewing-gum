@@ -13,6 +13,8 @@ import org.example.backend.dto.KaugummiDTO;
 
 import java.util.List;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 @Service
 public class KaugummiService {
 
@@ -119,5 +121,35 @@ public class KaugummiService {
                 savedKaugummi.getInhaltsstoffe(),
                 savedKaugummi.getShopUrl()
         );
+    }
+    // Kaugummi Bearbeiten
+    @Transactional
+    public KaugummiDTO updateKaugummi(KaugummiDTO kaugummiDTO){
+        //Kaugummi nach ID Suchen
+        Kaugummi kaugummi = kaugummiRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Kaugummi mit ID " + id + " nicht gefunden"));
+        //Attribute
+        kaugummi.setName(kaugummiDTO.name());
+        kaugummi.setImageUrl(kaugummiDTO.imageUrl());
+        kaugummi.setMarke(kaugummiDTO.marke());
+        kaugummi.setGeschmack(kaugummiDTO.geschmack());
+        kaugummi.setZuckerfrei(kaugummiDTO.zuckerfrei());
+        kaugummi.setInhaltsstoffe(kaugummiDTO.inhaltsstoffe());
+
+        Kaugummi savedKaugummi = kaugummiRepository.save(kaugummi);
+
+        return new KaugummiDTO(
+                savedKaugummi.getId(),
+                savedKaugummi.getName(),
+                savedKaugummi.getImageUrl(),
+                savedKaugummi.getMarke(),
+                savedKaugummi.getGeschmack(),
+                savedKaugummi.getZuckerfrei(),
+                savedKaugummi.getInhaltsstoffe(),
+                savedKaugummi.getShopUrl()
+        );
+
+
     }
 }
