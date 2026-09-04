@@ -41,7 +41,7 @@ function KaugummiDetailPage() {
     return (
         <main className="kaugummi-detail-page">
             <button className="kaugummi-back-button" onClick={() => navigate(-1)}>
-                Zurueck
+                Zurück
             </button>
 
             <article className="kaugummi-detail-card">
