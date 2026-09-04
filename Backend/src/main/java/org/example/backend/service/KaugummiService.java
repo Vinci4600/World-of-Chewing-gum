@@ -7,13 +7,12 @@ import org.example.backend.repository.BenutzerRepository;
 import org.example.backend.repository.BewertungRepository;
 import org.example.backend.repository.KaugummiRepository;
 import org.example.backend.repository.Kommentarrepository;
+import org.springframework.data.jpa.domain.AbstractPersistable_;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.example.backend.dto.KaugummiDTO;
 
 import java.util.List;
-
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Service
 public class KaugummiService {
@@ -124,11 +123,11 @@ public class KaugummiService {
     }
     // Kaugummi Bearbeiten
     @Transactional
-    public KaugummiDTO updateKaugummi(KaugummiDTO kaugummiDTO){
+    public KaugummiDTO updateKaugummi(Long id, KaugummiDTO kaugummiDTO){
         //Kaugummi nach ID Suchen
-        Kaugummi kaugummi = kaugummiRepository.findById(id)
+        Kaugummi kaugummi = kaugummiRepository.findById(AbstractPersistable_.id)
                 .orElseThrow(() ->
-                        new RuntimeException("Kaugummi mit ID " + id + " nicht gefunden"));
+                        new RuntimeException("Kaugummi mit ID " + AbstractPersistable_.id + " nicht gefunden"));
         //Attribute
         kaugummi.setName(kaugummiDTO.name());
         kaugummi.setImageUrl(kaugummiDTO.imageUrl());

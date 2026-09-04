@@ -102,5 +102,18 @@ public class KaugummiController {
 
         return ResponseEntity.ok("Kaugummi deleted successfully");
     }
+    // Kaugummi Bearbeiten Funktion
+
+    @PutMapping("/update/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<KaugummiDTO> updateKaugummi(
+            @PathVariable Long id,
+            @Valid @RequestBody KaugummiDTO kaugummiDTO) {
+
+        KaugummiDTO updatedKaugummi =
+                kaugummiService.updateKaugummi(id, kaugummiDTO);
+
+        return ResponseEntity.ok(updatedKaugummi);
+    }
 }
 
