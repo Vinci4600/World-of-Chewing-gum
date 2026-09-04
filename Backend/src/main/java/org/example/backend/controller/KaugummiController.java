@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import org.example.backend.dto.KaugummiDTO;
 import org.example.backend.model.Kaugummi;
 import org.example.backend.service.KaugummiService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -87,6 +88,19 @@ public class KaugummiController {
 
         return ResponseEntity.ok(createdKaugummi);
     }
+    @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<String> deleteKaugummi(@PathVariable Long id) {
 
+        if (!kaugummiService.existsById(id)) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body("Kaugummi not found");
+        }
+
+        kaugummiService.deleteKaugummi(id);
+
+        return ResponseEntity.ok("Kaugummi deleted successfully");
+    }
 }
 

@@ -57,6 +57,13 @@ public class KaugummiService {
         kommentar.setKaugummi(kaugummi);
         return kommentarRepository.save(kommentar);
     }
+    public boolean existsById(Long id) {
+        return kaugummiRepository.existsById(id);
+    }
+
+    public void deleteKaugummi(Long id) {
+        kaugummiRepository.deleteById(id);
+    }
 
 
 
