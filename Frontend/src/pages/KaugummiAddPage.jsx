@@ -20,11 +20,12 @@ function KaugummiAddPage() {
         geschmack: geschmack,
         zuckerfrei: zuckerfrei,
         inhaltsstoffe: inhaltsstoffe,
-        shop: shopUrl
+        shopUrl: shopUrl
     };
 
     // POST-Funktion
-    const kaugummiHinzufuegen = async () => {
+    const kaugummiHinzufuegen = async (event) => {
+        event.preventDefault();
         try {
             const response = await fetch(
                 "http://localhost:8080/api/kaugummi/add",
@@ -44,6 +45,14 @@ function KaugummiAddPage() {
             const data = await response.json();
 
             console.log("Erfolgreich hinzugefügt:", data);
+
+            setName("");
+            setImageUrl("");
+            setMarke("");
+            setGeschmack("");
+            setZuckerfrei(false);
+            setInhaltsstoffe("");
+            setShopUrl("");
 
         } catch (error) {
             console.error("Fehler:", error);

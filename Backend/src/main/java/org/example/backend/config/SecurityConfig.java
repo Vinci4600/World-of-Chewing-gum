@@ -1,4 +1,6 @@
-  package org.example.backend.config;
+package org.example.backend.config;
+
+import java.util.List;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,6 +10,9 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -22,31 +27,27 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
+                .cors(cors -> {})
                 .csrf(AbstractHttpConfigurer::disable)
 
                 .authorizeHttpRequests(auth -> auth
 
-                        // Registrierung und Login
                         .requestMatchers(
                                 "/register",
                                 "/login",
                                 "/api/auth/**"
                         ).permitAll()
 
-                        // Kaugummis ansehen
-                        // GET /api/kaugummi/all
-                        // GET /api/kaugummi/1
-                        // GET /api/kaugummi/2
-                        //Add update und Delete nacher wieder entfernen
+                        // Kaugummi
                         .requestMatchers(
-                                "/api/kaugummi/all",
-                                "/api/kaugummi/*",
-                                "/api/kaugummi/add",
-                                "/api/kaugummi/update",
-                                "/api/kaugummi/delete"
+                                "/kaugummi/**",
+                                "/api/kaugummi/**"
                         ).permitAll()
 
-                        // ALLES andere benötigt Login
+                        // OPTIONS für CORS
+                        .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**")
+                        .permitAll()
+
                         .anyRequest().authenticated()
                 )
 
@@ -55,5 +56,35 @@ public class SecurityConfig {
 
         return http.build();
     }
-}
 
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+
+        CorsConfiguration configuration = new CorsConfiguration();
+
+        configuration.setAllowedOrigins(
+                List.of("http://localhost:5173")
+        );
+
+        configuration.setAllowedMethods(
+                List.of(
+                        "GET",
+                        "POST",
+                        "PUT",
+                        "DELETE",
+                        "OPTIONS"
+                )
+        );
+
+        configuration.setAllowedHeaders(
+                List.of("*")
+        );
+
+        UrlBasedCorsConfigurationSource source =
+                new UrlBasedCorsConfigurationSource();
+
+        source.registerCorsConfiguration("/**", configuration);
+
+        return source;
+    }
+}

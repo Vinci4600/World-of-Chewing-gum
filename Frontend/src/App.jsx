@@ -6,6 +6,7 @@ import RegistrierungPage from "./pages/Registerpage.jsx";
 import lastpng from './pages/components/Bilder/Last.png'
 import KaugummiAddPage from "./pages/KaugummiAddPage.jsx";
 import KaugummiPage from "./pages/KaugummiPage.jsx";
+import KaugummiDetailPage from "./pages/KaugummiDetailPage.jsx";
 
 
 function App() {
@@ -61,6 +62,7 @@ function App() {
                     <Route path="/register" element={<RegistrierungPage />} />
                     <Route path="/kaugummiadd" element={<KaugummiAddPage />} />
                     <Route path="/kaugummiPage" element={<KaugummiPage />} />
+                    <Route path="/kaugummi/:id" element={<KaugummiDetailPage />} />
                 </Routes>
             </div>
 

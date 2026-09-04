@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../api"; // Pfad ggf. anpassen
+import deleteButtonImage from "./components/Bilder/Deletebtn.png";
 
 import "./components/Styles/Home.css";
 import "./components/Styles/Add.css";
@@ -28,6 +29,28 @@ function KaugummiPage() {
     const handleKaugummiClick = (id) => {
         navigate(`/kaugummi/${id}`);
     };
+    // Kaugummi Löschen
+    //  DELETE (nur Admin) = // weg Löschen
+    const deleteKaugummi = async (id) => {
+        //if (role !== "ADMIN") {
+            //alert("Nur Admins dürfen löschen!");
+            //return;
+        //}
+
+        try {
+            await API.delete(`/api/kaugummi/delete/${id}`);
+            await fetchKaugummi();
+
+        } catch (error) {
+            console.error(
+                "Fehler beim Löschen:",
+                error.response?.data || error.message
+            );
+        }
+    };
+
+
+
 
     return (
         <div className="kaugummi-page">
@@ -41,6 +64,14 @@ function KaugummiPage() {
                         className="kaugummi-card"
                         key={gum.id}
                         onClick={() => handleKaugummiClick(gum.id)}
+                        onKeyDown={(event) => {
+                            if (event.key === "Enter" || event.key === " ") {
+                                event.preventDefault();
+                                handleKaugummiClick(gum.id);
+                            }
+                        }}
+                        role="button"
+                        tabIndex={0}
                     >
 
                         <img
@@ -67,6 +98,20 @@ function KaugummiPage() {
                                     Zuckerfrei
                                 </span>
                             )}
+
+                            <button
+                                type="button"
+                                className="kaugummi-delete-button"
+                                onClick={(event) => {
+                                    event.stopPropagation();
+                                    deleteKaugummi(gum.id);
+                                }}
+                            >
+                                <img
+                                    src={deleteButtonImage}
+                                    alt="Kaugummi löschen"
+                                />
+                            </button>
 
                         </div>
 

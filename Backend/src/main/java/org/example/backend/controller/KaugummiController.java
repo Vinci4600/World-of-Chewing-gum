@@ -89,7 +89,6 @@ public class KaugummiController {
         return ResponseEntity.ok(createdKaugummi);
     }
     @DeleteMapping("/delete/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> deleteKaugummi(@PathVariable Long id) {
 
         if (!kaugummiService.existsById(id)) {
