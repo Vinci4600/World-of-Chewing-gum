@@ -37,10 +37,13 @@ public class SecurityConfig {
                         // GET /api/kaugummi/all
                         // GET /api/kaugummi/1
                         // GET /api/kaugummi/2
+                        //Add update und Delete nacher wieder entfernen
                         .requestMatchers(
                                 "/api/kaugummi/all",
                                 "/api/kaugummi/*",
-                                "/api/kaugummi/add"
+                                "/api/kaugummi/add",
+                                "/api/kaugummi/update",
+                                "/api/kaugummi/delete"
                         ).permitAll()
 
                         // ALLES andere benötigt Login
