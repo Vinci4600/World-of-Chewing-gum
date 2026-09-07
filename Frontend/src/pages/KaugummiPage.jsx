@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import API from "../api"; // Pfad ggf. anpassen
+import API from "../api.js"; // Pfad ggf. anpassen
 
+import {Link} from "react-router-dom";
 import "./components/Styles/Home.css";
 import "./components/Styles/Add.css";
 
@@ -32,7 +33,7 @@ function KaugummiPage() {
     return (
         <div className="kaugummi-page">
 
-            <h1>Unsere Kaugummis</h1>
+            <h1 className="kauggmi-field">Unsere Kaugummis</h1>
 
             <div className="kaugummi-grid">
 
@@ -42,6 +43,9 @@ function KaugummiPage() {
                         key={gum.id}
                         onClick={() => handleKaugummiClick(gum.id)}
                     >
+
+                        <Link to={`/kaugummiedit/${gum.id}`}>Bearbeiten</Link>
+
 
                         <img
                             src={gum.imageUrl}
@@ -60,6 +64,17 @@ function KaugummiPage() {
                             <p>
                                 <strong>Geschmack:</strong>{" "}
                                 {gum.geschmack}
+                            </p>
+
+
+                            <p>
+                                <strong>Image Url</strong>
+                                {gum.imageUrl}
+                            </p>
+
+                            <p>
+                                <strong>Inhaltsstoffe</strong>
+                                {gum.inhaltsstoffe}
                             </p>
 
                             {gum.zuckerfrei && (
