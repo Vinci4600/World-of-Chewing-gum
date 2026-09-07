@@ -103,15 +103,9 @@ function Loginpage() {
                             value={formData.password}
                             onChange={handleChange}
                             style={{ paddingRight: "70px" }}
+
                         />
-                        <button
-                            type="button"
-                            className="lg-toggle"
-                            onClick={() => setShowPassword((prev) => !prev)}
-                            aria-label={showPassword ? "Passwort verbergen" : "Passwort anzeigen"}
-                        >
-                            {showPassword ? "Hide" : "Show"}
-                        </button>
+
                     </div>
 
                     <label className="lg-remember">
