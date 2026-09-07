@@ -7,6 +7,7 @@ import org.example.backend.repository.BenutzerRepository;
 import org.example.backend.repository.BewertungRepository;
 import org.example.backend.repository.KaugummiRepository;
 import org.example.backend.repository.Kommentarrepository;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.example.backend.dto.KaugummiDTO;
@@ -56,6 +57,13 @@ public class KaugummiService {
         kommentar.setBenutzer(benutzer);
         kommentar.setKaugummi(kaugummi);
         return kommentarRepository.save(kommentar);
+    }
+    public boolean existsById(Long id) {
+        return kaugummiRepository.existsById(id);
+    }
+
+    public void deleteKaugummi(Long id) {
+        kaugummiRepository.deleteById(id);
     }
 
 
@@ -109,7 +117,40 @@ public class KaugummiService {
                 savedKaugummi.getMarke(),
                 savedKaugummi.getGeschmack(),
                 savedKaugummi.getZuckerfrei(),
-                savedKaugummi.getInhaltsstoffe()
+                savedKaugummi.getInhaltsstoffe(),
+                savedKaugummi.getShopUrl()
+        );
+    }
+    // Kaugummi Bearbeiten
+    @Transactional
+    public KaugummiDTO updateKaugummi(Long id, KaugummiDTO kaugummiDTO) {
+
+        // Kaugummi nach ID suchen
+        Kaugummi kaugummi = kaugummiRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Kaugummi mit ID " + id + " nicht gefunden"));
+
+        // Attribute aktualisieren
+        kaugummi.setName(kaugummiDTO.name());
+        kaugummi.setImageUrl(kaugummiDTO.imageUrl());
+        kaugummi.setMarke(kaugummiDTO.marke());
+        kaugummi.setGeschmack(kaugummiDTO.geschmack());
+        kaugummi.setZuckerfrei(kaugummiDTO.zuckerfrei());
+        kaugummi.setInhaltsstoffe(kaugummiDTO.inhaltsstoffe());
+
+        // Speichern
+        Kaugummi savedKaugummi = kaugummiRepository.save(kaugummi);
+
+        // DTO zurückgeben
+        return new KaugummiDTO(
+                savedKaugummi.getId(),
+                savedKaugummi.getName(),
+                savedKaugummi.getImageUrl(),
+                savedKaugummi.getMarke(),
+                savedKaugummi.getGeschmack(),
+                savedKaugummi.getZuckerfrei(),
+                savedKaugummi.getInhaltsstoffe(),
+                savedKaugummi.getShopUrl()
         );
     }
 }
