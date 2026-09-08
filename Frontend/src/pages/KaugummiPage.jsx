@@ -103,10 +103,7 @@ function KaugummiPage() {
                             </p>
 
 
-                            <p>
-                                <strong>Image Url</strong>
-                                {gum.imageUrl}
-                            </p>
+
 
                             <p>
                                 <strong>Inhaltsstoffe</strong>
