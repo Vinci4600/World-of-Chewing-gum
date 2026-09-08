@@ -72,7 +72,7 @@ public class AppUserDetailsService  implements UserDetailsService {
         return User.builder()
                 .username(benutzer.getBenutzername())
                 .password(benutzer.getPasswort())
-                .authorities(Collections.emptyList()) // Hier ggf. Rollen/GrantedAuthorities übergeben
+                .authorities(Collections.emptyList())
                 .build();
     }
 }
