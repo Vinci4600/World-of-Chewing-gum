@@ -106,7 +106,7 @@ function KaugummiPage() {
 
 
                             <p>
-                                <strong>Inhaltsstoffe</strong>
+                                <strong>Inhaltsstoffe:</strong>
                                 {gum.inhaltsstoffe}
                             </p>
 
