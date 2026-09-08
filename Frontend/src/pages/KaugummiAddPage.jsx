@@ -1,9 +1,9 @@
 import { useState } from "react";
+import API from "../api.js";
 import "./components/Styles/Home.css";
 import "./components/Styles/Add.css";
 
 function KaugummiAddPage() {
-    const [kaugummi, setKaugummi] = useState([]);
     const [name, setName] = useState("");
     const [imageUrl, setImageUrl] = useState("");
     const [marke, setMarke] = useState("");
@@ -24,35 +24,11 @@ function KaugummiAddPage() {
     };
 
     // POST-Funktion
-    const kaugummiHinzufuegen = async (event) => {
-        event.preventDefault();
+    const kaugummiHinzufuegen = async (e) => {
+        e.preventDefault();
         try {
-            const response = await fetch(
-                "http://localhost:8080/api/kaugummi/add",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(kaugummiData)
-                }
-            );
-
-            if (!response.ok) {
-                throw new Error("Kaugummi konnte nicht hinzugefügt werden");
-            }
-
-            const data = await response.json();
-
-            console.log("Erfolgreich hinzugefügt:", data);
-
-            setName("");
-            setImageUrl("");
-            setMarke("");
-            setGeschmack("");
-            setZuckerfrei(false);
-            setInhaltsstoffe("");
-            setShopUrl("");
+            const response = await API.post("/api/kaugummi/add", kaugummiData);
+            console.log("Erfolgreich hinzugefügt:", response.data);
 
         } catch (error) {
             console.error("Fehler:", error);

@@ -1,4 +1,4 @@
-package org.example.backend.model;
+package org.example.backend.Model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
@@ -14,10 +14,11 @@ public class Kunde extends Benutzer {
         super();
     }
 
-    public Kunde(Long id, String benutzername, String email, String passwort, Role role, String kundennummer) {
+    public Kunde(Long id, String benutzername, String email, String passwort, org.example.backend.model.Role role, String kundennummer) {
         super(id, benutzername, email, passwort, role);
         this.kundennummer = kundennummer;
     }
+
 
     public String getKundennummer() {
         return kundennummer;

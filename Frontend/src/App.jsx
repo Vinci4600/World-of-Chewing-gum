@@ -2,11 +2,12 @@ import { useState } from "react";
 import { Link, Routes, Route, useNavigate } from "react-router-dom";
 import HomePage from "./pages/HomePage.jsx";
 import LoginPage from "./pages/Loginpage.jsx";
-import RegistrierungPage from "./pages/Registerpage.jsx";
-import lastpng from './pages/components/Bilder/Last.png'
+import RegistrierungPage from "./pages/RegisterPage.jsx";
+import lastpng from '../public/Last.png';
 import KaugummiAddPage from "./pages/KaugummiAddPage.jsx";
 import KaugummiPage from "./pages/KaugummiPage.jsx";
 import KaugummiDetailPage from "./pages/KaugummiDetailPage.jsx";
+import KaugummiEditPage from "./pages/KaugummiEditPage.jsx";
 
 
 function App() {
@@ -63,6 +64,7 @@ function App() {
                     <Route path="/kaugummiadd" element={<KaugummiAddPage />} />
                     <Route path="/kaugummiPage" element={<KaugummiPage />} />
                     <Route path="/kaugummi/:id" element={<KaugummiDetailPage />} />
+                    <Route path="/kaugummiedit/:id" element={<KaugummiEditPage />} />
                 </Routes>
             </div>
 

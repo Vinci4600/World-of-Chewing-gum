@@ -2,7 +2,7 @@ package org.example.backend.controller;
 
 import jakarta.validation.Valid;
 import org.example.backend.dto.KaugummiDTO;
-import org.example.backend.model.Kaugummi;
+import org.example.backend.Model.Kaugummi;
 import org.example.backend.service.KaugummiService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +32,22 @@ public class KaugummiController {
 
 
     /**
+     * Einzelne Kaugummissorte anhand id Daten editieren
+     * @param id
+     * @param kaugummiDTO mit aktualisierten Daten der Kaugummi Entity
+     * @return aktualisiertes KaugummiDTO
+     */
+    @PutMapping({"/{id}", "/update/{id}"})
+    public ResponseEntity<KaugummiDTO> updateKaugummi(
+            @PathVariable Long id,
+            @Valid @RequestBody KaugummiDTO kaugummiDTO) {
+
+        KaugummiDTO updatedKaugummi = kaugummiService.updateKaugummi(id, kaugummiDTO);
+        return ResponseEntity.ok(updatedKaugummi);
+    }
+
+
+    /**
      * Kaugummi aus ArrayListe anhand id anzeigen
      * @param id
      * @return Kaugummi ArrayListe
@@ -45,9 +61,9 @@ public class KaugummiController {
 
 
     @PostMapping("/{id}/bewertung")
-    public ResponseEntity<org.example.backend.model.Bewertung> bewertungAbgeben(@PathVariable Long id,
+    public ResponseEntity<org.example.backend.Model.Bewertung> bewertungAbgeben(@PathVariable Long id,
                                                                                 @RequestParam Long benutzerId,
-                                                                                @RequestBody org.example.backend.model.Bewertung bewertungData) {
+                                                                                @RequestBody org.example.backend.Model.Bewertung bewertungData) {
         return ResponseEntity.ok(kaugummiService.bewertungAbgeben(id, benutzerId, bewertungData));
     }
 
@@ -59,7 +75,7 @@ public class KaugummiController {
      * @return
      */
     @PostMapping("/{id}/kommentar")
-    public ResponseEntity<org.example.backend.model.Kommentar> kommentarHinzufuegen(@PathVariable Long id,
+    public ResponseEntity<org.example.backend.Model.Kommentar> kommentarHinzufuegen(@PathVariable Long id,
                                                                                     @RequestParam Long benutzerId,
                                                                                     @RequestBody String text) {
         return ResponseEntity.ok(kaugummiService.kommentarHinzufuegen(id, benutzerId, text));
@@ -100,19 +116,6 @@ public class KaugummiController {
         kaugummiService.deleteKaugummi(id);
 
         return ResponseEntity.ok("Kaugummi deleted successfully");
-    }
-    // Kaugummi Bearbeiten Funktion
-
-    @PutMapping("/update/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<KaugummiDTO> updateKaugummi(
-            @PathVariable Long id,
-            @Valid @RequestBody KaugummiDTO kaugummiDTO) {
-
-        KaugummiDTO updatedKaugummi =
-                kaugummiService.updateKaugummi(id, kaugummiDTO);
-
-        return ResponseEntity.ok(updatedKaugummi);
     }
 }
 

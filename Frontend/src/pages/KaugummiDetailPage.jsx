@@ -50,9 +50,9 @@ function KaugummiDetailPage() {
                 </div>
 
                 <div className="kaugummi-detail-content">
-                    <p className="kaugummi-eyebrow">{gum.marke}</p>
+                    <p className="kaugummi-eyebrow">Marke: {gum.marke || "Keine Angaben"}</p>
                     <h1>{gum.name}</h1>
-                    <p className="kaugummi-detail-taste">{gum.geschmack}</p>
+                    <p className="kaugummi-detail-taste">Geschmack: {gum.geschmack || "Keine Angaben"}</p>
 
                     <div className="kaugummi-detail-facts">
                         <div>

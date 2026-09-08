@@ -1,13 +1,12 @@
 package org.example.backend.service;
 
-import org.example.backend.model.Bewertung;
-import org.example.backend.model.Kaugummi;
-import org.example.backend.model.Kommentar;
-import org.example.backend.repository.BenutzerRepository;
-import org.example.backend.repository.BewertungRepository;
-import org.example.backend.repository.KaugummiRepository;
-import org.example.backend.repository.Kommentarrepository;
-
+import jakarta.persistence.EntityNotFoundException;
+import org.example.backend.Model.Benutzer;
+import org.example.backend.Model.Bewertung;
+import org.example.backend.Model.Kaugummi;
+import org.example.backend.Model.Kommentar;
+import org.example.backend.repository.*;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.example.backend.dto.KaugummiDTO;
@@ -22,15 +21,14 @@ public class KaugummiService {
     private final BewertungRepository bewertungRepository;
     private final Kommentarrepository kommentarRepository;
     private final BenutzerRepository benutzerRepository;
+    private  final KaugummiMapper kaugummimapper;
 
-    public KaugummiService(KaugummiRepository kaugummiRepository,
-                           BewertungRepository bewertungRepository,
-                           Kommentarrepository kommentarRepository,
-                           BenutzerRepository benutzerRepository) {
+    public KaugummiService(KaugummiRepository kaugummiRepository, BewertungRepository bewertungRepository, Kommentarrepository kommentarRepository, BenutzerRepository benutzerRepository, KaugummiMapper kaugummimapper) {
         this.kaugummiRepository = kaugummiRepository;
         this.bewertungRepository = bewertungRepository;
         this.kommentarRepository = kommentarRepository;
         this.benutzerRepository = benutzerRepository;
+        this.kaugummimapper = kaugummimapper;
     }
 
     @Transactional
@@ -58,13 +56,6 @@ public class KaugummiService {
         kommentar.setKaugummi(kaugummi);
         return kommentarRepository.save(kommentar);
     }
-    public boolean existsById(Long id) {
-        return kaugummiRepository.existsById(id);
-    }
-
-    public void deleteKaugummi(Long id) {
-        kaugummiRepository.deleteById(id);
-    }
 
 
 
@@ -77,6 +68,19 @@ public class KaugummiService {
     public Kaugummi kaugummiAnzeigen(Long id) {
         return kaugummiRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Kaugummi mit ID " + id + " nicht gefunden"));
+    }
+
+
+    @Transactional
+    public void addFavoritToKaugummi(Long kaugummiId, Long userId) {
+        Kaugummi kaugummi = kaugummiRepository.findById(kaugummiId)
+                .orElseThrow(() -> new EntityNotFoundException("Kaugummi nicht gefunden mit ID: " + kaugummiId));
+
+        Benutzer  user = benutzerRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User nicht gefunden mit ID: " + userId));
+
+        // Hilfsmethode hält beide Seiten im Speicher synchron
+        kaugummi.addFavorisiertVon(user);
     }
 
     @Transactional
@@ -121,36 +125,41 @@ public class KaugummiService {
                 savedKaugummi.getShopUrl()
         );
     }
-    // Kaugummi Bearbeiten
+
+    @Transactional(readOnly = true)
+    public boolean existsById(Long id) {
+        return kaugummiRepository.existsById(id);
+    }
+
+    @Transactional
+    public void deleteKaugummi(Long id) {
+        kaugummiRepository.deleteById(id);
+    }
+
     @Transactional
     public KaugummiDTO updateKaugummi(Long id, KaugummiDTO kaugummiDTO) {
-
-        // Kaugummi nach ID suchen
         Kaugummi kaugummi = kaugummiRepository.findById(id)
-                .orElseThrow(() ->
-                        new RuntimeException("Kaugummi mit ID " + id + " nicht gefunden"));
+                .orElseThrow(() -> new RuntimeException("Kaugummi mit ID " + id + " nicht gefunden"));
 
-        // Attribute aktualisieren
         kaugummi.setName(kaugummiDTO.name());
         kaugummi.setImageUrl(kaugummiDTO.imageUrl());
         kaugummi.setMarke(kaugummiDTO.marke());
         kaugummi.setGeschmack(kaugummiDTO.geschmack());
         kaugummi.setZuckerfrei(kaugummiDTO.zuckerfrei());
         kaugummi.setInhaltsstoffe(kaugummiDTO.inhaltsstoffe());
+        kaugummi.setShopUrl(kaugummiDTO.shopUrl());
 
-        // Speichern
-        Kaugummi savedKaugummi = kaugummiRepository.save(kaugummi);
+        Kaugummi updatedKaugummi = kaugummiRepository.save(kaugummi);
 
-        // DTO zurückgeben
         return new KaugummiDTO(
-                savedKaugummi.getId(),
-                savedKaugummi.getName(),
-                savedKaugummi.getImageUrl(),
-                savedKaugummi.getMarke(),
-                savedKaugummi.getGeschmack(),
-                savedKaugummi.getZuckerfrei(),
-                savedKaugummi.getInhaltsstoffe(),
-                savedKaugummi.getShopUrl()
+                updatedKaugummi.getId(),
+                updatedKaugummi.getName(),
+                updatedKaugummi.getImageUrl(),
+                updatedKaugummi.getMarke(),
+                updatedKaugummi.getGeschmack(),
+                updatedKaugummi.getZuckerfrei(),
+                updatedKaugummi.getInhaltsstoffe(),
+                updatedKaugummi.getShopUrl()
         );
     }
 }

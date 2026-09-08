@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import API from "../api"; // Pfad ggf. anpassen
-import deleteButtonImage from "./components/Bilder/Deletebtn.png";
+import API from "../api.js"; // Pfad ggf. anpassen
 
+import {Link} from "react-router-dom";
 import "./components/Styles/Home.css";
 import "./components/Styles/Add.css";
+import editIcon from "./components/Bilder/Bearbeitenbtn.png";
+import deleteIcon from "./components/Bilder/Deletebtn.png";
 
 function KaugummiPage() {
     const [kaugummi, setKaugummi] = useState([]);
@@ -29,33 +31,26 @@ function KaugummiPage() {
     const handleKaugummiClick = (id) => {
         navigate(`/kaugummi/${id}`);
     };
-    // Kaugummi Löschen
-    //  DELETE (nur Admin) = // weg Löschen
-    const deleteKaugummi = async (id) => {
-        //if (role !== "ADMIN") {
-            //alert("Nur Admins dürfen löschen!");
-            //return;
-        //}
+
+    const handleDelete = async (event, id) => {
+        event.stopPropagation();
+
+        if (!window.confirm("Diesen Kaugummi wirklich löschen?")) {
+            return;
+        }
 
         try {
             await API.delete(`/api/kaugummi/delete/${id}`);
-            await fetchKaugummi();
-
+            setKaugummi((currentKaugummi) => currentKaugummi.filter((gum) => gum.id !== id));
         } catch (error) {
-            console.error(
-                "Fehler beim Löschen:",
-                error.response?.data || error.message
-            );
+            console.error("Fehler beim Löschen des Kaugummis:", error);
         }
     };
-
-
-
 
     return (
         <div className="kaugummi-page">
 
-            <h1>Unsere Kaugummis</h1>
+            <h1 className="kauggmi-field">Unsere Kaugummis</h1>
 
             <div className="kaugummi-grid">
 
@@ -64,15 +59,29 @@ function KaugummiPage() {
                         className="kaugummi-card"
                         key={gum.id}
                         onClick={() => handleKaugummiClick(gum.id)}
-                        onKeyDown={(event) => {
-                            if (event.key === "Enter" || event.key === " ") {
-                                event.preventDefault();
-                                handleKaugummiClick(gum.id);
-                            }
-                        }}
-                        role="button"
-                        tabIndex={0}
                     >
+
+                        <div className="kaugummi-card-actions">
+                            <Link
+                                className="kaugummi-icon-button"
+                                to={`/kaugummiedit/${gum.id}`}
+                                onClick={(event) => event.stopPropagation()}
+                                aria-label={`${gum.name} bearbeiten`}
+                                title="Bearbeiten"
+                            >
+                                <img src={editIcon} alt="" />
+                            </Link>
+                            <button
+                                className="kaugummi-icon-button"
+                                type="button"
+                                onClick={(event) => handleDelete(event, gum.id)}
+                                aria-label={`${gum.name} löschen`}
+                                title="Löschen"
+                            >
+                                <img src={deleteIcon} alt="" />
+                            </button>
+                        </div>
+
 
                         <img
                             src={gum.imageUrl}
@@ -93,25 +102,19 @@ function KaugummiPage() {
                                 {gum.geschmack}
                             </p>
 
+
+
+
+                            <p>
+                                <strong>Inhaltsstoffe:</strong>
+                                {gum.inhaltsstoffe}
+                            </p>
+
                             {gum.zuckerfrei && (
                                 <span className="zuckerfrei">
                                     Zuckerfrei
                                 </span>
                             )}
-
-                            <button
-                                type="button"
-                                className="kaugummi-delete-button"
-                                onClick={(event) => {
-                                    event.stopPropagation();
-                                    deleteKaugummi(gum.id);
-                                }}
-                            >
-                                <img
-                                    src={deleteButtonImage}
-                                    alt="Kaugummi löschen"
-                                />
-                            </button>
 
                         </div>
 
