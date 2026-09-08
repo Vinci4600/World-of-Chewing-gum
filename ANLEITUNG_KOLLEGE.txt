@@ -1,0 +1,89 @@
+World of Chewing Gum - Anleitung fuer Kollegen
+===============================================
+
+Voraussetzungen
+---------------
+- Git
+- Docker Desktop (Docker muss gestartet sein)
+
+1. Repository klonen
+--------------------
+Mit SSH:
+  git clone git@github.com:Vinci4600/World-of-chewing-gum.git
+
+Oder mit HTTPS:
+  git clone https://github.com/Vinci4600/World-of-chewing-gum.git
+
+Danach in den Projektordner wechseln:
+  cd World-of-Chewing-gum
+
+Auf den Entwicklungsbranch wechseln:
+  git checkout dev
+  git pull origin dev
+
+2. .env-Datei erstellen
+------------------------
+Im Hauptordner des Projekts eine Datei mit dem Namen .env erstellen.
+Die Datei darf nicht committed oder auf GitHub hochgeladen werden.
+
+Inhalt der .env-Datei:
+
+  MYSQL_DATABASE=world_of_chewing_gum
+  MYSQL_USER=chewinggum
+  MYSQL_PASSWORD=<MYSQL_PASSWORT_VOM_PROJEKT>
+  MYSQL_ROOT_PASSWORD=<MYSQL_ROOT_PASSWORT_VOM_PROJEKT>
+  JWT_SECRET=<LANGER_RANDOM_SECRET>
+
+Die echten Werte bitte sicher vom Projektbesitzer erhalten.
+Nicht die Platzhalter stehen lassen.
+
+3. Container bauen und starten
+------------------------------
+Im Hauptordner ausfuehren:
+
+  docker compose up -d --build
+
+Dieser Befehl baut Backend und Frontend und startet ausserdem MySQL.
+
+4. Anwendung aufrufen
+----------------------
+Frontend:
+  http://localhost:5173
+
+Backend:
+  http://localhost:8080
+
+Kaugummi-API:
+  http://localhost:8080/api/kaugummi/all
+
+5. Status und Logs pruefen
+--------------------------
+Containerstatus:
+  docker compose ps
+
+Backend-Logs:
+  docker compose logs -f backend
+
+Alle Logs:
+  docker compose logs -f
+
+6. Neustart bei Problemen
+-------------------------
+Container stoppen:
+  docker compose down
+
+Danach neu bauen und starten:
+  docker compose up -d --build
+
+Wichtig: Die Datenbankdaten bleiben normalerweise erhalten.
+
+Nur wenn die Datenbank komplett geloescht und neu erstellt werden soll:
+  docker compose down -v
+  docker compose up -d --build
+
+Hinweise
+--------
+- Der aktuelle Code liegt auf dem Branch dev.
+- Das Docker-Image selbst liegt nicht auf GitHub; es wird lokal gebaut.
+- Die .env-Datei wird aus Sicherheitsgruenden nicht mit Git geteilt.
+- Wenn Port 5173 oder 8080 bereits verwendet wird, den anderen Prozess stoppen.
