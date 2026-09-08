@@ -37,7 +37,7 @@ public class KaugummiController {
      * @param kaugummiDTO mit aktualisierten Daten der Kaugummi Entity
      * @return aktualisiertes KaugummiDTO
      */
-    @PutMapping("/{id}")
+    @PutMapping({"/{id}", "/update/{id}"})
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<KaugummiDTO> updateKaugummi(
             @PathVariable Long id,
@@ -117,19 +117,6 @@ public class KaugummiController {
         kaugummiService.deleteKaugummi(id);
 
         return ResponseEntity.ok("Kaugummi deleted successfully");
-    }
-    // Kaugummi Bearbeiten Funktion
-
-    @PutMapping("/update/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<KaugummiDTO> updateKaugummi(
-            @PathVariable Long id,
-            @Valid @RequestBody KaugummiDTO kaugummiDTO) {
-
-        KaugummiDTO updatedKaugummi =
-                kaugummiService.updateKaugummi(id, kaugummiDTO);
-
-        return ResponseEntity.ok(updatedKaugummi);
     }
 }
 

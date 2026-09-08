@@ -32,23 +32,6 @@ public class KaugummiService {
     }
 
     @Transactional
-    public KaugummiDTO updateKaugummi(Long id, KaugummiDTO kaugummiDTO) {
-        // 1. Entity aus der Datenbank laden oder Exception werfen, falls nicht gefunden
-        Kaugummi kaugummi = kaugummiRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Kaugummi mit ID " + id + " wurde nicht gefunden"));
-
-        // 2. Felder aus dem DTO auf das Entity übertragen
-        kaugummi.setName(kaugummiDTO.name());
-        kaugummi.setGeschmack(kaugummiDTO.geschmack());
-        kaugummi.setInhaltsstoffe(kaugummiDTO.inhaltsstoffe());
-
-
-        // 3. Entity speichern und das aktualisierte DTO zurückgeben
-        Kaugummi editierterKaugummis = kaugummiRepository.save(kaugummi);
-        return kaugummimapper.toDto(editierterKaugummis);
-    }
-
-    @Transactional
     public Bewertung bewertungAbgeben(Long kaugummiId, Long benutzerId, Bewertung bewertungData) {
         var kaugummi = kaugummiRepository.findById(kaugummiId)
                 .orElseThrow(() -> new RuntimeException("Kaugummi nicht gefunden"));
