@@ -142,4 +142,41 @@ public class KaugummiService {
                 savedKaugummi.getShopUrl()
         );
     }
+
+    @Transactional(readOnly = true)
+    public boolean existsById(Long id) {
+        return kaugummiRepository.existsById(id);
+    }
+
+    @Transactional
+    public void deleteKaugummi(Long id) {
+        kaugummiRepository.deleteById(id);
+    }
+
+    @Transactional
+    public KaugummiDTO updateKaugummi(Long id, KaugummiDTO kaugummiDTO) {
+        Kaugummi kaugummi = kaugummiRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Kaugummi mit ID " + id + " nicht gefunden"));
+
+        kaugummi.setName(kaugummiDTO.name());
+        kaugummi.setImageUrl(kaugummiDTO.imageUrl());
+        kaugummi.setMarke(kaugummiDTO.marke());
+        kaugummi.setGeschmack(kaugummiDTO.geschmack());
+        kaugummi.setZuckerfrei(kaugummiDTO.zuckerfrei());
+        kaugummi.setInhaltsstoffe(kaugummiDTO.inhaltsstoffe());
+        kaugummi.setShopUrl(kaugummiDTO.shopUrl());
+
+        Kaugummi updatedKaugummi = kaugummiRepository.save(kaugummi);
+
+        return new KaugummiDTO(
+                updatedKaugummi.getId(),
+                updatedKaugummi.getName(),
+                updatedKaugummi.getImageUrl(),
+                updatedKaugummi.getMarke(),
+                updatedKaugummi.getGeschmack(),
+                updatedKaugummi.getZuckerfrei(),
+                updatedKaugummi.getInhaltsstoffe(),
+                updatedKaugummi.getShopUrl()
+        );
+    }
 }
