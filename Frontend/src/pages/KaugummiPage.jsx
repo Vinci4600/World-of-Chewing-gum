@@ -5,6 +5,8 @@ import API from "../api.js"; // Pfad ggf. anpassen
 import {Link} from "react-router-dom";
 import "./components/Styles/Home.css";
 import "./components/Styles/Add.css";
+import editIcon from "./components/Bilder/Bearbeitenbtn.png";
+import deleteIcon from "./components/Bilder/Deletebtn.png";
 
 function KaugummiPage() {
     const [kaugummi, setKaugummi] = useState([]);
@@ -59,12 +61,26 @@ function KaugummiPage() {
                         onClick={() => handleKaugummiClick(gum.id)}
                     >
 
-                        <Link to={`/kaugummiedit/${gum.id}`} onClick={(event) => event.stopPropagation()}>
-                            Bearbeiten
-                        </Link>
-                        <button type="button" onClick={(event) => handleDelete(event, gum.id)}>
-                            Löschen
-                        </button>
+                        <div className="kaugummi-card-actions">
+                            <Link
+                                className="kaugummi-icon-button"
+                                to={`/kaugummiedit/${gum.id}`}
+                                onClick={(event) => event.stopPropagation()}
+                                aria-label={`${gum.name} bearbeiten`}
+                                title="Bearbeiten"
+                            >
+                                <img src={editIcon} alt="" />
+                            </Link>
+                            <button
+                                className="kaugummi-icon-button"
+                                type="button"
+                                onClick={(event) => handleDelete(event, gum.id)}
+                                aria-label={`${gum.name} löschen`}
+                                title="Löschen"
+                            >
+                                <img src={deleteIcon} alt="" />
+                            </button>
+                        </div>
 
 
                         <img
