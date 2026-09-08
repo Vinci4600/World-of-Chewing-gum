@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import API from "../api.js";
 
 function KaugummiEditPage() {
     const { id } = useParams();
@@ -22,11 +23,8 @@ function KaugummiEditPage() {
     useEffect(() => {
         const fetchKaugummi = async () => {
             try {
-                const response = await fetch(`/api/kaugummi/${id}`);
-                if (!response.ok) {
-                    throw new Error("Kaugummi konnte nicht geladen werden.");
-                }
-                const data = await response.json();
+                const response = await API.get(`/api/kaugummi/${id}`);
+                const data = response.data;
                 setName(data.name || "");
                 setGeschmack(data.geschmack || "");
                 setInhaltsstoffe(data.inhaltsstoffe || "");
@@ -39,7 +37,6 @@ function KaugummiEditPage() {
                 setError(err.message);
             } finally {
                 setLoading(false);
-                alert("Kaugummi ladet!")
             }
         };
 
@@ -51,16 +48,8 @@ function KaugummiEditPage() {
         e.preventDefault();
         setError("");
 
-        const token = localStorage.getItem("token");
-
         try {
-            const response = await fetch(`/api/kaugummi/${id}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                },
-                body: JSON.stringify({
+            await API.put(`/api/kaugummi/${id}`, {
                     name,
                     marke,
                     geschmack,
@@ -68,12 +57,7 @@ function KaugummiEditPage() {
                     imageUrl,
                     shopUrl,
                     zuckerfrei
-                })
             });
-
-            if (!response.ok) {
-                throw new Error("Fehler beim Aktualisieren des Kaugummis.");
-            }
 
             navigate("/kaugummiPage");
         } catch (err) {

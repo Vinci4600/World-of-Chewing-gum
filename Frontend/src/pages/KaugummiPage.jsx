@@ -30,6 +30,21 @@ function KaugummiPage() {
         navigate(`/kaugummi/${id}`);
     };
 
+    const handleDelete = async (event, id) => {
+        event.stopPropagation();
+
+        if (!window.confirm("Diesen Kaugummi wirklich löschen?")) {
+            return;
+        }
+
+        try {
+            await API.delete(`/api/kaugummi/delete/${id}`);
+            setKaugummi((currentKaugummi) => currentKaugummi.filter((gum) => gum.id !== id));
+        } catch (error) {
+            console.error("Fehler beim Löschen des Kaugummis:", error);
+        }
+    };
+
     return (
         <div className="kaugummi-page">
 
@@ -44,7 +59,12 @@ function KaugummiPage() {
                         onClick={() => handleKaugummiClick(gum.id)}
                     >
 
-                        <Link to={`/kaugummiedit/${gum.id}`}>Bearbeiten</Link>
+                        <Link to={`/kaugummiedit/${gum.id}`} onClick={(event) => event.stopPropagation()}>
+                            Bearbeiten
+                        </Link>
+                        <button type="button" onClick={(event) => handleDelete(event, gum.id)}>
+                            Löschen
+                        </button>
 
 
                         <img
