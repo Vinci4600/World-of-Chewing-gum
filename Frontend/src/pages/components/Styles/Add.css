@@ -1,0 +1,68 @@
+.kaugummi-form-container {
+    width: min(90%, 450px);
+    height: 700px;
+
+    position: absolute;
+    overflow: hidden;        /* Schneidet alles ab, was doch herausragen würde */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background: rgba(255, 255, 255, 0.03);
+
+    border: 2px solid #F72585;
+    border-radius: 25px;
+
+    box-shadow:
+            0 0 10px #7209b7,
+            0 0 25px #7209b7,
+            0 0 50px rgb(114 9 183);
+
+    backdrop-filter: blur(3px);
+
+    box-sizing: border-box;
+}
+
+
+.button1.animated-btn {
+    position: relative;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+/* Hover-Effekt: Vergrößern und Schatten */
+.button1.animated-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 15px rgba(0, 123, 255, 0.4);
+    background-color: #0056b3;
+}
+
+/* Click-Effekt */
+.button1.animated-btn:active {
+    transform: translateY(-1px) scale(0.98);
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+}
+
+/* Optionale Puls-Animation, um Aufmerksamkeit zu erzeugen */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.6);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(0, 123, 255, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+    }
+}
+
+.button1.animated-btn {
+    animation: pulse 2s infinite;
+}

@@ -4,7 +4,7 @@ services:
     container_name: woc-mysql
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: chewinggum_db
+      MYSQL_DATABASE: world_of_chewing_gum
       MYSQL_USER: chewinggum
       MYSQL_PASSWORD: chewing_user
       MYSQL_ROOT_PASSWORD: root
