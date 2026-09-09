@@ -38,7 +38,6 @@ public class KaugummiController {
      * @return aktualisiertes KaugummiDTO
      */
     @PutMapping({"/{id}", "/update/{id}"})
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<KaugummiDTO> updateKaugummi(
             @PathVariable Long id,
             @Valid @RequestBody KaugummiDTO kaugummiDTO) {

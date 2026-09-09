@@ -391,6 +391,34 @@ label {
     margin: 5px 0;
 }
 
+.kaugummi-card-actions {
+    display: flex;
+    gap: 8px;
+    padding: 10px 10px 0;
+}
+
+.kaugummi-icon-button {
+    display: grid;
+    width: 36px;
+    height: 36px;
+    place-items: center;
+    padding: 0;
+    border: 1px solid #ff2bd6;
+    border-radius: 5px;
+    background: #241c42;
+    cursor: pointer;
+}
+
+.kaugummi-icon-button img {
+    width: 25px;
+    height: 25px;
+    object-fit: contain;
+}
+
+.kaugummi-icon-button:hover {
+    background: #5d1f64;
+}
+
 .zuckerfrei {
     margin-top: auto;
     padding: 5px 9px;

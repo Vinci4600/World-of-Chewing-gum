@@ -25,6 +25,7 @@ public class Kaugummi {
 
     private Boolean zuckerfrei;
 
+    @Column(length = 2000)
     private String inhaltsstoffe;
 
     private String shopUrl;

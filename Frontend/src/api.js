@@ -7,7 +7,7 @@ const API = axios.create({
 // Fügt automatisch das Bearer-Token bei jeder Anfrage hinzu
 API.interceptors.request.use(
     (config) => {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem("token") || sessionStorage.getItem("token");
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
