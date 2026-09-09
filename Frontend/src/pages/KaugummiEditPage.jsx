@@ -33,6 +33,7 @@ function KaugummiEditPage() {
                 setZuckerfrei(Boolean(data.zuckerfrei));
                 setMarke(data.marke || "");
 
+
             } catch (err) {
                 setError(err.message);
             } finally {
@@ -125,6 +126,7 @@ function KaugummiEditPage() {
                         placeholder="Shop URL"
                         value={shopUrl}
                         onChange={(e) => setShopUrl(e.target.value)}
+                        required
                     />
                 </div>
 
@@ -135,6 +137,7 @@ function KaugummiEditPage() {
                         placeholder="Image URL"
                         value={imageUrl}
                         onChange={(e) => setImageUrl(e.target.value)}
+                        required
                     />
                 </div>
 
@@ -147,6 +150,8 @@ function KaugummiEditPage() {
                         type="checkbox"
                         checked={zuckerfrei}
                         onChange={(e) => setZuckerfrei(e.target.checked)}
+
+
                     />
                 </div>
 

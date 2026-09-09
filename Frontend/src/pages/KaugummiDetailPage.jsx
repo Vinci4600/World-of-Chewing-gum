@@ -63,6 +63,33 @@ function KaugummiDetailPage() {
                             <span>Inhaltsstoffe</span>
                             <strong>{gum.inhaltsstoffe || "Keine Angaben"}</strong>
                         </div>
+
+                        <div>
+                            <span>Geschmack</span>
+                            <strong>{gum.geschmack || "Geschmack"}</strong>
+                        </div>
+
+                        <div>
+                            <span>Marke</span>
+                            <strong>{gum.name || "Marke"}</strong>
+                        </div>
+
+                        <div>
+                            <span>Shop URl</span>
+                            <strong>{gum.shopUrl|| "Shop URL"}</strong>
+                        </div>
+
+
+                        <div>
+                            <span>Inhaltsstoffe</span>
+                            <strong>{gum.inhaltsstoffe || "Inhaltstoffe"}</strong>
+                        </div>
+
+
+
+
+
+
                     </div>
 
                     <div className="kaugummi-detail-actions">
