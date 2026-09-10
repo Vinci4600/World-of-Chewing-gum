@@ -28,10 +28,10 @@ function App() {
                 </div>
 
                 <div className="navbar-links">
+                    <Link to="/kaugummiPage">Kaugummis</Link>
                     {isAuthenticated ? (
                         <>
                             <Link to="/">Home</Link>
-                            <Link to="/kaugummiPage">Kaugummis</Link>
                             <Link to="/kaugummiadd">Kaugummi hinzufügen</Link>
                             <button onClick={handleLogout} className="logout-btn">
                                 Logout
