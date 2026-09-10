@@ -75,10 +75,9 @@ function KaugummiDetailPage() {
                         </div>
 
                         <div>
-                            <span>Shop URl</span>
-                            <strong>{gum.shopUrl|| "Shop URL"}</strong>
+                            <span>Herstellungsland</span>
+                            <strong>{gum.herstellungsland || "Keine Angaben"}</strong>
                         </div>
-
 
                         <div>
                             <span>Inhaltsstoffe</span>
