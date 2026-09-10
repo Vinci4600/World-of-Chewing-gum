@@ -65,16 +65,6 @@ function KaugummiDetailPage() {
                         </div>
 
                         <div>
-                            <span>Geschmack</span>
-                            <strong>{gum.geschmack || "Geschmack"}</strong>
-                        </div>
-
-                        <div>
-                            <span>Marke</span>
-                            <strong>{gum.name || "Marke"}</strong>
-                        </div>
-
-                        <div>
                             <span>Herstellungsland</span>
                             <strong>{gum.herstellungsland || "Keine Angaben"}</strong>
                         </div>
