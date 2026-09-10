@@ -38,6 +38,7 @@ public class KaugummiController {
      * @return aktualisiertes KaugummiDTO
      */
     @PutMapping({"/{id}", "/update/{id}"})
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<KaugummiDTO> updateKaugummi(
             @PathVariable Long id,
             @Valid @RequestBody KaugummiDTO kaugummiDTO) {
@@ -105,6 +106,7 @@ public class KaugummiController {
         return ResponseEntity.ok(createdKaugummi);
     }
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> deleteKaugummi(@PathVariable Long id) {
 
         if (!kaugummiService.existsById(id)) {
