@@ -29,6 +29,7 @@ public class Kaugummi {
     private String inhaltsstoffe;
 
     private String shopUrl;
+    private String herstellungsland;
 
     // Ein Kaugummi kann mehrere Bewertungen haben
     @OneToMany(
@@ -56,7 +57,8 @@ public class Kaugummi {
             String geschmack,
             Boolean zuckerfrei,
             String inhaltsstoffe,
-            String shopUrl
+            String shopUrl,
+            String herstellungsland
     ) {
         this.id = id;
         this.name = name;
@@ -66,10 +68,19 @@ public class Kaugummi {
         this.zuckerfrei = zuckerfrei;
         this.inhaltsstoffe = inhaltsstoffe;
         this.shopUrl = shopUrl;
+        this.herstellungsland = herstellungsland;
     }
 
 
     // Getter und Setter
+
+    public String getHerstellungsland() {
+        return herstellungsland;
+    }
+
+    public void setHerstellungsland(String herstellungsland) {
+        this.herstellungsland = herstellungsland;
+    }
 
     public Long getId() {
         return id;

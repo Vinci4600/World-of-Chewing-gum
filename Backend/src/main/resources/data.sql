@@ -13,3 +13,13 @@ ON DUPLICATE KEY UPDATE
     name = VALUES(name),
     zuckerfrei = VALUES(zuckerfrei),
     shop_url = VALUES(shop_url);
+
+INSERT INTO benutzer (benutzername, email, passwort, role, dtype)
+VALUES
+    ('Vincent', 'vincentdiergardt12@gmail.com', '$2a$10$4IGrR3G.5g7FLQoUWaW0tO0vNKYQlFIuOCknGbmODhhHnOOa7bBuO', 'ADMIN', 'Admin'),
+    ('Elias', 'eljourka@gmail.com', '$2a$10$7uO2OK4s8huQxh19dhXx7eGgK4HXBwY7kZC3ssS6J/8OlzQb0mO2u', 'ADMIN', 'Admin')
+ON DUPLICATE KEY UPDATE
+    benutzername = VALUES(benutzername),
+    passwort = VALUES(passwort),
+    role = VALUES(role),
+    dtype = VALUES(dtype);
