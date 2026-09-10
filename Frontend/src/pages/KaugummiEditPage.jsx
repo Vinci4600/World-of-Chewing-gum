@@ -14,6 +14,7 @@ function KaugummiEditPage() {
     const [imageUrl, setImageUrl] = useState("");
     const [shopUrl, setShopUrl] = useState("");
     const [zuckerfrei, setZuckerfrei] = useState(false);
+    const [herstellungsland, setHerstellungsland] = useState("");
 
     // 2. States für Status und Fehlerhandling
     const [loading, setLoading] = useState(true);
@@ -32,6 +33,7 @@ function KaugummiEditPage() {
                 setShopUrl(data.shopUrl || "");
                 setZuckerfrei(Boolean(data.zuckerfrei));
                 setMarke(data.marke || "");
+                setHerstellungsland(data.herstellungsland || "");
 
 
             } catch (err) {
@@ -57,7 +59,8 @@ function KaugummiEditPage() {
                     inhaltsstoffe,
                     imageUrl,
                     shopUrl,
-                    zuckerfrei
+                    zuckerfrei,
+                herstellungsland,
             });
 
             navigate("/kaugummiPage");
@@ -152,6 +155,16 @@ function KaugummiEditPage() {
                         onChange={(e) => setZuckerfrei(e.target.checked)}
 
 
+                    />
+                </div>
+                <div className="lg-field">
+                    <input
+                        className="lg-input"
+                        type="text"
+                        placeholder="Herstellungsland"
+                        value={herstellungsland}
+                        onChange={(e) => setHerstellungsland(e.target.value)}
+                        required
                     />
                 </div>
 
