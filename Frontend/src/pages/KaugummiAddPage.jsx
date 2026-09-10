@@ -11,7 +11,7 @@ function KaugummiAddPage() {
     const [zuckerfrei, setZuckerfrei] = useState(false);
     const [inhaltsstoffe, setInhaltsstoffe] = useState("");
     const [shopUrl, setShopUrl] = useState("");
-
+    const [herstellungsland, setHerstellungsland] = useState("");
     // Daten, die ins Backend geschickt werden
     const kaugummiData = {
         name: name,
@@ -20,7 +20,8 @@ function KaugummiAddPage() {
         geschmack: geschmack,
         zuckerfrei: zuckerfrei,
         inhaltsstoffe: inhaltsstoffe,
-        shopUrl: shopUrl
+        shopUrl: shopUrl,
+        herstellungsland: herstellungsland,
     };
 
     // POST-Funktion
@@ -146,6 +147,15 @@ function KaugummiAddPage() {
                             value={shopUrl}
                             onChange={(e) => setShopUrl(e.target.value)}
                             placeholder="Gütigster verkaufs Url"
+                            required
+                        />
+                        {/*Herstellungsland*/}
+                        <input
+                            id="herstellungsland"
+                            type="text"
+                            value={herstellungsland}
+                            onChange={(e) => setHerstellungsland(e.target.value)}
+                            placeholder="Herstellungsland"
                             required
                         />
                     </div>
