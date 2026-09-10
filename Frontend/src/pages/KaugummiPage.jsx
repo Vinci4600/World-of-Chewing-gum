@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../api.js"; // Pfad ggf. anpassen
+import { useAuth } from "../context/AuthContext.jsx";
 
 import {Link} from "react-router-dom";
 import "./components/Styles/Home.css";
@@ -10,6 +11,7 @@ import deleteIcon from "./components/Bilder/Deletebtn.png";
 
 function KaugummiPage() {
     const [kaugummi, setKaugummi] = useState([]);
+    const { isAuthenticated } = useAuth();
 
     const navigate = useNavigate();
 
@@ -61,26 +63,28 @@ function KaugummiPage() {
                         onClick={() => handleKaugummiClick(gum.id)}
                     >
 
-                        <div className="kaugummi-card-actions">
-                            <Link
-                                className="kaugummi-icon-button"
-                                to={`/kaugummiedit/${gum.id}`}
-                                onClick={(event) => event.stopPropagation()}
-                                aria-label={`${gum.name} bearbeiten`}
-                                title="Bearbeiten"
-                            >
-                                <img src={editIcon} alt="" />
-                            </Link>
-                            <button
-                                className="kaugummi-icon-button"
-                                type="button"
-                                onClick={(event) => handleDelete(event, gum.id)}
-                                aria-label={`${gum.name} löschen`}
-                                title="Löschen"
-                            >
-                                <img src={deleteIcon} alt="" />
-                            </button>
-                        </div>
+                        {isAuthenticated && (
+                            <div className="kaugummi-card-actions">
+                                <Link
+                                    className="kaugummi-icon-button"
+                                    to={`/kaugummiedit/${gum.id}`}
+                                    onClick={(event) => event.stopPropagation()}
+                                    aria-label={`${gum.name} bearbeiten`}
+                                    title="Bearbeiten"
+                                >
+                                    <img src={editIcon} alt="" />
+                                </Link>
+                                <button
+                                    className="kaugummi-icon-button"
+                                    type="button"
+                                    onClick={(event) => handleDelete(event, gum.id)}
+                                    aria-label={`${gum.name} löschen`}
+                                    title="Löschen"
+                                >
+                                    <img src={deleteIcon} alt="" />
+                                </button>
+                            </div>
+                        )}
 
 
                         <img
