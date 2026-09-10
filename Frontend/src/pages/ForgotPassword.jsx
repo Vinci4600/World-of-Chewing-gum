@@ -8,18 +8,23 @@ function ForgotPassword() {
     const [formData, setFormData] = useState({
         username: '',
         oldpassword: '',
-        newpassword: '',
         confirmPassword: '',
         rememberMe: false // Als Boolean für die Checkbox initialisiert
     });
-    const [showPassword, setShowPassword] = useState(false);
-    const [error, setError] = useState('');
 
-    // Dynamische Passwort-Validierung (basiert jetzt korrekt auf 'newpassword')
-    const hasLength = formData.newpassword.length >= 8;
-    const hasLower = /[a-z]/.test(formData.newpassword);
-    const hasUpper = /[A-Z]/.test(formData.newpassword);
-    const hasNumber = /\d/.test(formData.newpassword);
+    /**
+     * Password Requirements
+     */
+    const [showPassword, setShowPassword] = useState(false);
+    const [showOldPassword, setShowOldPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState('');
+    const hasLength = formData.confirmPassword.length >= 5;
+    const hasLower = /[a-z]/.test(formData.confirmPassword);
+    const hasUpper = /[A-Z]/.test(formData.confirmPassword);
+    const hasNumber = /\d/.test(formData.confirmPassword);
     const isPasswordValid = hasLength && hasLower && hasUpper && hasNumber;
 
 
@@ -44,6 +49,8 @@ function ForgotPassword() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setError('');
+        setSuccess('');
 
 
 
@@ -57,6 +64,7 @@ function ForgotPassword() {
 
         if(formData.confirmPassword.length <6){
             setError("Der Password ist zu kurz!");
+            alert("Bitte ein längeres Password eingeben!");
             return;
         }
 
@@ -74,10 +82,16 @@ function ForgotPassword() {
         }
 
         // Validierung: Passwörter müssen übereinstimmen
-        if (formData.newpassword !== formData.confirmPassword) {
-            setError("Die Passwörter stimmen nicht überein!");
-            return;
-        }
+
+
+        setTimeout(() => {
+            setLoading(false);
+            setSuccess("Passwort wurde erfolgreich zurückgesetzt! Du wirst weitergeleitet...");
+
+            setTimeout(() => {
+                navigate("/login");
+            }, 2000);
+        }, 1500);
 
         // Wenn alles passt:
         setError('');
@@ -129,8 +143,8 @@ function ForgotPassword() {
                         <input
                             className="lg-input"
                             name="oldpassword"
-                            type={showPassword ? "text" : "password"}
-                            placeholder="Passwort eingeben"
+                            type={showOldPassword? "text" : "password"}
+                            placeholder=" Jetziges Passwort eingeben"
                             autoComplete="current-password"
                             value={formData.oldpassword}
                             onChange={handleChange}
@@ -139,10 +153,10 @@ function ForgotPassword() {
                         <button
                             type="button"
                             className="lg-toggle"
-                            onClick={() => setShowPassword((prev) => !prev)}
-                            aria-label={showPassword ? "Passwort verbergen" : "Passwort anzeigen"}
+                            onClick={() => setShowOldPassword((prev) => !prev)}
+                            aria-label={showOldPassword? "Passwort verbergen" : "Passwort anzeigen"}
                         >
-                            {showPassword ? "Hide" : "Show"}
+                            {showOldPassword? "Hide" : "Show"}
                         </button>
                     </div>
 
@@ -152,7 +166,7 @@ function ForgotPassword() {
                         <input
                             id="confirmPassword"
                             name="confirmPassword"
-                            type="password"
+
                             required
                             value={formData.confirmPassword}
                             onChange={handleChange}
@@ -177,34 +191,48 @@ function ForgotPassword() {
                     {/* Remember Me Checkbox */}
 
 
+                    {error && (
+                        <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg text-sm border border-red-300" style={{ color: '#b91c1c', backgroundColor: '#fee2e2', padding: '0.75rem', borderRadius: '0.5rem', marginBottom: '1rem' }}>
+                            ⚠️ {error}
+                        </div>
+                    )}
+
+                    {success && (
+                        <div className="mb-4 p-3 bg-green-100 text-green-700 rounded-lg text-sm border border-green-300" style={{ color: '#15803d', backgroundColor: '#dcfce7', padding: '0.75rem', borderRadius: '0.5rem', marginBottom: '1rem' }}>
+                            ✓ {success}
+                        </div>
+                    )}
+
                     {/* Live-Validierungs-Box */}
                     <div className="rg-card">
                         <h3 className="title font-semibold text-sm mb-2 text-gray-700">Das Passwort muss Folgendes enthalten:</h3>
 
-                        <p id="letter" className={hasLower ? 'text-green-600 text-sm' : 'text-red-500 text-sm'}>
-                            {hasLower ? <span>✓ Ein <b>Kleinbuchstabe</b></span> : <span>• Ein <b>Kleinbuchstabe</b></span>}
+                        <p id="letter" style={{ color: hasLower ? '#16a34a' : '#ef4444', fontSize: '0.875rem', margin: '4px 0' }}>
+                            {hasLower ? <span>✓ Ein <b>Kleinbuchstabe</b></span> : <span>✕ Ein <b>Kleinbuchstabe</b></span>}
                         </p>
 
-                        <p id="capital" className={hasUpper ? 'text-green-600 text-sm' : 'text-red-500 text-sm'}>
-                            {hasUpper ? <span>✓ Ein <b>Großbuchstabe</b></span> : <span>• Ein <b>Großbuchstabe</b></span>}
+                        <p id="capital" style={{ color: hasUpper ? '#16a34a' : '#ef4444', fontSize: '0.875rem', margin: '4px 0' }}>
+                            {hasUpper ? <span>✓ Ein <b>Großbuchstabe</b></span> : <span>✕ Ein <b>Großbuchstabe</b></span>}
                         </p>
 
-                        <p id="number" className={hasNumber ? 'text-green-600 text-sm' : 'text-red-500 text-sm'}>
-                            {hasNumber ? <span>✓ Eine <b>Zahl</b></span> : <span>• Eine <b>Zahl</b></span>}
+                        <p id="number" style={{ color: hasNumber ? '#16a34a' : '#ef4444', fontSize: '0.875rem', margin: '4px 0' }}>
+                            {hasNumber ? <span>✓ Eine <b>Zahl</b></span> : <span>✕ Eine <b>Zahl</b></span>}
                         </p>
 
-                        <p id="length" className={hasLength ? 'text-green-600 text-sm' : 'text-red-500 text-sm'}>
-                            {hasLength ? <span>✓ Mindestens <b>8 Zeichen</b></span> : <span>• Mindestens <b>8 Zeichen</b></span>}
+                        <p id="length" style={{ color: hasLength ? '#16a34a' : '#ef4444', fontSize: '0.875rem', margin: '4px 0' }}>
+                            {hasLength ? <span>✓ Mindestens <b>8 Zeichen</b></span> : <span>✕ Mindestens <b>8 Zeichen</b></span>}
                         </p>
                     </div>
 
-                    {/* Button zum Abschicken */}
-                    <br></br>
+                    {/* Button zum Abschicken mit Ladezustand */}
+                    <br />
                     <button
                         type="submit"
                         className="lg-btn"
+                        disabled={loading}
+                        style={{ opacity: loading ? 0.9 : 1, cursor: loading ? 'not-allowed' : 'pointer' }}
                     >
-                        Jetzt Passwort zurücksetzen
+                        {loading ? "Passwort wird zurückgesetzt..." : "Jetzt Passwort zurücksetzen"}
                     </button>
                 </form>
             </div>
