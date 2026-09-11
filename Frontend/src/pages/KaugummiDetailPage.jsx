@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import API from "../api.js";
+import "./components/Styles/Home.css";
+
 function KaugummiDetailPage() {
     const { id } = useParams();
     const navigate = useNavigate();
