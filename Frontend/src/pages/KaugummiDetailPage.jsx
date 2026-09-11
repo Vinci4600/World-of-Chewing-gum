@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import API from "../api";
-import "./components/Styles/Home.css";
-
 function KaugummiDetailPage() {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -63,19 +60,14 @@ function KaugummiDetailPage() {
                             <span>Inhaltsstoffe</span>
                             <strong>{gum.inhaltsstoffe || "Keine Angaben"}</strong>
                         </div>
-
                         <div>
                             <span>Herstellungsland</span>
                             <strong>{gum.herstellungsland || "Keine Angaben"}</strong>
                         </div>
-
-
-
-
-
-
-
-
+                        <div>
+                            <span>Nebenwirkungen</span>
+                            <strong>{gum.nebenwirkungen || "Keine Angaben"}</strong>
+                        </div>
                     </div>
 
                     <div className="kaugummi-detail-actions">
@@ -89,7 +81,6 @@ function KaugummiDetailPage() {
                                 Im Shop ansehen
                             </a>
                         )}
-
                     </div>
                 </div>
             </article>
