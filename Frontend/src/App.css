@@ -196,12 +196,14 @@ Body {
     font-weight: bold;
     text-decoration: none;
     color: #333;
+    margin-right: 5rem;
 }
 .navbar-logo img {
     width: 60px;
     height: auto;
     display: block;
     object-fit: contain;
+    margin-right: 3rem;
 }
 
 .navbar-links {
