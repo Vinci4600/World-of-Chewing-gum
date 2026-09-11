@@ -154,6 +154,7 @@ public class KaugummiService {
         kaugummi.setInhaltsstoffe(kaugummiDTO.inhaltsstoffe());
         kaugummi.setShopUrl(kaugummiDTO.shopUrl());
         kaugummi.setHerstellungsland(kaugummiDTO.herstellungsland());
+        kaugummi.setNebenwirkungen(kaugummiDTO.nebenwirkungen());
 
         Kaugummi updatedKaugummi = kaugummiRepository.save(kaugummi);
 
