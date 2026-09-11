@@ -90,6 +90,10 @@ function KaugummiDetailPage() {
 
 
 
+
+
+
+
                     </div>
 
                     <div className="kaugummi-detail-actions">

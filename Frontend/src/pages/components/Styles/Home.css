@@ -228,6 +228,58 @@ input:not([type="checkbox"]) {
 }
 
 
+
+/* Container für das Formular */
+.lg-field-password {
+    position: relative;
+}
+
+/* Button zum Anzeigen / Verbergen des Passworts */
+.toggle-password-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.toggle-password-btn:hover {
+    color: #333;
+}
+
+/* Trennlinie */
+.lg-divider {
+    margin: 15px 0;
+    text-align: center;
+    color: #888;
+    font-size: 0.9rem;
+}
+
+/* Google Sign-In Button */
+.button-google {
+    width: 100%;
+    padding: 10px;
+    background-color: #ffffff;
+    color: #757575;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.button-google:hover {
+    background-color: #f7f7f7;
+    border-color: #ccc;
+}
 label {
     color: #F72585;
 
