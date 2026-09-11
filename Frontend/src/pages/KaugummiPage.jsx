@@ -114,6 +114,11 @@ function KaugummiPage() {
                                 {gum.inhaltsstoffe}
                             </p>
 
+                            <p>
+                                <strong>Nebenwirkungen:</strong>{" "}
+                                {gum.nebenwirkungen || "Keine Angaben"}
+                            </p>
+
                             {gum.zuckerfrei && (
                                 <span className="zuckerfrei">
                                     Zuckerfrei
