@@ -46,7 +46,14 @@ function KaugummiDetailPage() {
 
             <article className="kaugummi-detail-card">
                 <div className="kaugummi-detail-image-wrap">
-                    <img src={gum.imageUrl} alt={gum.name} className="kaugummi-detail-image" />
+                    <img
+                        src={gum.imageUrl?.includes("via.placeholder.com") ? "/Last.png" : gum.imageUrl || "/Last.png"}
+                        alt={gum.name}
+                        className="kaugummi-detail-image"
+                        onError={(event) => {
+                            event.currentTarget.src = "/Last.png";
+                        }}
+                    />
                 </div>
 
                 <div className="kaugummi-detail-content">

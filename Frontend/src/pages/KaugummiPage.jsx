@@ -88,9 +88,12 @@ function KaugummiPage() {
 
 
                         <img
-                            src={gum.imageUrl}
+                            src={gum.imageUrl?.includes("via.placeholder.com") ? "/Last.png" : gum.imageUrl || "/Last.png"}
                             alt={gum.name}
                             className="kaugummi-image"
+                            onError={(event) => {
+                                event.currentTarget.src = "/Last.png";
+                            }}
                         />
 
                         <div className="kaugummi-card-content">

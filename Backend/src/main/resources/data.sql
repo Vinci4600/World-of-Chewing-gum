@@ -1,6 +1,6 @@
 INSERT INTO kaugummi (id, geschmack, image_url, inhaltsstoffe, marke, name, zuckerfrei, shop_url)
 VALUES
-    (1, 'Menthol', 'https://via.placeholder.com/300', 'Sorbit, Kaumasse, Aromen', 'Wrigley', 'Airwaves', NULL, 'https://www.example.com'),
+    (1, 'Menthol', '/Last.png', 'Sorbit, Kaumasse, Aromen', 'Wrigley', 'Airwaves', NULL, 'https://www.example.com'),
     (3, 'Minze', 'https://www.brack.ch/true-gum-kaugummi-minze-21-g-1129898', 'Plastik Freier Kaugummi', 'True Gum', 'True Gum Mint', NULL, NULL),
     (4, 'Pineapple', 'https://www.brack.ch/true-gum-kaugummi-minze-21-g-1129898', '...', 'True Gum', 'True Gum Pineapple', NULL, NULL)
 ON DUPLICATE KEY UPDATE
