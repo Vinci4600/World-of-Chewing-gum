@@ -12,6 +12,7 @@ function KaugummiAddPage() {
     const [inhaltsstoffe, setInhaltsstoffe] = useState("");
     const [shopUrl, setShopUrl] = useState("");
     const [herstellungsland, setHerstellungsland] = useState("");
+    const [nebenwirkungen , setNebenwirkungen] = useState("");
     // Daten, die ins Backend geschickt werden
     const kaugummiData = {
         name: name,
@@ -22,6 +23,7 @@ function KaugummiAddPage() {
         inhaltsstoffe: inhaltsstoffe,
         shopUrl: shopUrl,
         herstellungsland: herstellungsland,
+        nebenwirkungen: nebenwirkungen,
     };
 
     // POST-Funktion
@@ -149,16 +151,26 @@ function KaugummiAddPage() {
                             placeholder="Gütigster verkaufs Url"
                             required
                         />
+                    </div>
                         {/*Herstellungsland*/}
-                        <input
+                        <div className="form-group"> <input
                             id="herstellungsland"
                             type="text"
                             value={herstellungsland}
                             onChange={(e) => setHerstellungsland(e.target.value)}
                             placeholder="Herstellungsland"
                             required
-                        />
-                    </div>
+                        /></div>
+                    {/*Nebenwirkungen*/}
+                    <div className="form-group"> <input
+                        id="nebenwirkungen"
+                        type="text"
+                        value={nebenwirkungen}
+                        onChange={(e) => setNebenwirkungen(e.target.value)}
+                        placeholder="Nebenwirkungen"
+                        required
+                    /></div>
+
 
                     {/* Absenden */}
                     <button className="button1 animated-btn" type="submit">
