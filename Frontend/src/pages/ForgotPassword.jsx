@@ -55,9 +55,12 @@ function ForgotPassword() {
 
 
 
+
+
+
         // Validierung: Username-Länge prüfen
         if (formData.username.length < 8) {
-            setError("Der Username ist zu kurz! Er muss mindestens 8 Zeichen lang sein.");
+            setError("Der Username bzw iene gültige E-Mail-Adresse ein  ist zu kurz! Er muss mindestens 8 Zeichen lang sein.");
             return;
         }
 
@@ -86,10 +89,10 @@ function ForgotPassword() {
 
         setTimeout(() => {
             setLoading(false);
-            setSuccess("Passwort wurde erfolgreich zurückgesetzt! Du wirst weitergeleitet...");
+            setSuccess("Ein Code zum Zurücksetzen wurde an deine E-Mail gesendet!");
 
             setTimeout(() => {
-                navigate("/login");
+                navigate("/verify-code",{state:{email:formData.username}});
             }, 2000);
         }, 1500);
 
@@ -104,16 +107,16 @@ function ForgotPassword() {
 
     return (
         <div className="lg-page">
+
             <div className="kaugummi-form-container">
+                    <h1 className="lg-title">Passwort vergessen</h1>
+                    <p style={{ textAlign: 'center', marginBottom: '1.5rem', color: '#666' }}>
+                        Gib deine E-Mail-Adresse ein. Wir senden dir einen Code zum Zurücksetzen des Passworts.
+                    </p>
                 <h1 className="lg-title">Reset Password</h1>
                 <br></br>
 
-                {/* Fehlermeldung im UI anzeigen */}
-                {error && (
-                    <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg text-sm">
-                        {error}
-                    </div>
-                )}
+
 
                 <form onSubmit={handleSubmit} >
                     {/* Benutzername Feld */}
@@ -232,7 +235,7 @@ function ForgotPassword() {
                         disabled={loading}
                         style={{ opacity: loading ? 0.9 : 1, cursor: loading ? 'not-allowed' : 'pointer' }}
                     >
-                        {loading ? "Passwort wird zurückgesetzt..." : "Jetzt Passwort zurücksetzen"}
+                        {loading ? "Code wird gesendet..." : "Code per E-Mail senden"}
                     </button>
                 </form>
             </div>

@@ -9,6 +9,7 @@ import KaugummiEditPage from "./pages/KaugummiEditPage.jsx";
 import ProtectedRoute from "./pages/components/ProtectedRoute.jsx";
 import { useAuth } from "./context/AuthContext.jsx";
 import ForgotPassword from "./pages/ForgotPassword.jsx";
+import VerifyCode from "./pages/VerifyCode.jsx";
 
 function App() {
     const { isAuthenticated, logout } = useAuth();
@@ -43,6 +44,7 @@ function App() {
                             <Link to="/login">Login</Link>
                             <Link to="/register">Registrieren</Link>
                             <Link to="/forgotpassword">Password vergessen</Link>
+                            <Link to="verify-code">Code verifizieren</Link>
                         </>
                     )}
                 </div>
@@ -53,7 +55,8 @@ function App() {
                     {/* Öffentliche Routen */}
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/register" element={<RegistrierungPage />} />
-
+                    <Route path="/forgotpassword" element={<ForgotPassword />}/>
+                    <Route path="/verify-code" element={<VerifyCode />}/>
                     {/* Geschützte Routen (Nicht eingeloggt -> Redirect zu /login) */}
                     <Route element={<ProtectedRoute />}>
                         <Route path="/" element={<HomePage />} />
