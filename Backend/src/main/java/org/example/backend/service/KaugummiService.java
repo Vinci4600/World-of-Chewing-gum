@@ -111,6 +111,9 @@ public class KaugummiService {
         kaugummi.setGeschmack(kaugummiDTO.geschmack());
         kaugummi.setZuckerfrei(kaugummiDTO.zuckerfrei());
         kaugummi.setInhaltsstoffe(kaugummiDTO.inhaltsstoffe());
+        kaugummi.setShopUrl(kaugummiDTO.shopUrl());
+        kaugummi.setHerstellungsland(kaugummiDTO.herstellungsland());
+        kaugummi.setNebenwirkungen(kaugummiDTO.nebenwirkungen());
 
         Kaugummi savedKaugummi = kaugummiRepository.save(kaugummi);
 
@@ -122,7 +125,9 @@ public class KaugummiService {
                 savedKaugummi.getGeschmack(),
                 savedKaugummi.getZuckerfrei(),
                 savedKaugummi.getInhaltsstoffe(),
-                savedKaugummi.getShopUrl()
+                savedKaugummi.getShopUrl(),
+                savedKaugummi.getHerstellungsland(),
+                savedKaugummi.getNebenwirkungen()
         );
     }
 
@@ -148,6 +153,8 @@ public class KaugummiService {
         kaugummi.setZuckerfrei(kaugummiDTO.zuckerfrei());
         kaugummi.setInhaltsstoffe(kaugummiDTO.inhaltsstoffe());
         kaugummi.setShopUrl(kaugummiDTO.shopUrl());
+        kaugummi.setHerstellungsland(kaugummiDTO.herstellungsland());
+        kaugummi.setNebenwirkungen(kaugummiDTO.nebenwirkungen());
 
         Kaugummi updatedKaugummi = kaugummiRepository.save(kaugummi);
 
@@ -159,7 +166,9 @@ public class KaugummiService {
                 updatedKaugummi.getGeschmack(),
                 updatedKaugummi.getZuckerfrei(),
                 updatedKaugummi.getInhaltsstoffe(),
-                updatedKaugummi.getShopUrl()
+                updatedKaugummi.getShopUrl(),
+                updatedKaugummi.getHerstellungsland(),
+                updatedKaugummi.getNebenwirkungen()
         );
     }
 }

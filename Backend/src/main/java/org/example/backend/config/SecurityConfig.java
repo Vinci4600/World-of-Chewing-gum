@@ -2,6 +2,7 @@ package org.example.backend.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -27,6 +28,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // Gib ALLE Pfade frei, unter denen Registrierung/Login erreichbar sind:
                         .requestMatchers("/register", "/login", "/api/auth/**").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/kaugummi/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(AbstractHttpConfigurer::disable)

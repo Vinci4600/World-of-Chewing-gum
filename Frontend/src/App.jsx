@@ -53,8 +53,6 @@ function App() {
                     {/* Öffentliche Routen */}
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/register" element={<RegistrierungPage />} />
-                    <Route path="/forgotpassword" element={<ForgotPassword />} />
-
 
                     {/* Geschützte Routen (Nicht eingeloggt -> Redirect zu /login) */}
                     <Route element={<ProtectedRoute />}>
