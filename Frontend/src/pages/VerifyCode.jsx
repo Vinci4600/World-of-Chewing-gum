@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import "./components/Styles/ForgotPassword.css";
+import "/ForgotPassword.jsx";
 
 function VerifyCode() {
     const navigate = useNavigate();
@@ -115,6 +116,7 @@ function VerifyCode() {
                             onChange={(e) => setEmail(e.target.value)}
                             className="lg-input"
                             placeholder="E-Mail-Adresse eingeben"
+                            readOnly={Boolean(emailFromState)}
                             autoComplete="email"
                         />
                     </div>
@@ -129,6 +131,7 @@ function VerifyCode() {
                             className="lg-input"
                             placeholder="Bitte COde eingeben.."
                             maxLength={6}
+
 
                         />
                     </div>
@@ -162,6 +165,7 @@ function VerifyCode() {
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                             required
+                            autoComplete="new-password"
                         />
                     </div>
 

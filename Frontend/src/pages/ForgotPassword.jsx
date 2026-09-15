@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import "./components/Styles/ForgotPassword.css";
+import "./components/ForgotPassword.css";
 function ForgotPassword() {
     const navigate = useNavigate();
 
@@ -18,6 +18,7 @@ function ForgotPassword() {
     const [showPassword, setShowPassword] = useState(false);
     const [showOldPassword, setShowOldPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [email,setEmail] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState('');
@@ -47,13 +48,15 @@ function ForgotPassword() {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
         setSuccess('');
 
-
-
+        if (!email.trim() || !email.includes('@')) {
+            setError("Bitte gib eine gültige E-Mail-Adresse ein.");
+            return;
+        }
 
 
 
@@ -65,7 +68,7 @@ function ForgotPassword() {
         }
 
 
-        if(formData.confirmPassword.length <6){
+        if (formData.confirmPassword.length < 6) {
             setError("Der Password ist zu kurz!");
             alert("Bitte ein längeres Password eingeben!");
             return;
@@ -81,18 +84,43 @@ function ForgotPassword() {
         // Validierung: Neues Passwort muss den komplexen Kriterien entsprechen
         if (!isPasswordValid) {
             setError("Das neue Passwort erfüllt die Sicherheitsanforderungen nicht.");
+            alert("Bitte ein gültiges Password eingeben!");
             return;
         }
 
+
+        // API-Aufruf zum Senden des Codes
+        const response = await fetch('/forgot-password', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({email})
+        });
+
+        if (response.ok) {
+            // E-Mail über den Router-State an die VerifyCode-Seite weitergeben
+            navigate('/verify-code', {state: {email: email}});
+        }
+
+
+        if (!response.ok) {
+            const data = await response.json().catch(() => ({}));
+            throw new Error(data.message || 'Fehler beim Senden des Verifizierungscodes.');
+        }
+
+
+
+
         // Validierung: Passwörter müssen übereinstimmen
 
-
+        /**
+         * 2 Sekunden Time Oud bevor Code geshcickt wird
+         */
         setTimeout(() => {
             setLoading(false);
             setSuccess("Ein Code zum Zurücksetzen wurde an deine E-Mail gesendet!");
 
             setTimeout(() => {
-                navigate("/verify-code",{state:{email:formData.username}});
+                navigate("/verify-code", {state: {email: formData.username}});
             }, 2000);
         }, 1500);
 
@@ -113,14 +141,23 @@ function ForgotPassword() {
                     <p style={{ textAlign: 'center', marginBottom: '1.5rem', color: '#666' }}>
                         Gib deine E-Mail-Adresse ein. Wir senden dir einen Code zum Zurücksetzen des Passworts.
                     </p>
-                <h1 className="lg-title">Reset Password</h1>
                 <br></br>
 
 
+                <form onSubmit={handleSubmit}>
 
-                <form onSubmit={handleSubmit} >
-                    {/* Benutzername Feld */}
+                    <div className="lg-field">
+                        <input
+                            type="email"
+                            required
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="lg-input"
+                            placeholder="E-Mail-Adresse eingeben"
+                            autoComplete="email"
 
+                        />
+                    </div>
 
 
                     <div className="lg-field">
@@ -132,13 +169,11 @@ function ForgotPassword() {
                             value={formData.username}
                             onChange={handleChange}
                             className="lg-input"
-                            placeholder="E-mail/Username eingeben"
+                            placeholder="Username eingeben"
                             autoComplete="current-username"
-                            style={{paddingRight:"80px",display:"flex",justifyContent:"center"}}
+                            style={{paddingRight: "80px", display: "flex", justifyContent: "center"}}
                         />
                     </div>
-
-
 
 
                     {/* Neues Passwort Feld */}
@@ -146,20 +181,21 @@ function ForgotPassword() {
                         <input
                             className="lg-input"
                             name="oldpassword"
-                            type={showOldPassword? "text" : "password"}
+                            type={showOldPassword ? "text" : "password"}
                             placeholder=" Jetziges Passwort eingeben"
                             autoComplete="current-password"
                             value={formData.oldpassword}
                             onChange={handleChange}
-                            style={{ paddingRight: "70px", display:"flex",justifyContent:"center" }}
+                            required
+                            style={{paddingRight: "70px", display: "flex", justifyContent: "center"}}
                         />
                         <button
                             type="button"
                             className="lg-toggle"
                             onClick={() => setShowOldPassword((prev) => !prev)}
-                            aria-label={showOldPassword? "Passwort verbergen" : "Passwort anzeigen"}
+                            aria-label={showOldPassword ? "Passwort verbergen" : "Passwort anzeigen"}
                         >
-                            {showOldPassword? "Hide" : "Show"}
+                            {showOldPassword ? "Hide" : "Show"}
                         </button>
                     </div>
 
@@ -195,47 +231,69 @@ function ForgotPassword() {
 
 
                     {error && (
-                        <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg text-sm border border-red-300" style={{ color: '#b91c1c', backgroundColor: '#fee2e2', padding: '0.75rem', borderRadius: '0.5rem', marginBottom: '1rem' }}>
+                        <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg text-sm border border-red-300"
+                             style={{
+                                 color: '#b91c1c',
+                                 backgroundColor: '#fee2e2',
+                                 padding: '0.75rem',
+                                 borderRadius: '0.5rem',
+                                 marginBottom: '1rem'
+                             }}>
                             ⚠️ {error}
                         </div>
                     )}
 
                     {success && (
-                        <div className="mb-4 p-3 bg-green-100 text-green-700 rounded-lg text-sm border border-green-300" style={{ color: '#15803d', backgroundColor: '#dcfce7', padding: '0.75rem', borderRadius: '0.5rem', marginBottom: '1rem' }}>
+                        <div className="mb-4 p-3 bg-green-100 text-green-700 rounded-lg text-sm border border-green-300"
+                             style={{
+                                 color: '#15803d',
+                                 backgroundColor: '#dcfce7',
+                                 padding: '0.75rem',
+                                 borderRadius: '0.5rem',
+                                 marginBottom: '1rem'
+                             }}>
                             ✓ {success}
                         </div>
                     )}
 
                     {/* Live-Validierungs-Box */}
                     <div className="rg-card">
-                        <h3 className="title font-semibold text-sm mb-2 text-gray-700">Das Passwort muss Folgendes enthalten:</h3>
+                        <h3 className="title font-semibold text-sm mb-2 text-gray-700">Das Passwort muss Folgendes
+                            enthalten:</h3>
 
-                        <p id="letter" style={{ color: hasLower ? '#16a34a' : '#ef4444', fontSize: '0.875rem', margin: '4px 0' }}>
-                            {hasLower ? <span>✓ Ein <b>Kleinbuchstabe</b></span> : <span>✕ Ein <b>Kleinbuchstabe</b></span>}
+                        <p id="letter"
+                           style={{color: hasLower ? '#16a34a' : '#ef4444', fontSize: '0.875rem', margin: '4px 0'}}>
+                            {hasLower ? <span>✓ Ein <b>Kleinbuchstabe</b></span> :
+                                <span>✕ Ein <b>Kleinbuchstabe</b></span>}
                         </p>
 
-                        <p id="capital" style={{ color: hasUpper ? '#16a34a' : '#ef4444', fontSize: '0.875rem', margin: '4px 0' }}>
-                            {hasUpper ? <span>✓ Ein <b>Großbuchstabe</b></span> : <span>✕ Ein <b>Großbuchstabe</b></span>}
+                        <p id="capital"
+                           style={{color: hasUpper ? '#16a34a' : '#ef4444', fontSize: '0.875rem', margin: '4px 0'}}>
+                            {hasUpper ? <span>✓ Ein <b>Großbuchstabe</b></span> :
+                                <span>✕ Ein <b>Großbuchstabe</b></span>}
                         </p>
 
-                        <p id="number" style={{ color: hasNumber ? '#16a34a' : '#ef4444', fontSize: '0.875rem', margin: '4px 0' }}>
+                        <p id="number"
+                           style={{color: hasNumber ? '#16a34a' : '#ef4444', fontSize: '0.875rem', margin: '4px 0'}}>
                             {hasNumber ? <span>✓ Eine <b>Zahl</b></span> : <span>✕ Eine <b>Zahl</b></span>}
                         </p>
 
-                        <p id="length" style={{ color: hasLength ? '#16a34a' : '#ef4444', fontSize: '0.875rem', margin: '4px 0' }}>
-                            {hasLength ? <span>✓ Mindestens <b>8 Zeichen</b></span> : <span>✕ Mindestens <b>8 Zeichen</b></span>}
+                        <p id="length"
+                           style={{color: hasLength ? '#16a34a' : '#ef4444', fontSize: '0.875rem', margin: '4px 0'}}>
+                            {hasLength ? <span>✓ Mindestens <b>8 Zeichen</b></span> :
+                                <span>✕ Mindestens <b>8 Zeichen</b></span>}
                         </p>
                     </div>
 
                     {/* Button zum Abschicken mit Ladezustand */}
-                    <br />
+                    <br/>
                     <button
                         type="submit"
                         className="lg-btn"
                         disabled={loading}
-                        style={{ opacity: loading ? 0.9 : 1, cursor: loading ? 'not-allowed' : 'pointer' }}
+                        style={{ opacity: loading ? 0.8 : 1, cursor: loading ? 'not-allowed' : 'pointer', marginTop: '1rem' }}
                     >
-                        {loading ? "Code wird gesendet..." : "Code per E-Mail senden"}
+                        {loading ? "Code wird gesendet..." : "Code anfordern"}
                     </button>
                 </form>
             </div>

@@ -23,7 +23,7 @@ public class AppUserDetailsService  implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public Benutzer registrieren(String username, String email, String rawPassword, org.example.backend.model.Role rolle) {
+    public Benutzer registrieren(String username, String email, String rawPassword, org.example.backend.Model.Role rolle) {
         if (benutzerRepository.existsByBenutzername(username)) {
             throw new IllegalArgumentException("Benutzername '" + username + "' ist bereits vergeben");
         }
