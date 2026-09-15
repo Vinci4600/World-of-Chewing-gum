@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import "./ForgotPassword.jsx";
 import "./components/Styles/ForgotPassword.css";
-import "/ForgotPassword.jsx";
 
 function VerifyCode() {
     const navigate = useNavigate();
@@ -45,6 +45,7 @@ function VerifyCode() {
 
         if (!isPasswordValid) {
             setError("Das neue Passwort erfüllt die Sicherheitsanforderungen nicht.");
+            alert("Das neue Password erfüllt ale Sicherheitsanforderungen!");
             return;
         }
 

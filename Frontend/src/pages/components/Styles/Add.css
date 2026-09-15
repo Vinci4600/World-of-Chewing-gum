@@ -24,6 +24,12 @@
 }
 
 
+.add-kaugummi{
+    position: absolute;
+    text-shadow: orangered 2px 2px;
+}
+
+
 .button1.animated-btn {
     position: relative;
     padding: 10px 20px;

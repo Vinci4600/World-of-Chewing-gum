@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import "./components/ForgotPassword.css";
+import "./components/Styles/ForgotPassword.css";
 function ForgotPassword() {
     const navigate = useNavigate();
 
@@ -32,6 +32,7 @@ function ForgotPassword() {
 
 
 
+
     /**
      * Password Requirements
      * @type {[{label: string, valid: boolean},{label: string, valid: boolean},{label: string, valid: boolean},{label: string, valid: boolean},{label: string, valid: boolean}]}
@@ -55,6 +56,7 @@ function ForgotPassword() {
 
         if (!email.trim() || !email.includes('@')) {
             setError("Bitte gib eine gültige E-Mail-Adresse ein.");
+            alert("Gib bitte eine gültige E-Mail Adresse ein!");
             return;
         }
 
@@ -64,8 +66,11 @@ function ForgotPassword() {
         // Validierung: Username-Länge prüfen
         if (formData.username.length < 8) {
             setError("Der Username bzw iene gültige E-Mail-Adresse ein  ist zu kurz! Er muss mindestens 8 Zeichen lang sein.");
+            alert("Gib bitte eine gültiger Username ein!");
             return;
         }
+
+
 
 
         if (formData.confirmPassword.length < 6) {
@@ -138,7 +143,7 @@ function ForgotPassword() {
 
             <div className="kaugummi-form-container">
                     <h1 className="lg-title">Passwort vergessen</h1>
-                    <p style={{ textAlign: 'center', marginBottom: '1.5rem', color: '#666' }}>
+                    <p style={{ textAlign: 'center', marginBottom: '1.5rem', color: 'blueviolet' }}>
                         Gib deine E-Mail-Adresse ein. Wir senden dir einen Code zum Zurücksetzen des Passworts.
                     </p>
                 <br></br>

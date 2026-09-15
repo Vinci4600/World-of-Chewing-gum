@@ -162,6 +162,11 @@ body {
 .kaugummi-form-container {
     width: min(90%, 450px);
     height: 700px;
+    display: flex;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
 
     position: absolute;
     top: 50%;
