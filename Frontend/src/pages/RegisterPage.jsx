@@ -19,6 +19,25 @@ function RegistrierungPage() {
 
     const navigate = useNavigate();
 
+
+
+    const [formData, setFormData] = useState({
+        username: '',
+        newPassword: '',
+        confirmPassword: ''
+    });
+
+
+    const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+    // Validierung für das neue Passwort
+    const hasLength = formData.newPassword.length >= 8;
+    const hasLower = /[a-z]/.test(formData.newPassword);
+    const hasUpper = /[A-Z]/.test(formData.newPassword);
+    const hasNumber = /\d/.test(formData.newPassword);
+    const isPasswordValid = hasLength && hasLower && hasUpper && hasNumber;
+    const passwordsMatch = formData.newPassword.length > 0 && formData.newPassword === formData.confirmPassword;
+
     // Passwort-Anforderungen
     const passwordRequirements = [
         {
@@ -51,7 +70,11 @@ function RegistrierungPage() {
 
     // E-Mail-Anforderungen
     const emailRequirements = [
+
+
         {
+
+
             label: "Muss ein @ enthalten",
             valid: email.includes("@")
         },

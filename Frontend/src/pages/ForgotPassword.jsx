@@ -1,51 +1,56 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./components/Styles/ForgotPassword.css";
+
 function ForgotPassword() {
     const navigate = useNavigate();
 
-    // 1. State für Formulardaten definiert (Unnötiges 'password' entfernt, da es 'newpassword' ist)
     const [formData, setFormData] = useState({
         username: '',
-        oldpassword: '',
-        confirmPassword: '',
-        rememberMe: false // Als Boolean für die Checkbox initialisiert
+        newPassword: '',
+        confirmPassword: ''
     });
 
-    /**
-     * Password Requirements
-     */
-    const [showPassword, setShowPassword] = useState(false);
-    const [showOldPassword, setShowOldPassword] = useState(false);
+    const [showNewPassword, setShowNewPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    const [email,setEmail] = useState('');
+    const [showRequirements, setShowRequirements] = useState(false);
+
+    const [email, setEmail] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState('');
-    const hasLength = formData.confirmPassword.length >= 5;
-    const hasLower = /[a-z]/.test(formData.confirmPassword);
-    const hasUpper = /[A-Z]/.test(formData.confirmPassword);
-    const hasNumber = /\d/.test(formData.confirmPassword);
+
+    // Validierung für E-Mail
+    const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+    // Validierung für das neue Passwort
+    const hasLength = formData.newPassword.length >= 8;
+    const hasLower = /[a-z]/.test(formData.newPassword);
+    const hasUpper = /[A-Z]/.test(formData.newPassword);
+    const hasNumber = /\d/.test(formData.newPassword);
     const isPasswordValid = hasLength && hasLower && hasUpper && hasNumber;
+    const passwordsMatch = formData.newPassword.length > 0 && formData.newPassword === formData.confirmPassword;
 
+    const passwordRequirements = [
+        { label: "Mindestens 8 Zeichen lang", valid: hasLength },
+        { label: "Mindestens 1 Großbuchstabe (A-Z)", valid: hasUpper },
+        { label: "Mindestens 1 Kleinbuchstabe (a-z)", valid: hasLower },
+        { label: "Mindestens 1 Zahl (0-9)", valid: hasNumber },
+        { label: "Passwörter stimmen überein", valid: passwordsMatch }
+    ];
 
+    const emailRequirements = [
 
+        { label: "Muss ein @ enthalten", valid: email.includes("@") },
+        { label: "Muss eine gültige TLD enthalten (.de, .com, .ch)", valid: /\.[a-zA-Z]{2,}$/.test(email) },
+        { label: "Muss eine gültige E-Mail-Adresse sein", valid: isEmailValid }
+    ];
 
-
-
-    /**
-     * Password Requirements
-     * @type {[{label: string, valid: boolean},{label: string, valid: boolean},{label: string, valid: boolean},{label: string, valid: boolean},{label: string, valid: boolean}]}
-     */
-
-    // Prüft, ob alle Kriterien erfüllt sind
-
-    // 2. Optimierte handleChange-Funktion (beachtet auch Checkboxes)
     const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
+        const { name, value } = e.target;
         setFormData((prevData) => ({
             ...prevData,
-            [name]: type === 'checkbox' ? checked : value
+            [name]: value
         }));
     };
 
@@ -54,103 +59,67 @@ function ForgotPassword() {
         setError('');
         setSuccess('');
 
-        if (!email.trim() || !email.includes('@')) {
+        if (!isEmailValid) {
             setError("Bitte gib eine gültige E-Mail-Adresse ein.");
-            alert("Gib bitte eine gültige E-Mail Adresse ein!");
             return;
         }
 
-
-
-
-        // Validierung: Username-Länge prüfen
-        if (formData.username.length < 8) {
-            setError("Der Username bzw iene gültige E-Mail-Adresse ein  ist zu kurz! Er muss mindestens 8 Zeichen lang sein.");
-            alert("Gib bitte eine gültiger Username ein!");
+        if (formData.username.trim().length < 3) {
+            setError("Der Username ist zu kurz.");
             return;
         }
 
-
-
-
-        if (formData.confirmPassword.length < 6) {
-            setError("Der Password ist zu kurz!");
-            alert("Bitte ein längeres Password eingeben!");
-            return;
-        }
-
-        // Validierung: Altes Passwort prüfen
-        if (formData.oldpassword.length < 6) {
-            setError("Das alte Passwort ist zu kurz!");
-            alert("Bitte ein korrektes Passwort eingeben");
-            return;
-        }
-
-        // Validierung: Neues Passwort muss den komplexen Kriterien entsprechen
         if (!isPasswordValid) {
             setError("Das neue Passwort erfüllt die Sicherheitsanforderungen nicht.");
-            alert("Bitte ein gültiges Password eingeben!");
             return;
         }
 
-
-        // API-Aufruf zum Senden des Codes
-        const response = await fetch('/forgot-password', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({email})
-        });
-
-        if (response.ok) {
-            // E-Mail über den Router-State an die VerifyCode-Seite weitergeben
-            navigate('/verify-code', {state: {email: email}});
+        if (!passwordsMatch) {
+            setError("Die Passwörter stimmen nicht überein.");
+            return;
         }
 
+        setLoading(true);
 
-        if (!response.ok) {
-            const data = await response.json().catch(() => ({}));
-            throw new Error(data.message || 'Fehler beim Senden des Verifizierungscodes.');
-        }
+        try {
+            const response = await fetch('/forgot-password', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email,
+                    username: formData.username,
+                    newPassword: formData.newPassword
+                })
+            });
 
+            if (!response.ok) {
+                const data = await response.json().catch(() => ({}));
+                throw new Error(data.message || 'Fehler beim Senden des Verifizierungscodes.');
+            }
 
-
-
-        // Validierung: Passwörter müssen übereinstimmen
-
-        /**
-         * 2 Sekunden Time Oud bevor Code geshcickt wird
-         */
-        setTimeout(() => {
-            setLoading(false);
             setSuccess("Ein Code zum Zurücksetzen wurde an deine E-Mail gesendet!");
 
             setTimeout(() => {
-                navigate("/verify-code", {state: {email: formData.username}});
+                setLoading(false);
+                navigate('/verify-code', { state: { email, username: formData.username } });
             }, 2000);
-        }, 1500);
 
-        // Wenn alles passt:
-        setError('');
-        console.log("Passwort erfolgreich zurückgesetzt", formData);
-        alert("Dein Passwort wurde erfolgreich geändert!");
-
-        // Weiterleitung zum Login
-        navigate("/login");
+        } catch (err) {
+            setLoading(false);
+            setError(err.message || 'Fehler beim Senden des Verifizierungscodes.');
+        }
     };
 
     return (
-        <div className="lg-page">
-
+        <div className="Background-Intro">
             <div className="kaugummi-form-container">
-                    <h1 className="lg-title">Passwort vergessen</h1>
-                    <p style={{ textAlign: 'center', marginBottom: '1.5rem', color: 'blueviolet' }}>
-                        Gib deine E-Mail-Adresse ein. Wir senden dir einen Code zum Zurücksetzen des Passworts.
-                    </p>
-                <br></br>
-
+                <h1>Passwort vergessen</h1>
+                <p style={{ textAlign: 'center', marginBottom: '1.5rem', color: 'blueviolet' }}>
+                    Gib deine E-Mail-Adresse, deinen Usernamen und dein neues Passwort ein.
+                </p>
 
                 <form onSubmit={handleSubmit}>
-
+                    {/* E-Mail */}
                     <div className="lg-field">
                         <input
                             type="email"
@@ -160,143 +129,232 @@ function ForgotPassword() {
                             className="lg-input"
                             placeholder="E-Mail-Adresse eingeben"
                             autoComplete="email"
-
                         />
                     </div>
 
-
+                    {/* Username */}
                     <div className="lg-field">
                         <input
                             id="username"
                             name="username"
-                            type="text" // Wenn es ein Username ist, lieber 'text'. Wenn E-Mail gewünscht, auf 'email' lassen.
+                            type="text"
                             required
                             value={formData.username}
                             onChange={handleChange}
                             className="lg-input"
                             placeholder="Username eingeben"
-                            autoComplete="current-username"
-                            style={{paddingRight: "80px", display: "flex", justifyContent: "center"}}
+                            autoComplete="username"
                         />
                     </div>
 
-
                     {/* Neues Passwort Feld */}
-                    <div className="lg-field">
+                    <div className="lg-field" style={{ position: 'relative' }}>
                         <input
                             className="lg-input"
-                            name="oldpassword"
-                            type={showOldPassword ? "text" : "password"}
-                            placeholder=" Jetziges Passwort eingeben"
-                            autoComplete="current-password"
-                            value={formData.oldpassword}
+                            name="newPassword"
+                            type={showNewPassword ? "text" : "password"}
+                            placeholder="Neues Passwort eingeben"
+                            autoComplete="new-password"
+                            value={formData.newPassword}
                             onChange={handleChange}
                             required
-                            style={{paddingRight: "70px", display: "flex", justifyContent: "center"}}
+                            style={{ paddingRight: "70px" }}
                         />
                         <button
                             type="button"
                             className="lg-toggle"
-                            onClick={() => setShowOldPassword((prev) => !prev)}
-                            aria-label={showOldPassword ? "Passwort verbergen" : "Passwort anzeigen"}
+                            onClick={() => setShowNewPassword((prev) => !prev)}
+                            aria-label={showNewPassword ? "Passwort verbergen" : "Passwort anzeigen"}
                         >
-                            {showOldPassword ? "Hide" : "Show"}
+                            {showNewPassword ? "Hide" : "Show"}
                         </button>
                     </div>
 
                     {/* Passwort bestätigen Feld */}
-                    <div className="lg-field">
-
+                    <div className="lg-field" style={{ position: 'relative' }}>
                         <input
                             id="confirmPassword"
                             name="confirmPassword"
-
+                            type={showConfirmPassword ? "text" : "password"}
                             required
                             value={formData.confirmPassword}
                             onChange={handleChange}
                             className="lg-input"
-                            placeholder="Bestätigungspassword"
+                            placeholder="Passwort bestätigen"
                             autoComplete="new-password"
+                            style={{ paddingRight: "70px" }}
                         />
                         <button
                             type="button"
                             className="lg-toggle"
-                            onClick={() => setShowPassword((prev) => !prev)}
-                            aria-label={showPassword ? "Passwort verbergen" : "Passwort anzeigen"}
+                            onClick={() => setShowConfirmPassword((prev) => !prev)}
+                            aria-label={showConfirmPassword ? "Passwort verbergen" : "Passwort anzeigen"}
                         >
-                            {showPassword ? "Hide" : "Show"}
+                            {showConfirmPassword ? "Hide" : "Show"}
                         </button>
                     </div>
 
-
-                    {/* Passwort-Anforderungen anzeigen */}
-
-
-                    {/* Remember Me Checkbox */}
-
-
+                    {/* Fehlermeldung */}
                     {error && (
-                        <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg text-sm border border-red-300"
-                             style={{
-                                 color: '#b91c1c',
-                                 backgroundColor: '#fee2e2',
-                                 padding: '0.75rem',
-                                 borderRadius: '0.5rem',
-                                 marginBottom: '1rem'
-                             }}>
+                        <div style={{ color: '#b91c1c', backgroundColor: '#fee2e2', padding: '0.75rem', borderRadius: '0.5rem', marginBottom: '1rem', fontSize: '0.875rem' }}>
                             ⚠️ {error}
                         </div>
                     )}
 
+                    {/* Erfolgsmeldung */}
                     {success && (
-                        <div className="mb-4 p-3 bg-green-100 text-green-700 rounded-lg text-sm border border-green-300"
-                             style={{
-                                 color: '#15803d',
-                                 backgroundColor: '#dcfce7',
-                                 padding: '0.75rem',
-                                 borderRadius: '0.5rem',
-                                 marginBottom: '1rem'
-                             }}>
+                        <div style={{ color: '#15803d', backgroundColor: '#dcfce7', padding: '0.75rem', borderRadius: '0.5rem', marginBottom: '1rem', fontSize: '0.875rem' }}>
                             ✓ {success}
                         </div>
                     )}
 
-                    {/* Live-Validierungs-Box */}
-                    <div className="rg-card">
-                        <h3 className="title font-semibold text-sm mb-2 text-gray-700">Das Passwort muss Folgendes
-                            enthalten:</h3>
+                    <button
+                        type="button"
+                        className="requirements-button"
+                        onClick={() =>
+                            setShowRequirements(true)
+                        }
+                    >
+                        Anforderungen anzeigen
+                    </button>
 
-                        <p id="letter"
-                           style={{color: hasLower ? '#16a34a' : '#ef4444', fontSize: '0.875rem', margin: '4px 0'}}>
-                            {hasLower ? <span>✓ Ein <b>Kleinbuchstabe</b></span> :
-                                <span>✕ Ein <b>Kleinbuchstabe</b></span>}
-                        </p>
 
-                        <p id="capital"
-                           style={{color: hasUpper ? '#16a34a' : '#ef4444', fontSize: '0.875rem', margin: '4px 0'}}>
-                            {hasUpper ? <span>✓ Ein <b>Großbuchstabe</b></span> :
-                                <span>✕ Ein <b>Großbuchstabe</b></span>}
-                        </p>
 
-                        <p id="number"
-                           style={{color: hasNumber ? '#16a34a' : '#ef4444', fontSize: '0.875rem', margin: '4px 0'}}>
-                            {hasNumber ? <span>✓ Eine <b>Zahl</b></span> : <span>✕ Eine <b>Zahl</b></span>}
-                        </p>
+                    {/* Popup */}
+                    {showRequirements && (
+                        <div
+                            className="popup-overlay"
+                            onClick={() =>
+                                setShowRequirements(false)
+                            }
+                        >
 
-                        <p id="length"
-                           style={{color: hasLength ? '#16a34a' : '#ef4444', fontSize: '0.875rem', margin: '4px 0'}}>
-                            {hasLength ? <span>✓ Mindestens <b>8 Zeichen</b></span> :
-                                <span>✕ Mindestens <b>8 Zeichen</b></span>}
-                        </p>
-                    </div>
+                            <div
+                                className="rg-card"
+                                onClick={(e) =>
+                                    e.stopPropagation()
+                                }
+                            >
 
-                    {/* Button zum Abschicken mit Ladezustand */}
-                    <br/>
+                                {/* Schließen */}
+                                <button
+                                    type="button"
+                                    className="popup-close"
+                                    onClick={() =>
+                                        setShowRequirements(
+                                            false
+                                        )
+                                    }
+                                >
+                                    ✕
+                                </button>
+
+                                <h3>
+                                    Anforderungen:
+                                </h3>
+
+                                {/* Passwort */}
+                                <p>
+                                    Passwort-Anforderungen:
+                                </p>
+
+                                <ul
+                                    style={{
+                                        listStyle: "none",
+                                        paddingLeft: 0
+                                    }}
+                                >
+
+                                    {passwordRequirements.map(
+                                        (req, index) => (
+                                            <li
+                                                key={index}
+                                                className="rg-item"
+                                                style={{
+                                                    color: req.valid
+                                                        ? "#2e7d32"
+                                                        : "#d32f2f",
+                                                    display: "flex",
+                                                    alignItems:
+                                                        "center",
+                                                    gap: "8px",
+                                                    marginBottom:
+                                                        "4px"
+                                                }}
+                                            >
+
+                                            <span>
+                                                {req.valid
+                                                    ? "✓"
+                                                    : "✗"}
+                                            </span>
+
+                                                <span>
+                                                {req.label}
+                                            </span>
+
+                                            </li>
+                                        )
+                                    )}
+
+                                </ul>
+
+                                {/* E-Mail */}
+                                <p>
+                                    E-Mail-Anforderungen:
+                                </p>
+
+                                <ul
+                                    style={{
+                                        listStyle: "none",
+                                        paddingLeft: 0
+                                    }}
+                                >
+
+                                    {emailRequirements.map(
+                                        (req, index) => (
+                                            <li
+                                                key={index}
+                                                className="rg-item"
+                                                style={{
+                                                    color: req.valid
+                                                        ? "#2e7d32"
+                                                        : "#d32f2f",
+                                                    display: "flex",
+                                                    alignItems:
+                                                        "center",
+                                                    gap: "8px",
+                                                    marginBottom:
+                                                        "4px"
+                                                }}
+                                            >
+
+                                            <span>
+                                                {req.valid
+                                                    ? "✓"
+                                                    : "✗"}
+                                            </span>
+
+                                                <span>
+                                                {req.label}
+                                            </span>
+
+                                            </li>
+                                        )
+                                    )}
+
+                                </ul>
+
+                            </div>
+
+                        </div>
+                    )}
+
                     <button
                         type="submit"
                         className="lg-btn"
                         disabled={loading}
-                        style={{ opacity: loading ? 0.8 : 1, cursor: loading ? 'not-allowed' : 'pointer', marginTop: '1rem' }}
+                        style={{ opacity: loading ? 0.8 : 1, cursor: loading ? 'not-allowed' : 'pointer', marginTop: '0.5rem', width: '100%' }}
                     >
                         {loading ? "Code wird gesendet..." : "Code anfordern"}
                     </button>

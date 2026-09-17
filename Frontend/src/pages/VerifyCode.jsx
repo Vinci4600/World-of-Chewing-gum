@@ -7,15 +7,24 @@ function VerifyCode() {
     const navigate = useNavigate();
     const location = useLocation();
 
+
+    const [formData, setFormData] = useState({
+        username: '',
+        newPassword: '',
+        confirmPassword: ''
+    });
+
     // Liest die E-Mail aus dem React Router Navigation State
     const emailFromState = location.state?.email || '';
+    const [showRequirements, setShowRequirements] = useState(false);
 
     const [email, setEmail] = useState(emailFromState);
     const [code, setCode] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [loading, setLoading] = useState(false);
@@ -27,6 +36,25 @@ function VerifyCode() {
     const hasNumber = /\d/.test(newPassword);
     const isPasswordValid = hasLength && hasLower && hasUpper && hasNumber;
 
+
+    // Validierung für E-Mail
+
+    const passwordsMatch = formData.newPassword.length > 0 && formData.newPassword === formData.confirmPassword;
+
+    const passwordRequirements = [
+        { label: "Mindestens 8 Zeichen lang", valid: hasLength },
+        { label: "Mindestens 1 Großbuchstabe (A-Z)", valid: hasUpper },
+        { label: "Mindestens 1 Kleinbuchstabe (a-z)", valid: hasLower },
+        { label: "Mindestens 1 Zahl (0-9)", valid: hasNumber },
+        { label: "Passwörter stimmen überein", valid: passwordsMatch }
+    ];
+
+    const emailRequirements = [
+
+        { label: "Muss ein @ enthalten", valid: email.includes("@") },
+        { label: "Muss eine gültige TLD enthalten (.de, .com, .ch)", valid: /\.[a-zA-Z]{2,}$/.test(email) },
+        { label: "Muss eine gültige E-Mail-Adresse sein", valid: isEmailValid }
+    ];
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
@@ -34,6 +62,12 @@ function VerifyCode() {
 
         if (!email.trim()) {
             setError("Bitte gib deine E-Mail-Adresse ein.");
+            alert("Bitte eine gültige E-Mail Adresse eingeben fürs Anmelden!");
+            return;
+        }
+
+        if(!isEmailValid){
+            setError("Bitte gib eine gültige E-Mail Adresse ein!");
             return;
         }
 
@@ -88,9 +122,9 @@ function VerifyCode() {
     };
 
     return (
-        <div className="lg-page">
+        <div className="Background-Intro">
             <div className="kaugummi-form-container">
-                <h1 className="lg-title">Code verifizieren</h1>
+                <h1>Code verifizieren</h1>
                 <p style={{ textAlign: 'center', marginBottom: '1.5rem', color: '#666' }}>
                     Gib den Code ein, den du per E-Mail erhalten hast, sowie dein neues Passwort.
                 </p>
@@ -161,7 +195,7 @@ function VerifyCode() {
                     <div className="lg-field">
                         <input
                             className="lg-input"
-                            type={showPassword ? "text" : "password"}
+                            type={showConfirmPassword? "text" : "password"}
                             placeholder="Passwort bestätigen"
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
@@ -170,22 +204,165 @@ function VerifyCode() {
                         />
                     </div>
 
-                    {/* Live-Validierungs-Box */}
-                    <div className="rg-card" style={{ marginTop: '1rem' }}>
-                        <h3 className="title font-semibold text-sm mb-2 text-gray-700">Das Passwort muss Folgendes enthalten:</h3>
-                        <p style={{ color: hasLower ? '#16a34a' : '#ef4444', fontSize: '0.875rem', margin: '4px 0' }}>
-                            {hasLower ? '✓' : '✕'} Ein <b>Kleinbuchstabe</b>
-                        </p>
-                        <p style={{ color: hasUpper ? '#16a34a' : '#ef4444', fontSize: '0.875rem', margin: '4px 0' }}>
-                            {hasUpper ? '✓' : '✕'} Ein <b>Großbuchstabe</b>
-                        </p>
-                        <p style={{ color: hasNumber ? '#16a34a' : '#ef4444', fontSize: '0.875rem', margin: '4px 0' }}>
-                            {hasNumber ? '✓' : '✕'} Eine <b>Zahl</b>
-                        </p>
-                        <p style={{ color: hasLength ? '#16a34a' : '#ef4444', fontSize: '0.875rem', margin: '4px 0' }}>
-                            {hasLength ? '✓' : '✕'} Mindestens <b>8 Zeichen</b>
-                        </p>
-                    </div>
+                    <button
+                        type="button"
+                        className="lg-toggle"
+                        onClick={() =>
+                            setShowConfirmPassword(
+                                !showConfirmPassword
+                            )
+                        }
+
+                    >
+                        {showConfirmPassword
+                            ? "Hide"
+                            : "Show"}
+                    </button>
+
+
+                    <button
+                        type="button"
+                        className="requirements-button"
+                        onClick={() =>
+                            setShowRequirements(true)
+                        }
+                    >
+                        Anforderungen anzeigen
+                    </button>
+
+
+
+                    {/* Popup */}
+                    {showRequirements && (
+                        <div
+                            className="popup-overlay"
+                            onClick={() =>
+                                setShowRequirements(false)
+                            }
+                        >
+
+                            <div
+                                className="rg-card"
+                                onClick={(e) =>
+                                    e.stopPropagation()
+                                }
+                            >
+
+                                {/* Schließen */}
+                                <button
+                                    type="button"
+                                    className="popup-close"
+                                    onClick={() =>
+                                        setShowRequirements(
+                                            false
+                                        )
+                                    }
+                                >
+                                    ✕
+                                </button>
+
+                                <h3>
+                                    Anforderungen:
+                                </h3>
+
+                                {/* Passwort */}
+                                <p>
+                                    Passwort-Anforderungen:
+                                </p>
+
+                                <ul
+                                    style={{
+                                        listStyle: "none",
+                                        paddingLeft: 0
+                                    }}
+                                >
+
+                                    {passwordRequirements.map(
+                                        (req, index) => (
+                                            <li
+                                                key={index}
+                                                className="rg-item"
+                                                style={{
+                                                    color: req.valid
+                                                        ? "#2e7d32"
+                                                        : "#d32f2f",
+                                                    display: "flex",
+                                                    alignItems:
+                                                        "center",
+                                                    gap: "8px",
+                                                    marginBottom:
+                                                        "4px"
+                                                }}
+                                            >
+
+                                            <span>
+                                                {req.valid
+                                                    ? "✓"
+                                                    : "✗"}
+                                            </span>
+
+                                                <span>
+                                                {req.label}
+                                            </span>
+
+                                            </li>
+                                        )
+                                    )}
+
+                                </ul>
+
+                                {/* E-Mail */}
+                                <p>
+                                    E-Mail-Anforderungen:
+                                </p>
+
+                                <ul
+                                    style={{
+                                        listStyle: "none",
+                                        paddingLeft: 0
+                                    }}
+                                >
+
+                                    {emailRequirements.map(
+                                        (req, index) => (
+                                            <li
+                                                key={index}
+                                                className="rg-item"
+                                                style={{
+                                                    color: req.valid
+                                                        ? "#2e7d32"
+                                                        : "#d32f2f",
+                                                    display: "flex",
+                                                    alignItems:
+                                                        "center",
+                                                    gap: "8px",
+                                                    marginBottom:
+                                                        "4px"
+                                                }}
+                                            >
+
+                                            <span>
+                                                {req.valid
+                                                    ? "✓"
+                                                    : "✗"}
+                                            </span>
+
+                                                <span>
+                                                {req.label}
+                                            </span>
+
+                                            </li>
+                                        )
+                                    )}
+
+                                </ul>
+
+                            </div>
+
+                        </div>
+                    )}
+
+
 
                     <br />
                     <button
