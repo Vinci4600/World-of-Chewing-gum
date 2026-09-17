@@ -6,7 +6,7 @@ const ProtectedRoute = () => {
     const { isAuthenticated, role } = useAuth();
 
     /**
-     * Directly redirected für
+     * User wird sofort  redirected zu Login wenn User nicht eingeloggt ist
      */
 
     if (!isAuthenticated) {
@@ -21,7 +21,7 @@ const ProtectedRoute = () => {
     }
 
     /**
-     * Protected Route anzeigen
+     * Protected Route mit geschützten Pages anzeigen in Outlet
      */
 
     return <Outlet />;

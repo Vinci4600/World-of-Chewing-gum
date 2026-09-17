@@ -22,6 +22,10 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated(true)
     }
 
+
+    /**
+     * Beim Logout Token mitschicken sofort
+     */
     const logout = () => {
         localStorage.removeItem('token')
         sessionStorage.removeItem('token')
