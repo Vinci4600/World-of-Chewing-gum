@@ -13,9 +13,10 @@ export const AuthProvider = ({ children }) => {
         return localStorage.getItem('isAuthenticated') === 'true'
     })
 
-    const login = (token) => {
+    const login = (token, rememberMe = true) => {
         if (token) {
-            localStorage.setItem('token', token)
+            const storage = rememberMe ? localStorage : sessionStorage
+            storage.setItem('token', token)
         }
         localStorage.setItem('isAuthenticated', 'true')
         setIsAuthenticated(true)
@@ -23,6 +24,7 @@ export const AuthProvider = ({ children }) => {
 
     const logout = () => {
         localStorage.removeItem('token')
+        sessionStorage.removeItem('token')
         localStorage.removeItem('isAuthenticated')
         setIsAuthenticated(false)
     }
