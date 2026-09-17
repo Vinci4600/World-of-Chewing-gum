@@ -2,11 +2,13 @@
 import './components/Styles/Home.css'
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext.jsx";
 
 
 function Loginpage() {
 
     const navigate = useNavigate();
+    const { login } = useAuth();
 
     const [formData, setFormData] = useState({
         username: "",
@@ -53,14 +55,7 @@ function Loginpage() {
                 throw new Error(data.error || "Login fehlgeschlagen");
             }
 
-            if (formData.rememberMe) {
-                localStorage.setItem("token", data.token);
-            } else {
-                sessionStorage.setItem("token", data.token);
-            }
-
-            // Navbar über Login informieren
-            if (onLoginSuccess) onLoginSuccess(data.token);
+            login(data.token, formData.rememberMe);
 
             navigate("/");
         } catch (err) {
