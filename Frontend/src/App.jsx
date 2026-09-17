@@ -12,7 +12,7 @@ import ForgotPassword from "./pages/ForgotPassword.jsx";
 import VerifyCode from "./pages/VerifyCode.jsx";
 
 function App() {
-    const { isAuthenticated, logout } = useAuth();
+    const { isAuthenticated , role, logout } = useAuth();
     const navigate = useNavigate();
 
     const handleLogout = () => {
@@ -30,10 +30,10 @@ function App() {
                 </div>
 
                 <div className="navbar-links">
-                    {isAuthenticated ? (
+                    {isAuthenticated && role === 'ADMIN'   ? (
                         <>
+
                             <Link to="/">Home</Link>
-                            <Link to="/kaugummiPage">Kaugummis</Link>
                             <Link to="/kaugummiadd">Kaugummi hinzufügen</Link>
                             <button onClick={handleLogout} className="logout-btn">
                                 Logout
@@ -43,8 +43,7 @@ function App() {
                         <>
                             <Link to="/login">Login</Link>
                             <Link to="/register">Registrieren</Link>
-                            <Link to="/forgotpassword">Password vergessen</Link>
-                            <Link to="verify-code">Code verifizieren</Link>
+
                         </>
                     )}
                 </div>

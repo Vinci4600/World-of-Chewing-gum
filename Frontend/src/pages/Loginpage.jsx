@@ -2,7 +2,8 @@
 import './components/Styles/Home.css';
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-
+import {useAuth} from "../context/AuthContext.jsx";
+import {data} from "react-router-dom";
 
 function Loginpage({onLoginSuccess}) {
 
@@ -13,6 +14,9 @@ function Loginpage({onLoginSuccess}) {
         password: "",
         rememberMe: false,
     });
+
+    const {login} = useAuth();
+    login(data.token, data.role,  formData.rememberMe);
 
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);

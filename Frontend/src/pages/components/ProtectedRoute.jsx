@@ -1,23 +1,30 @@
-import { Navigate, Outlet } from 'react-router-dom'
+import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from "../../context/AuthContext.jsx";
 
 const ProtectedRoute = () => {
-    /**
-     * Global UseAuth for Context for Authenfification with GLobal User AUth Context for Protected Routesd
-     */
-    const { isAuthenticated } = useAuth()
+    // Authentifizierungsstatus und Rolle aus dem AuthContext abfragen
+    const { isAuthenticated, role } = useAuth();
 
     /**
-     * Unless the uesr isnt authenticated he will be redirected on Login-Context
+     * Directly redirected für
      */
+
     if (!isAuthenticated) {
-        return <Navigate to="/login"  replace />
+        return <Navigate to="/login" replace />;
     }
 
     /**
-     * When User is not logged in dont show Protected Routes
+     * Wenn Admin Role authorisiert ist direct zum Kaugummi redirected
      */
-    return <Outlet />
-}
+    if (role !== 'ADMIN') {
+        return <Navigate to="/kaugummiPage" replace />;
+    }
+
+    /**
+     * Protected Route anzeigen
+     */
+
+    return <Outlet />;
+};
 
 export default ProtectedRoute;

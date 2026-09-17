@@ -27,6 +27,7 @@ function ForgotPassword() {
     const hasUpper = /[A-Z]/.test(formData.confirmPassword);
     const hasNumber = /\d/.test(formData.confirmPassword);
     const isPasswordValid = hasLength && hasLower && hasUpper && hasNumber;
+    const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
 
 
 
@@ -70,6 +71,12 @@ function ForgotPassword() {
             return;
         }
 
+
+        if(!isEmailValid){
+            setError("Bitte gib eine gültige E-Mail Adresse ein!");
+            alert("Bitte eine gültige E-Mail Adresse eingeben!");
+            return;
+        }
 
 
 
@@ -210,7 +217,6 @@ function ForgotPassword() {
                         <input
                             id="confirmPassword"
                             name="confirmPassword"
-
                             required
                             value={formData.confirmPassword}
                             onChange={handleChange}
@@ -288,6 +294,15 @@ function ForgotPassword() {
                             {hasLength ? <span>✓ Mindestens <b>8 Zeichen</b></span> :
                                 <span>✕ Mindestens <b>8 Zeichen</b></span>}
                         </p>
+
+
+                        <h3 className="title font-semibold text-sm mb-2 text-gray-700">Das E-Mail muss folgende Anforderungen haben</h3>
+                        {/* E-Mail Validierung */}
+                        <p style={{ color: isEmailValid ? '#16a34a' : '#ef4444', fontSize: '0.875rem', margin: '4px 0' }}>
+                            {isEmailValid ? '✓' : '✕'} Gültige <b>E-Mail-Adresse</b>
+                        </p>
+
+                        <hr style={{ margin: '8px 0', border: '0', borderTop: '1px solid #e5e7eb' }} />
                     </div>
 
                     {/* Button zum Abschicken mit Ladezustand */}
