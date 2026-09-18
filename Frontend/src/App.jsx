@@ -33,7 +33,7 @@ function App() {
                     {isAuthenticated && role === 'ADMIN'   ? (
                         <>
 
-                            <Link to="/">Home</Link>
+
                             <Link to="/kaugummiadd">Kaugummi hinzufügen</Link>
                             <button onClick={handleLogout} className="logout-btn">
                                 Logout
@@ -41,6 +41,7 @@ function App() {
                         </>
                     ) : (
                         <>
+                            <Link to="/">Home</Link>
                             <Link to="/login">Login</Link>
                             <Link to="/register">Registrieren</Link>
 
@@ -56,11 +57,11 @@ function App() {
                     <Route path="/register" element={<RegistrierungPage />} />
                     <Route path="/forgotpassword" element={<ForgotPassword />}/>
                     <Route path="/verify-code" element={<VerifyCode />}/>
+                    <Route path="/kaugummiPage" element={<KaugummiPage />} />
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/kaugummi/:id" element={<KaugummiDetailPage />} />
                     {/* Geschützte Routen (Nicht eingeloggt -> Redirect zu /login) */}
                     <Route element={<ProtectedRoute />}>
-                        <Route path="/" element={<HomePage />} />
-                        <Route path="/kaugummiPage" element={<KaugummiPage />} />
-                        <Route path="/kaugummi/:id" element={<KaugummiDetailPage />} />
                         <Route path="/kaugummiadd" element={<KaugummiAddPage />} />
                         <Route path="/kaugummiedit/:id" element={<KaugummiEditPage />} />
                     </Route>
