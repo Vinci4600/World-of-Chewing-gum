@@ -47,33 +47,33 @@ function ForgotPassword() {
         }
 
 
-        // API-Aufruf zum Senden des Codes
-        const response = await fetch('/api/auth/forgot-password', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({email})
-        });
+        setLoading(true);
 
-        if (response.ok) {
-            // E-Mail über den Router-State an die VerifyCode-Seite weitergeben
-            navigate('/verify-code', {state: {email: email}});
+        try {
+            const response = await fetch('/api/auth/forgot-password', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({email: email.trim()})
+            });
+
+            if (!response.ok) {
+                const data = await response.json().catch(() => ({}));
+                throw new Error(data.message || 'Fehler beim Senden des Verifizierungscodes.');
+            }
+
+            navigate('/verify-code', {state: {email: email.trim()}});
+        } catch (err) {
+            setError(err.message || 'Fehler beim Senden des Verifizierungscodes.');
+        } finally {
+            setLoading(false);
         }
-
-
-        if (!response.ok) {
-            const data = await response.json().catch(() => ({}));
-            throw new Error(data.message || 'Fehler beim Senden des Verifizierungscodes.');
-        }
-
-
-        // !
     };
 
     return (
         <div className="Background-Intro">
 
             <div className="kaugummi-form-container">
-                <h1 className="lg-title">Passwort vergessen</h1>
+                <h1>Passwort vergessen</h1>
                 <p>
                     Gib deine E-Mail-Adresse ein. Wir senden dir einen Code zum Zurücksetzen des Passworts.
                 </p>
@@ -100,7 +100,7 @@ function ForgotPassword() {
                     <br/>
                     <button
                         type="submit"
-                        className="lg-btn"
+                        className="button1"
                         disabled={loading}
                         style={{
                             opacity: loading ? 0.8 : 1,
