@@ -2,10 +2,13 @@ package org.example.backend.controller;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 
 import org.example.backend.Model.Benutzer;
 import org.example.backend.dto.ForgotPasswordRequest;
@@ -39,19 +42,29 @@ public class AuthController {
 
 
     public static final String ERROR_TEXT_BEGINNING = "error";
+    // Masage Key erstellen
+    private static final String MESSAGE_KEY = "message";
+    //Random Security code
+    private static final SecureRandom SECURE_RANDOM = new SecureRandom();
 
     private final AppUserService appUserService;
     private final JwtService jwtService;
     private final BenutzerRepository benutzerRepository;
     private final PasswordEncoder passwordEncoder;
+    // Das Mailsender Attribut
+    private final JavaMailSender mailSender;
 
     private final Map<String, ResetTokenInfo> resetTokenStore = new ConcurrentHashMap<>();
 
-    public AuthController(AppUserService appUserService, JwtService jwtService, BenutzerRepository benutzerRepository, PasswordEncoder passwordEncoder) {
+
+
+
+    public AuthController(AppUserService appUserService, JwtService jwtService, BenutzerRepository benutzerRepository, PasswordEncoder passwordEncoder, JavaMailSender mailSender) {
         this.appUserService = appUserService;
         this.jwtService = jwtService;
         this.benutzerRepository = benutzerRepository;
         this.passwordEncoder = passwordEncoder;
+        this.mailSender = mailSender;
     }
     
 
@@ -76,6 +89,7 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Fehler bei der Registrierung: " + e.getMessage());
         }
+
     }
 
 
@@ -90,23 +104,40 @@ public class AuthController {
 
     @PostMapping("/forgot-password")
     public ResponseEntity<?> forgotPassword(@RequestBody ForgotPasswordRequest request) {
-        Optional<Benutzer> userOptional = benutzerRepository.findByEmail(request.getEmail());
+        // Falls keine Email adresse eingegeben wurde
+        if (request.getEmail() == null || request.getEmail().isBlank()) {
+            return ResponseEntity.badRequest()
+                    .body(Map.of(MESSAGE_KEY, "E-Mail-Adresse ist erforderlich."));
+        }
+
+        // Alle zeichen aus der email adresse werden in kleinbuchstaben weiter gegeben
+        String email = request.getEmail().trim().toLowerCase();
+        Optional<Benutzer> userOptional = benutzerRepository.findByEmail(email);
 
         if (userOptional.isEmpty()) {
             // Sicherheits-Best-Practice: Keine Information preisgeben, ob die E-Mail existiert
-            return ResponseEntity.ok(Map.of("message", "Falls die E-Mail existiert, wurde ein Code gesendet."));
+            return ResponseEntity.ok(Map.of(MESSAGE_KEY, "Falls die E-Mail existiert, wurde ein Code gesendet."));
         }
 
         // 6-stelligen zufälligen Code generieren
-        String code = String.format("%06d", new SecureRandom().nextInt(1000000));
+        String code = String.format("%06d", SECURE_RANDOM.nextInt(1000000));
         
         // Code für 15 Minuten speichern
-        resetTokenStore.put(request.getEmail(), new ResetTokenInfo(code, LocalDateTime.now().plusMinutes(15)));
+        resetTokenStore.put(email, new ResetTokenInfo(code, LocalDateTime.now(ZoneOffset.UTC).plusMinutes(15)));
 
-        // TODO: Hier den E-Mail-Versand (z.B. JavaMailSender) aufrufen
-        System.out.println("VERIFIZIERUNGSCODE FÜR " + request.getEmail() + ": " + code);
+        // Gesendete Mail aufbau
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(email);
+        message.setSubject("World of Chewing Gum - Passwort zurücksetzen");
+        message.setText(
+                "Dein Verifizierungscode lautet: " + code +
+                        "\n\nDer Code ist 15 Minuten gültig." +
+                        "\n\nWenn du diese Anfrage nicht gestellt hast, ignoriere diese E-Mail."
+        );
 
-        return ResponseEntity.ok(Map.of("message", "Ein Verifizierungscode wurde an deine E-Mail gesendet."));
+        mailSender.send(message);
+
+        return ResponseEntity.ok(Map.of(MESSAGE_KEY, "Ein Verifizierungscode wurde an deine E-Mail gesendet."));
     }
 
 
@@ -117,30 +148,48 @@ public class AuthController {
      */
     @PostMapping("/verify-code")
     public ResponseEntity<?> verifyCodeAndResetPassword(@RequestBody VerifyCodeRequest request) {
-        ResetTokenInfo tokenInfo = resetTokenStore.get(request.getEmail());
+
+        if (request.getEmail() == null || request.getEmail().isBlank()
+                || request.getCode() == null || request.getCode().isBlank()
+                || request.getNewPassword() == null) {
+            return ResponseEntity.badRequest()
+                    .body(Map.of(MESSAGE_KEY, "E-Mail, Code und neues Passwort sind erforderlich."));
+        }
+
+
+        String email = request.getEmail().trim().toLowerCase();
+        String code = request.getCode().trim();
+
+
+        if (request.getNewPassword().length() < 8) {
+            return ResponseEntity.badRequest()
+                    .body(Map.of(MESSAGE_KEY, "Das Passwort muss mindestens 8 Zeichen lang sein."));
+        }
+
+        ResetTokenInfo tokenInfo = resetTokenStore.get(email);
 
         // Prüfen, ob für die E-Mail ein Code angefordert wurde
         if (tokenInfo == null) {
             return ResponseEntity.badRequest()
-                    .body(Map.of("message", "Kein Verifizierungscode für diese E-Mail gefunden."));
+                    .body(Map.of(MESSAGE_KEY, "Kein Verifizierungscode für diese E-Mail gefunden."));
         }
 
         // Prüfen, ob der Code abgelaufen ist
-        if (LocalDateTime.now().isAfter(tokenInfo.getExpirationTime())) {
-            resetTokenStore.remove(request.getEmail());
+        if (LocalDateTime.now(ZoneOffset.UTC).isAfter(tokenInfo.getExpirationTime())) {
+            resetTokenStore.remove(email);
             return ResponseEntity.badRequest()
-                    .body(Map.of("message", "Der Verifizierungscode ist abgelaufen. Bitte neu anfordern."));
+                    .body(Map.of(MESSAGE_KEY, "Der Verifizierungscode ist abgelaufen. Bitte neu anfordern."));
         }
 
         // Prüfen, ob der Code übereinstimmt
-        if (!tokenInfo.getCode().equals(request.getCode())) {
-            return ResponseEntity.badRequest().body(Map.of("message", "Ungültiger Verifizierungscode."));
+        if (!tokenInfo.getCode().equals(code)) {
+            return ResponseEntity.badRequest().body(Map.of(MESSAGE_KEY, "Ungültiger Verifizierungscode."));
         }
 
         // Benutzer finden und Passwort aktualisieren
-        Optional<Benutzer> userOptional = benutzerRepository.findByEmail(request.getEmail());
+        Optional<Benutzer> userOptional = benutzerRepository.findByEmail(email);
         if (userOptional.isEmpty()) {
-            return ResponseEntity.badRequest().body(Map.of("message", "Benutzer nicht gefunden."));
+            return ResponseEntity.badRequest().body(Map.of(MESSAGE_KEY, "Benutzer nicht gefunden."));
         }
 
         Benutzer user = userOptional.get();
@@ -148,9 +197,9 @@ public class AuthController {
         benutzerRepository.save(user);
 
         // Code nach erfolgreichem Reset löschen
-        resetTokenStore.remove(request.getEmail());
+        resetTokenStore.remove(email);
 
-        return ResponseEntity.ok(Map.of("message", "Passwort erfolgreich geändert."));
+        return ResponseEntity.ok(Map.of(MESSAGE_KEY, "Passwort erfolgreich geändert."));
     }
 
     /**
