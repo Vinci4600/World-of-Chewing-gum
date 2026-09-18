@@ -42,7 +42,7 @@ function KaugummiAddPage() {
         <div className="Background-Intro">
             <div className="kaugummi-form-container">
 
-                <h1 className="add-kaugummi">Kaugummi hinzufügen</h1>
+                <h1 className="kauggmi-field">Kaugummi hinzufügen</h1>
 
                 <form onSubmit={kaugummiHinzufuegen}>
 
@@ -173,7 +173,7 @@ function KaugummiAddPage() {
 
 
                     {/* Absenden */}
-                    <button className="button1 animated-btn" type="submit">
+                    <button className="button1" type="submit">
                         Kaugummi hinzufügen
                     </button>
 
