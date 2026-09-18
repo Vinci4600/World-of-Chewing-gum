@@ -138,7 +138,7 @@ function Loginpage({onLoginSuccess}) {
 
                     </div>
 
-                    <label className="lg-remember">
+                    <label className="form-group checkbox-group">
                         <input
                             type="checkbox"
                             name="rememberMe"
@@ -169,10 +169,10 @@ function Loginpage({onLoginSuccess}) {
                 */}
 
                 <div className="lg-footer">
-                    <p>Passwort vergessen?</p> <Link to="/forgotpassword">Passwort vergessen?</Link>
+                     <Link to="/forgotpassword">Passwort vergessen?</Link>
                 </div>
                 <div className="lg-footer">
-                    <p>Noch kein Konto vorhanden?</p> <Link to="/register">Registrieren</Link>
+                     <Link to="/register">Noch kein Konto vorhanden? Registrieren</Link>
                 </div>
             </div>
         </div>
