@@ -11,7 +11,7 @@ import deleteIcon from "./components/Bilder/Deletebtn.png";
 
 function KaugummiPage() {
     const [kaugummi, setKaugummi] = useState([]);
-    const { isAuthenticated } = useAuth();
+    const { isAuthenticated, user } = useAuth();
 
     const navigate = useNavigate();
 
@@ -63,7 +63,7 @@ function KaugummiPage() {
                         onClick={() => handleKaugummiClick(gum.id)}
                     >
 
-                        {isAuthenticated && (
+                        {isAuthenticated && user?.role === "admin" && (
                             <div className="kaugummi-card-actions">
                                 <Link
                                     className="kaugummi-icon-button"
