@@ -18,6 +18,11 @@ export const AuthProvider = ({ children }) => {
 
     const login = (token, roleName, rememberMe = true) => {
         if (token) {
+            localStorage.removeItem('token')
+            sessionStorage.removeItem('token')
+            localStorage.removeItem('role')
+            sessionStorage.removeItem('role')
+
             const storage = rememberMe ? localStorage : sessionStorage
             storage.setItem('token', token)
             storage.setItem('role', roleName || 'USER')
