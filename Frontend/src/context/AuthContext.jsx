@@ -10,16 +10,20 @@ const AuthContext = createContext(null)
  */
 export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(() => {
-        return localStorage.getItem('isAuthenticated') === 'true'
+        return Boolean(localStorage.getItem('token') || sessionStorage.getItem('token'))
+    })
+    const [role, setRole] = useState(() => {
+        return localStorage.getItem('role') || sessionStorage.getItem('role') || null
     })
 
-    const login = (token, rememberMe = true) => {
+    const login = (token, roleName, rememberMe = true) => {
         if (token) {
             const storage = rememberMe ? localStorage : sessionStorage
             storage.setItem('token', token)
+            storage.setItem('role', roleName || 'USER')
         }
-        localStorage.setItem('isAuthenticated', 'true')
         setIsAuthenticated(true)
+        setRole(roleName || 'USER')
     }
 
 
@@ -29,12 +33,14 @@ export const AuthProvider = ({ children }) => {
     const logout = () => {
         localStorage.removeItem('token')
         sessionStorage.removeItem('token')
-        localStorage.removeItem('isAuthenticated')
+        localStorage.removeItem('role')
+        sessionStorage.removeItem('role')
         setIsAuthenticated(false)
+        setRole(null)
     }
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+        <AuthContext.Provider value={{ isAuthenticated, role, login, logout }}>
             {children}
         </AuthContext.Provider>
     )
