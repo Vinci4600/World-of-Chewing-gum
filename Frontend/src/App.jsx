@@ -33,7 +33,7 @@ function App() {
                     {isAuthenticated && role === 'ADMIN'   ? (
                         <>
 
-
+                            <Link to="/kaugummiPage">Kaugummis</Link>
                             <Link to="/kaugummiadd">Kaugummi hinzufügen</Link>
                             <button onClick={handleLogout} className="logout-btn">
                                 Logout
