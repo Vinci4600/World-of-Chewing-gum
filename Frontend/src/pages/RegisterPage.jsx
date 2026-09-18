@@ -82,18 +82,26 @@ function RegistrierungPage() {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    username,
+                    username: username.trim(),
                     password,
-                    email
+                    email: email.trim()
                 })
             });
 
             if (!response.ok) {
-                const errorData = await response.json();
+                const responseText = await response.text();
+                let errorData = responseText;
+
+                try {
+                    errorData = JSON.parse(responseText);
+                } catch {
+                    // Das Backend kann Fehler auch als einfachen Text senden.
+                }
 
                 throw new Error(
-                    errorData.error ||
-                    errorData ||
+                    (typeof errorData === "string"
+                        ? errorData
+                        : errorData.error || errorData.message) ||
                     "Registrierung fehlgeschlagen"
                 );
             }
@@ -249,13 +257,10 @@ function RegistrierungPage() {
                 </form>
 
                 {/* Login-Link */}
-                <p className="lg-sub">
-                    Bereits ein Konto?
-                </p>
+                <div className="lg-footer">
+                    <Link to="/login">Bereits ein Konto? Hier Anmelden</Link>
+                </div>
 
-                <Link to="/login">
-                    Hier anmelden
-                </Link>
                 <br></br>
 
                 {/* Anforderungen öffnen */}
