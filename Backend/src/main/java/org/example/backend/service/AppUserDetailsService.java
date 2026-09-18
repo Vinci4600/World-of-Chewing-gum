@@ -8,11 +8,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.Optional;
 
-public class AppUserDetailsService  implements UserDetailsService {
+@Service
+public class AppUserDetailsService implements UserDetailsService {
 
 
     private final BenutzerRepository benutzerRepository;
@@ -69,10 +70,14 @@ public class AppUserDetailsService  implements UserDetailsService {
                         "User mit Username/E-Mail nicht gefunden: " + usernameOrEmail));
 
         //  Korrektes Mapping zu Spring Security UserDetails (verhindert den Absturz)
+        String authority = benutzer.getRole() == null
+            ? "ROLE_KUNDE"
+            : "ROLE_" + benutzer.getRole().name();
+
         return User.builder()
                 .username(benutzer.getBenutzername())
                 .password(benutzer.getPasswort())
-                .authorities(Collections.emptyList())
+                .authorities(authority)
                 .build();
     }
 }
