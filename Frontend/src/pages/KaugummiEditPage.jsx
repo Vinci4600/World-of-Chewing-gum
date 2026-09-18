@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import API from "../api.js";
+import "./components/Styles/Edit.css";
 
 function KaugummiEditPage() {
     const { id } = useParams();
@@ -73,16 +74,17 @@ function KaugummiEditPage() {
         }
     };
 
-    if (loading) return <div>Lade Kaugummi-Daten...</div>;
+    if (loading) return <div className="edit-loading">Lade Kaugummi-Daten...</div>;
 
     return (
-        <div className="kaugummi-form-container">
-            <h1>Kaugummi bearbeiten (ID: {id})</h1>
+        <main className="edit-page">
+            <section className="edit-card">
+            <h1 className="edit-title">Kaugummi bearbeiten (ID: {id})</h1>
 
-            {error && <div className="lg-error">{error}</div>}
+            {error && <div className="edit-error">{error}</div>}
 
-            <form onSubmit={handleUpdate}>
-                <div className="lg-field">
+            <form className="edit-form" onSubmit={handleUpdate}>
+                <div className="edit-field">
                     <input
                         className="lg-input"
                         type="text"
@@ -93,7 +95,7 @@ function KaugummiEditPage() {
                     />
                 </div>
 
-                <div className="lg-field">
+                <div className="edit-field">
                     <input
                         className="lg-input"
                         type="text"
@@ -104,7 +106,7 @@ function KaugummiEditPage() {
                     />
                 </div>
 
-                <div className="lg-field">
+                <div className="edit-field">
                     <input
                         className="lg-input"
                         type="text"
@@ -115,7 +117,7 @@ function KaugummiEditPage() {
                     />
                 </div>
 
-                <div className="lg-field">
+                <div className="edit-field edit-field-full">
                     <input
                         className="lg-input"
                         type="text"
@@ -126,7 +128,7 @@ function KaugummiEditPage() {
                     />
                 </div>
 
-                <div className="lg-field">
+                <div className="edit-field">
                     <input
                         className="lg-input"
                         type="text"
@@ -137,7 +139,7 @@ function KaugummiEditPage() {
                     />
                 </div>
 
-                <div className="lg-field">
+                <div className="edit-field">
                     <input
                         className="lg-input"
                         type="text"
@@ -148,7 +150,7 @@ function KaugummiEditPage() {
                     />
                 </div>
 
-                <div className="lg-field">
+                <div className="edit-field">
                     <input
                         className="lg-input"
                         type="text"
@@ -161,7 +163,7 @@ function KaugummiEditPage() {
 
 
 
-                <div className="lg-field" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                <div className="edit-checkbox-field">
                     <label htmlFor="zuckerfrei-checkbox">Zuckerfrei?</label>
                     <input
                         id="zuckerfrei-checkbox"
@@ -172,7 +174,7 @@ function KaugummiEditPage() {
 
                     />
                 </div>
-                <div className="lg-field">
+                <div className="edit-field">
                     <input
                         className="lg-input"
                         type="text"
@@ -182,21 +184,21 @@ function KaugummiEditPage() {
                         required
                     />
                 </div>
-
-
-
-                <button type="submit" className="button1">
-                    Speichern
-                </button>
-                <button
-                    type="button"
-                    className="button1"
-                    onClick={() => navigate("/kaugummiPage")}
-                >
-                    Abbrechen
-                </button>
+                <div className="edit-actions">
+                    <button type="submit">
+                        Speichern
+                    </button>
+                    <button
+                        type="button"
+                        className="edit-cancel-button"
+                        onClick={() => navigate("/kaugummiPage")}
+                    >
+                        Abbrechen
+                    </button>
+                </div>
             </form>
-        </div>
+            </section>
+        </main>
     );
 }
 
