@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import "./components/Styles/Home.css";
 import "./components/Styles/ForgotPassword.css";
 function ForgotPassword() {
     const navigate = useNavigate();
@@ -146,7 +147,7 @@ function ForgotPassword() {
     };
 
     return (
-        <div className="lg-page">
+        <div className="Background-Intro">
 
             <div className="kaugummi-form-container">
                     <h1 className="lg-title">Passwort vergessen</h1>
