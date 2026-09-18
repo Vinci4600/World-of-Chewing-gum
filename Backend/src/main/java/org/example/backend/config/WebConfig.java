@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
 
 
-    private static final String[] ALLOWED_ORIGINS = new String[]{"http://localhost:5173"};
+    private static final String[] ALLOWED_ORIGINS = new String[]{"http://localhost:5173", "http://localhost:5174"};
     private static final String[] ALLOWED_METHODS = new String[]{"GET", "POST", "PUT", "DELETE", "OPTIONS"};
 
     @Override

@@ -63,6 +63,15 @@ function KaugummiDetailPage() {
                             <span>Inhaltsstoffe</span>
                             <strong>{gum.inhaltsstoffe || "Keine Angaben"}</strong>
                         </div>
+                        <div>
+                            <span>Herkunftsland</span>
+                            <strong>{gum.herstellungsland || "Keine Angaben"}</strong>
+                        </div>
+
+                        <div>
+                            <span>Nebenwirkungen</span>
+                            <strong>{gum.nebenwirkungen || "Keine Angaben"}</strong>
+                        </div>
                     </div>
 
                     <div className="kaugummi-detail-actions">
