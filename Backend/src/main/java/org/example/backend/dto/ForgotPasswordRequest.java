@@ -9,6 +9,9 @@ public class ForgotPasswordRequest {
 
     private String code;
     private String newPassword;
+	// Anpassungen für Passwort vergessen
+	public ForgotPasswordRequest() {
+	}
 
     public ForgotPasswordRequest(String email, String code, String newPassword) {
         this.email = email;
