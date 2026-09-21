@@ -19,6 +19,7 @@ function Loginpage({onLoginSuccess}) {
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
 
+
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
         setFormData((prev) => ({
@@ -133,6 +134,16 @@ function Loginpage({onLoginSuccess}) {
                             style={{ paddingRight: "70px" }}
 
                         />
+
+
+
+                    <button
+                        type="button"
+                        className="lg-toggle"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                    >
+                        {showPassword ? "Hide" : "Show"}
+                    </button>
 
                     </div>
 

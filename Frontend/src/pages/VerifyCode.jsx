@@ -88,7 +88,7 @@ function VerifyCode() {
     };
 
     return (
-        <div className="lg-page">
+        <div className="Background-Intro">
             <div className="kaugummi-form-container">
                 <h1 className="lg-title">Code verifizieren</h1>
                 <p style={{ textAlign: 'center', marginBottom: '1.5rem', color: '#666' }}>

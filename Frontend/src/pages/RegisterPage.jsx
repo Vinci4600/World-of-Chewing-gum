@@ -44,13 +44,23 @@ function RegistrierungPage() {
         {
             label: "Passwörter stimmen überein",
             valid:
-                password.length > 0 &&
+                password.length >=7&&
                 password === confirmPassword
         }
     ];
 
     // E-Mail-Anforderungen
     const emailRequirements = [
+        {
+            label: "Mindestens 8 Zeichen lang",
+            valid: email.length >= 8
+        },
+
+        {
+            label: "Mindestens 1 Kleinbuchstabe (a-z)",
+            valid: /[a-z]/.test(email)
+        },
+
         {
             label: "Muss ein @ enthalten",
             valid: email.includes("@")
@@ -75,6 +85,10 @@ function RegistrierungPage() {
             return;
         }
 
+
+        /**
+         * registrierung mit Usernam eudn Konto
+         */
         try {
             const response = await fetch("/api/auth/register", {
                 method: "POST",
