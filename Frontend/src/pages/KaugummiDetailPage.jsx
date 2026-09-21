@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import API from "../api";
+import { useAuth } from "../context/AuthContext.jsx";
 import "./components/Styles/Home.css";
 import commentButtonIcon from "./components/Bilder/Kommentarbtn.png";
 
 function KaugummiDetailPage() {
     const { id } = useParams();
     const navigate = useNavigate();
+    const { isAuthenticated } = useAuth();
     const [gum, setGum] = useState(null);
     const [error, setError] = useState("");
     const [commentText, setCommentText] = useState("");
@@ -31,6 +33,14 @@ function KaugummiDetailPage() {
         event.preventDefault();
         setCommentError("");
         setCommentSuccess("");
+
+        if (!isAuthenticated) {
+            window.alert("Bitte zuerst anmelden, bevor du einen Kommentar schreibst.");
+            navigate("/login", {
+                state: { message: "Bitte melde dich an, um einen Kommentar zu schreiben." }
+            });
+            return;
+        }
 
         try {
             const response = await API.post(
