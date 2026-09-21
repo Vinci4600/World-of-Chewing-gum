@@ -8,5 +8,11 @@ export default defineConfig({
     proxy: {
       '/api': 'http://localhost:8080',
     },
+
   },
-})
+
+  test: {
+    globals: true, // erlaubt describe, test, expect ohne expliziten Import
+    environment: 'jsdom',
+    setupFiles: './src/setupTests.js'
+}});
