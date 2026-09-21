@@ -2,6 +2,7 @@ package org.example.backend.Model;
 
 import jakarta.persistence.*;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "benutzer")
@@ -93,9 +94,11 @@ public abstract class Benutzer {
         this.role = role;
     }
 
-    public List<org.example.backend.Model.Kommentar> getKommentare() {
+    @JsonIgnore
+    public List<Kommentar> getKommentare() {
         return kommentare;
     }
+
 
     public void setKommentare(List<org.example.backend.Model.Kommentar> kommentare) {
         this.kommentare = kommentare;

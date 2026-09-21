@@ -44,16 +44,24 @@ public class KaugummiService {
     }
 
     @Transactional
-    public Kommentar kommentarHinzufuegen(Long kaugummiId, Long benutzerId, String text) {
-        var kaugummi = kaugummiRepository.findById(kaugummiId)
-                .orElseThrow(() -> new RuntimeException("Kaugummi nicht gefunden"));
-        var benutzer = benutzerRepository.findById(benutzerId)
-                .orElseThrow(() -> new RuntimeException("Benutzer wurde nicht gefunden"));
+    public Kommentar kommentarHinzufuegen(
+            Long kaugummiId,
+            String benutzername,
+            String text) {
+
+        Kaugummi kaugummi = kaugummiRepository.findById(kaugummiId)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Kaugummi nicht gefunden"));
+
+        Benutzer benutzer = benutzerRepository.findByBenutzername(benutzername)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Benutzer nicht gefunden"));
 
         Kommentar kommentar = new Kommentar();
         kommentar.setText(text);
         kommentar.setBenutzer(benutzer);
         kommentar.setKaugummi(kaugummi);
+
         return kommentarRepository.save(kommentar);
     }
 

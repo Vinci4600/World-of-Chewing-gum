@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import org.example.backend.Model.Kommentar;
 
 @Entity
 @Table(name = "kaugummi")
@@ -44,6 +45,17 @@ public class Kaugummi {
     @ManyToMany(mappedBy = "favoriten")
     private Set<Benutzer> favorisiertVon = new HashSet<>();
 
+    // Ein Kaugummi kann mehrere Komenare haben
+    @OneToMany(mappedBy = "kaugummi", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Kommentar> kommentare = new ArrayList<>();
+
+    public List<Kommentar> getKommentare() {
+        return kommentare;
+    }
+
+    public void setKommentare(List<Kommentar> kommentare) {
+        this.kommentare = kommentare;
+    }
 
     // Standard-Konstruktor für JPA
     public Kaugummi() {
