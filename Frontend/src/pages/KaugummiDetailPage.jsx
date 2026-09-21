@@ -2,12 +2,16 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import API from "../api";
 import "./components/Styles/Home.css";
+import commentButtonIcon from "./components/Bilder/Kommentarbtn.png";
 
 function KaugummiDetailPage() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [gum, setGum] = useState(null);
     const [error, setError] = useState("");
+    const [commentText, setCommentText] = useState("");
+    const [commentError, setCommentError] = useState("");
+    const [commentSuccess, setCommentSuccess] = useState("");
 
     useEffect(() => {
         const fetchGum = async () => {
@@ -22,6 +26,35 @@ function KaugummiDetailPage() {
 
         fetchGum();
     }, [id]);
+// KommentarHinzufügen
+    const handleCommentSubmit = async (event) => {
+        event.preventDefault();
+        setCommentError("");
+        setCommentSuccess("");
+
+        try {
+            const response = await API.post(
+                `/api/kaugummi/${id}/kommentar`,
+                { text: commentText }
+            );
+
+            setGum((currentGum) => ({
+                ...currentGum,
+                kommentare: [
+                    ...(currentGum.kommentare || []),
+                    response.data
+                ]
+            }));
+
+            setCommentText("");
+            setCommentSuccess("Kommentar erfolgreich gespeichert.");
+        } catch (requestError) {
+            setCommentError(
+                requestError.response?.data?.message ||
+                "Der Kommentar konnte nicht gespeichert werden."
+            );
+        }
+    };
 
     if (error) {
         return (
@@ -85,8 +118,40 @@ function KaugummiDetailPage() {
                                 Im Shop ansehen
                             </a>
                         )}
-
                     </div>
+
+                    <section className="comments-section">
+                        <h2>Kommentare</h2>
+
+                        <form onSubmit={handleCommentSubmit}>
+                            <textarea
+                                value={commentText}
+                                onChange={(event) => setCommentText(event.target.value)}
+                                placeholder="Dein Kommentar"
+                                maxLength={1000}
+                                required
+                            />
+
+                            <button className="kaugummi-comment-button" type="submit">
+                                <img src={commentButtonIcon} alt="" />
+                                Kommentar schreiben
+                            </button>
+                        </form>
+
+                        {commentError && <p>{commentError}</p>}
+                        {commentSuccess && <p>{commentSuccess}</p>}
+
+                        <div className="comments-list">
+                            {(gum.kommentare || []).map((kommentar) => (
+                                <article className="comment-item" key={kommentar.id}>
+                                    <strong>
+                                        {kommentar.benutzer?.benutzername || "Benutzer"}
+                                    </strong>
+                                    <p>{kommentar.text}</p>
+                                </article>
+                            ))}
+                        </div>
+                    </section>
                 </div>
             </article>
         </main>
