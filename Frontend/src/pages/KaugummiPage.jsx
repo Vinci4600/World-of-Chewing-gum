@@ -15,7 +15,11 @@ function KaugummiPage() {
 
     const navigate = useNavigate();
 
-    // Alle Kaugummis laden
+    /**
+     * Kaugummis laden asynchon mit Fetch-Methode des Endpoints /api/kaugummi/all(promise-based AJAX-Call)
+     * 
+     * @returns {Promise<void>}
+     */
     const fetchKaugummi = async () => {
         try {
             const response = await API.get("/api/kaugummi/all");

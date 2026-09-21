@@ -103,7 +103,7 @@ body {
         transform: translateY(0px) rotate(0deg);
     }
     100% {
-        transform: translateY(-12px) rotate(1deg);
+        transform: translateY(-15px) rotate(1deg);
     }
 }
 

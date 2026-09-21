@@ -10,6 +10,7 @@ import ProtectedRoute from "./pages/components/ProtectedRoute.jsx";
 import {useAuth} from "./context/AuthContext.jsx";
 import ForgotPassword from "./pages/ForgotPassword.jsx";
 import VerifyCode from "./pages/VerifyCode.jsx";
+import Kundenprofil from "./pages/Kundenprofil.jsx";
 
 function App() {
     const {isAuthenticated, role, logout} = useAuth();
@@ -33,10 +34,16 @@ function App() {
                     {isAuthenticated ? (
                         <>
                             <Link to="/kaugummiPage">Kaugummis</Link>
+                            <Link to="/customerprofile">Kundenansicht</Link>
+
 
                             {role === "ADMIN" && (
+                                <>
                                 <Link to="/kaugummiadd">Kaugummi hinzufügen</Link>
+
+                                </>
                             )}
+
 
                             <button onClick={handleLogout} className="logout-btn">
                                 Logout
@@ -62,6 +69,8 @@ function App() {
                     <Route path="/kaugummiPage" element={<KaugummiPage/>}/>
                     <Route path="/" element={<HomePage/>}/>
                     <Route path="/kaugummi/:id" element={<KaugummiDetailPage/>}/>
+                    <Route path="/customerprofile" element={<Kundenprofil />}/>
+
                     {/* Geschützte Routen (Nicht eingeloggt -> Redirect zu /login) */}
                     <Route element={<ProtectedRoute/>}>
                         <Route path="/kaugummiadd" element={<KaugummiAddPage/>}/>
