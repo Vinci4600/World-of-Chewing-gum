@@ -41,6 +41,7 @@ function App() {
                                 <>
                                 <Link to="/kaugummiadd">Kaugummi hinzufügen</Link>
 
+
                                 </>
                             )}
 
@@ -82,6 +83,7 @@ function App() {
 
             <footer className="footer">
                 <div className="footer-content">
+
                     <p className="copyright-text">&copy; {new Date().getFullYear()} World of Chewing Gum., a Fullstack
                         Applikation made the One Shot Team, consisting of Elias Kaiser and Vincent Diergardt.All Rights
                         reserved</p>

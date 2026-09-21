@@ -126,11 +126,25 @@ body,
 .footer {
     background-color: #1a1a1a;
     color: #ffffff;
-    padding: 2rem 0;
+
+    padding: 0.8rem 1rem;
+
     text-align: center;
     overflow: hidden;
 }
 
+
+
+
+
+.footer-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100px;
+    marx-width:100px;
+    background-color: #0fc889;
+}
 .copyright-text {
     font-size: 0.9rem;
     opacity: 0;
