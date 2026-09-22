@@ -68,4 +68,7 @@ public class Kommentar {
     public void setKaugummi(Kaugummi kaugummi) {
         this.kaugummi = kaugummi;
     }
+
+    
 }
+    

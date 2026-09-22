@@ -68,6 +68,8 @@ describe("KaugummiAddPage Component", () => {
         fireEvent.change(screen.getByLabelText(/shopurl/i), { target: { value: "https://test.com" } });
         fireEvent.change(screen.getByPlaceholderText("Herstellungsland"), { target: { value: "CH" } });
         fireEvent.change(screen.getByPlaceholderText("Nebenwirkungen"), { target: { value: "Keine" } });
+        fireEvent.change(screen.getByLabelText(/bild-url/i), { target: { value: "https://example.com/image.png" } });
+
 
         fireEvent.click(screen.getByRole("button", { name: /kaugummi hinzufügen/i }));
 

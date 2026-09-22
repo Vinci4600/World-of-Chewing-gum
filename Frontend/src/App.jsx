@@ -11,6 +11,7 @@ import {useAuth} from "./context/AuthContext.jsx";
 import ForgotPassword from "./pages/ForgotPassword.jsx";
 import VerifyCode from "./pages/VerifyCode.jsx";
 import Kundenprofil from "./pages/Kundenprofil.jsx";
+import CookieBanner from "./pages/CookieBanner.jsx";
 
 function App() {
     const {isAuthenticated, role, logout} = useAuth();
@@ -35,6 +36,7 @@ function App() {
                         <>
                             <Link to="/kaugummiPage">Kaugummis</Link>
                             <Link to="/customerprofile">Kundenansicht</Link>
+                            <Link to="/cookiebanner">Cookie Banner</Link>
 
 
                             {role === "ADMIN" && (
@@ -71,6 +73,7 @@ function App() {
                     <Route path="/" element={<HomePage/>}/>
                     <Route path="/kaugummi/:id" element={<KaugummiDetailPage/>}/>
                     <Route path="/customerprofile" element={<Kundenprofil />}/>
+                    <Route path="/cookiebanner" element={<CookieBanner />}/>
 
                     {/* Geschützte Routen (Nicht eingeloggt -> Redirect zu /login) */}
                     <Route element={<ProtectedRoute/>}>
