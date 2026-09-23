@@ -18,16 +18,24 @@ function KaugummiEditPage() {
     const [herstellungsland, setHerstellungsland] = useState("");
     const [nebenwirkungen, setNebenwirkungen] = useState("");
 
+
+
     // 2. States für Status und Fehlerhandling
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
-    // 3. Daten beim Laden abrufen
+
+
+
+
     useEffect(() => {
+        // 3. Daten beim Laden abrufen
         const fetchKaugummi = async () => {
             try {
+                setLoading(true);
                 const response = await API.get(`/api/kaugummi/${id}`);
                 const data = response.data;
+
                 setName(data.name || "");
                 setGeschmack(data.geschmack || "");
                 setInhaltsstoffe(data.inhaltsstoffe || "");
@@ -37,18 +45,24 @@ function KaugummiEditPage() {
                 setMarke(data.marke || "");
                 setHerstellungsland(data.herstellungsland || "");
                 setNebenwirkungen(data.nebenwirkungen || "");
-
-
-
             } catch (err) {
-                setError(err.message);
+                // Hier wird jetzt die echte Fehlermeldung vom Backend abgefangen und ausgegeben
+                const errorMsg = err.response?.data?.message || err.response?.data || err.message;
+                console.error("API Error Detail:", err.response);
+                setError(errorMsg);
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchKaugummi();
+        if (id) {
+            fetchKaugummi();
+        }
     }, [id]);
+
+
+
+
 
     // 4. PUT-Request beim Speichern
     const handleUpdate = async (e) => {
@@ -76,10 +90,15 @@ function KaugummiEditPage() {
 
     if (loading) return <div className="edit-loading">Lade Kaugummi-Daten...</div>;
 
+        const isFav = favorites.some((fav) => String(fav.id) === String(id));
+
     return (
         <main className="edit-page">
             <section className="edit-card">
-            <h1 className="edit-title">Kaugummi bearbeiten (ID: {id})</h1>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <h1 className="edit-title">Kaugummi bearbeiten (ID: {id})</h1>
+
+                </div>
 
             {error && <div className="edit-error">{error}</div>}
 

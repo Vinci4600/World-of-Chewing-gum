@@ -266,18 +266,21 @@ Body {
 
 .logout-button {
     border: none;
-    background-color: #e85aad;
-    color: white;
+    background-color: #3bd80d;
+
+    color: #18c50f;
 
     padding: 8px 16px;
     border-radius: 8px;
 
     font-size: 16px;
+    transition: background-color 0.2s ease;
     cursor: pointer;
 }
 
 .logout-button:hover {
-    background-color: #d63f99;
+    background-color: #e53e3e
+
 }
 
 

@@ -25,7 +25,7 @@ function KaugummiPage() {
             const response = await API.get("/api/kaugummi/all");
             setKaugummi(response.data);
         } catch (error) {
-            console.error("Fehler beim Laden der Kaugummis:", error);
+            console.error("Fehler beim Laden der Kaugummiss:", error);
         }
     };
 

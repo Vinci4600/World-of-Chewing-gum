@@ -44,7 +44,7 @@ function Loginpage({onLoginSuccess}) {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    usernameOrEmail: formData.username.trim(),
+                    usernameOrEmail: formData.username,
                     password: formData.password,
                 }),
             });

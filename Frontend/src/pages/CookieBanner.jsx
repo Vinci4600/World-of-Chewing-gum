@@ -15,12 +15,14 @@ export default function CookieBanner() {
     const acceptCookies = () => {
         localStorage.setItem('cookieConsent', 'accepted');
         setIsVisible(false);
+        alert("Alle Cookies akzeptieren");
         // Hier kannst du Tracking-Skripte wie Google Analytics aktivieren
     };
 
     const declineCookies = () => {
         localStorage.setItem('cookieConsent', 'declined');
         setIsVisible(false);
+        alert("Alle Cookies ablehnen");
         // Optionale Logik für abgelehnte Cookies
     };
 
@@ -38,7 +40,7 @@ export default function CookieBanner() {
                         Ablehnen
                     </button>
                     <button className="btn-accept" onClick={acceptCookies}>
-                        Alle akzeptieren
+                        Alle Cookies  akzeptieren
                     </button>
                 </div>
             </div>

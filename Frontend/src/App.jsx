@@ -12,6 +12,7 @@ import ForgotPassword from "./pages/ForgotPassword.jsx";
 import VerifyCode from "./pages/VerifyCode.jsx";
 import Kundenprofil from "./pages/Kundenprofil.jsx";
 import CookieBanner from "./pages/CookieBanner.jsx";
+import Datenschutzerklärung from "./pages/Datenschutzerklärung.jsx";
 
 function App() {
     const {isAuthenticated, role, logout} = useAuth();
@@ -21,6 +22,9 @@ function App() {
         logout();
         navigate("/login");
     };
+
+    // Hilfsprüfung für Admin (deckt "ADMIN" und "ROLE_ADMIN" ab)
+    const isAdmin = role === "ADMIN" || role === "ROLE_ADMIN";
 
     return (
         <div className="Background">
@@ -37,16 +41,11 @@ function App() {
                             <Link to="/kaugummiPage">Kaugummis</Link>
                             <Link to="/customerprofile">Kundenansicht</Link>
                             <Link to="/cookiebanner">Cookie Banner</Link>
+                            <Link to="/privacy">Datenschutzerklärung</Link>
 
-
-                            {role === "ADMIN" && (
-                                <>
+                            {isAdmin && (
                                 <Link to="/kaugummiadd">Kaugummi hinzufügen</Link>
-
-
-                                </>
                             )}
-
 
                             <button onClick={handleLogout} className="logout-btn">
                                 Logout
@@ -71,29 +70,31 @@ function App() {
                     <Route path="/verify-code" element={<VerifyCode/>}/>
                     <Route path="/kaugummiPage" element={<KaugummiPage/>}/>
                     <Route path="/" element={<HomePage/>}/>
-                    <Route path="/kaugummi/:id" element={<KaugummiDetailPage/>}/>
-                    <Route path="/customerprofile" element={<Kundenprofil />}/>
-                    <Route path="/cookiebanner" element={<CookieBanner />}/>
 
-                    {/* Geschützte Routen (Nicht eingeloggt -> Redirect zu /login) */}
-                    <Route element={<ProtectedRoute/>}>
+                    {/* 1. Normale geschützte Routen (für alle eingeloggten User) */}
+                    <Route element={<ProtectedRoute />}>
+                        <Route path="/customerprofile" element={<Kundenprofil />}/>
+                        <Route path="/cookiebanner" element={<CookieBanner/>}/>
+                        <Route path="/privacy" element={<Datenschutzerklärung/>}/>
+                    </Route>
+
+                    {/* 2. Admin-geschützte Routen (nur für Admins) */}
+                    <Route element={<ProtectedRoute requiredRole="ADMIN" />}>
                         <Route path="/kaugummiadd" element={<KaugummiAddPage/>}/>
                         <Route path="/kaugummiedit/:id" element={<KaugummiEditPage/>}/>
+                        <Route path="/kaugummi/:id" element={<KaugummiDetailPage/>}/>
+
                     </Route>
                 </Routes>
             </div>
 
-
             <footer className="footer">
                 <div className="footer-content">
-
                     <p className="copyright-text">&copy; {new Date().getFullYear()} World of Chewing Gum., a Fullstack
-                        Applikation made the One Shot Team, consisting of Elias Kaiser and Vincent Diergardt.All Rights
+                        Applikation made the One Shot Team, consisting of Elias Kaiser and Vincent Diergardt. All Rights
                         reserved</p>
                 </div>
-
             </footer>
-
         </div>
     );
 }
