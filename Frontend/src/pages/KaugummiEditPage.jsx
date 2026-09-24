@@ -90,8 +90,6 @@ function KaugummiEditPage() {
 
     if (loading) return <div className="edit-loading">Lade Kaugummi-Daten...</div>;
 
-        const isFav = favorites.some((fav) => String(fav.id) === String(id));
-
     return (
         <main className="edit-page">
             <section className="edit-card">

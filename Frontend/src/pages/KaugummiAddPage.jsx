@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import API from "../api.js";
 import "./components/Styles/Home.css";
 import "./components/Styles/Add.css";
 
 function KaugummiAddPage() {
+    const navigate = useNavigate();
     const [name, setName] = useState("");
     const [imageUrl, setImageUrl] = useState("");
     const [marke, setMarke] = useState("");
@@ -13,6 +15,7 @@ function KaugummiAddPage() {
     const [shopUrl, setShopUrl] = useState("");
     const [herstellungsland, setHerstellungsland] = useState("");
     const [nebenwirkungen , setNebenwirkungen] = useState("");
+    const [error, setError] = useState("");
     // Daten, die ins Backend geschickt werden
     const kaugummiData = {
         name: name,
@@ -29,12 +32,14 @@ function KaugummiAddPage() {
     // POST-Funktion
     const kaugummiHinzufuegen = async (e) => {
         e.preventDefault();
+        setError("");
         try {
             const response = await API.post("/api/kaugummi/add", kaugummiData);
             console.log("Erfolgreich hinzugefügt:", response.data);
-
+            navigate("/kaugummiPage");
         } catch (error) {
             console.error("Fehler:", error);
+            setError(error.response?.data?.message || "Der Kaugummi konnte nicht hinzugefügt werden.");
         }
     };
 
@@ -43,6 +48,8 @@ function KaugummiAddPage() {
             <div className="kaugummi-form-container">
 
                 <h1 className="kauggmi-field">Kaugummi hinzufügen</h1>
+
+                {error && <p className="edit-error">{error}</p>}
 
                 <form onSubmit={kaugummiHinzufuegen}>
 

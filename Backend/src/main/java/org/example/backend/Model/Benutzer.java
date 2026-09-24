@@ -28,7 +28,7 @@ public abstract class Benutzer {
 
 
     @OneToMany(mappedBy = "benutzer", cascade = CascadeType.ALL)
-    private List<org.example.backend.model.Kommentar> kommentare;
+    private List<org.example.backend.Model.Kommentar> kommentare;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(

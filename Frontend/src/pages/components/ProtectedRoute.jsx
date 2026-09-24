@@ -15,7 +15,9 @@ const ProtectedRoute = ({ requiredRole }) => {
         const hasRequiredRole = role === requiredRole || role === "ROLE_" + requiredRole;
 
         // Wenn der User die Rolle NICHT hat, leiten wir ihn auf die Startseite um
-
+        if (!hasRequiredRole) {
+            return <Navigate to="/kaugummiPage" replace />;
+        }
     }
 
     // 3. Alles passt -> Geschützte Seite anzeigen
