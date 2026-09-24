@@ -36,7 +36,8 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "http://localhost:5173") // Für React Frontend
+@CrossOrigin(origins = "http://localhost:5174", allowedHeaders = "*", allowCredentials = "true")
+
 
 public class AuthController {
 
@@ -83,11 +84,15 @@ public class AuthController {
             );
 
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
+
+            
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+            
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Fehler bei der Registrierung: " + e.getMessage());
+
         }
 
     }

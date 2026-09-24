@@ -15,7 +15,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
 
-        registry.addMapping("/api/admin/*")
+        registry.addMapping("/api/admin/**")
                 .allowedOrigins(ALLOWED_ORIGINS)
                 .allowedMethods(ALLOWED_METHODS)
                 .allowedHeaders("*")
@@ -40,7 +40,22 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedMethods(ALLOWED_METHODS)
                 .allowedHeaders("*")
                 .allowCredentials(false)
+                        .maxAge(3600);
+                
+
+        registry.addMapping("/api/kommentar/**")
+                .allowedOrigins(ALLOWED_ORIGINS)
+                .allowedMethods(ALLOWED_METHODS)
+                .allowedHeaders("*")
+                .allowCredentials(false)
+                        .maxAge(3600);
+        registry.addMapping("/api/favoriten/**")
+                .allowedOrigins(ALLOWED_ORIGINS)
+                .allowedMethods(ALLOWED_METHODS)
+                .allowedHeaders("*")
+                .allowCredentials(false)
                 .maxAge(3600);
+
     }
 
 

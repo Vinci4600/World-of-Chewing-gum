@@ -31,7 +31,6 @@ public class Kommentar {
     }
 
     public Kommentar() {
-
     }
 
     public Long getId() {
