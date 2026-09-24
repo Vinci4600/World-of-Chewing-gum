@@ -26,7 +26,7 @@
 
 .add-kaugummi{
     position: absolute;
-    text-shadow: orangered 2px 2px;
+    text-shadow: 0 0 12px #ff2bd6;
 }
 
 
@@ -37,7 +37,7 @@
     cursor: pointer;
     border: none;
     border-radius: 5px;
-    background-color: #007bff;
+    background: linear-gradient(135deg, #f72585, #b5179e);
     color: white;
     transition: all 0.3s ease;
     overflow: hidden;
@@ -46,26 +46,26 @@
 /* Hover-Effekt: Vergrößern und Schatten */
 .button1.animated-btn:hover {
     transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 8px 15px rgba(0, 123, 255, 0.4);
-    background-color: #0056b3;
+    box-shadow: 0 0 18px rgba(247, 37, 133, 0.45);
+    background: #00b8cc;
 }
 
 /* Click-Effekt */
 .button1.animated-btn:active {
     transform: translateY(-1px) scale(0.98);
-    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+    box-shadow: 0 0 12px rgba(0, 229, 255, 0.35);
 }
 
 /* Optionale Puls-Animation, um Aufmerksamkeit zu erzeugen */
 @keyframes pulse {
     0% {
-        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.6);
+        box-shadow: 0 0 0 0 rgba(0, 229, 255, 0.6);
     }
     70% {
-        box-shadow: 0 0 0 10px rgba(0, 123, 255, 0);
+        box-shadow: 0 0 0 10px rgba(0, 229, 255, 0);
     }
     100% {
-        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+        box-shadow: 0 0 0 0 rgba(0, 229, 255, 0);
     }
 }
 

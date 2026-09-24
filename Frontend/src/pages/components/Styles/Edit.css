@@ -61,7 +61,7 @@
 }
 
 .edit-field input:focus {
-    outline: 2px solid #3a86ff;
+    outline: 2px solid #00e5ff;
     outline-offset: 2px;
 }
 
@@ -112,7 +112,7 @@
 }
 
 .edit-actions .edit-cancel-button {
-    background: #3a86ff;
+    background: #00a8b8;
 }
 
 .edit-loading {

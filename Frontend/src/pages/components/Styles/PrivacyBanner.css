@@ -4,7 +4,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 9999;
+     background: linear-gradient(90deg, #0b0620, #241242, #0b0620);
     background: #1a1a2e;
     color: #f0f0f0;
     border-top: 3px solid #00adb5;
@@ -16,7 +16,7 @@
     box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
     flex-wrap: wrap;
 }
-
+     border-top: 3px solid #00e5ff;
 .privacy-banner-text {
     flex: 1;
     min-width: 240px;
@@ -25,9 +25,9 @@
 .privacy-banner-text strong {
     font-size: 1rem;
     color: #00adb5;
-}
 
-.privacy-banner-text p {
+
+ color: #00e5ff;
     margin: 6px 0 0;
     font-size: 0.85rem;
     color: #ccc;
