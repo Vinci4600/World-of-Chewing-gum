@@ -52,7 +52,7 @@
                         setMarke(data.marke || "");
                         setHerstellungsland(data.herstellungsland || "");
                         setNebenwirkungen(data.nebenwirkungen || "");
-                        setGum(data.name ||"");
+                        setGum(data);
 
                         // Fall A: Das Backend schickt isFavorite direkt im Objekt mit
                         // 2. Favoritenstatus sicher abfangen (ohne Fehler zu werfen)
@@ -203,9 +203,13 @@
                                 <button
                                     onClick={toggleFavorite}
                                     className="favorite-btn"
-                                    style={{cursor: 'pointer', padding: '8px 16px', borderRadius: '4px'}}
+                                    type="button"
+                                    aria-pressed={isFavorite}
                                 >
-                                    {isFavorite ? "❤️ Aus Favoriten entfernen" : "🤍 Zu Favoriten hinzufügen"}
+                                    <span className="favorite-btn-icon" aria-hidden="true">
+                                        {isFavorite ? "♥" : "♡"}
+                                    </span>
+                                    <span>{isFavorite ? "Aus Favoriten entfernen" : "Zu Favoriten hinzufügen"}</span>
                                 </button>
                             </section>
 
