@@ -19,17 +19,8 @@ public class KundeController {
         this.kaugummiService = kaugummiService;
     }
 
-    // GET - Alle Kaugummis anschauen
-    @GetMapping("/kaugummis")
-    public ResponseEntity<List<Kaugummi>> alleKaugummisAnschauen() {
-        return ResponseEntity.ok(kaugummiService.alleKaugummisAnzeigen());
-    }
 
-    // GET - Einzelnen Kaugummi anschauen
-    @GetMapping("/kaugummis/{id}")
-    public ResponseEntity<Kaugummi> kaugummiAnschauen(@PathVariable Long id) {
-        return ResponseEntity.ok(kaugummiService.kaugummiAnzeigen(id));
-    }
+
 
     // POST - Kaugummi zu Favoriten hinzufügen
     @PostMapping("/{kundeId}/favoriten/{kaugummiId}")
