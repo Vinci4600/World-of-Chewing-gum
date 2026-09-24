@@ -1,4 +1,4 @@
-INSERT INTO kaugummi (id, geschmack, image_url, inhaltsstoffe, marke, name, zuckerfrei, shop_url, herstellungsland, nebenwirkungen)
+INSERT IGNORE INTO kaugummi (id, geschmack, image_url, inhaltsstoffe, marke, name, zuckerfrei, shop_url, herstellungsland, nebenwirkungen)
 VALUES
     (1, 'Menthol', '/Last.png', 'Sorbit, Kaumasse, Aromen', 'Wrigley', 'Airwaves', NULL, 'https://www.example.com', 'Deutschland', 'Kann bei übermäßigem Verzehr abführend wirken'),
     (3, 'Minze', 'https://www.brack.ch/true-gum-kaugummi-minze-21-g-1129898', 'Plastikfreie Kaumasse, Süßungsmittel, Minzaroma', 'True Gum', 'True Gum Mint', NULL, NULL, 'Dänemark', 'Kann bei übermäßigem Verzehr abführend wirken'),
@@ -23,23 +23,10 @@ VALUES
     (22, 'Eukalyptus', 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=800', 'Kaumasse, Sorbit, Eukalyptus- und Minzaroma', 'Wrigley', 'Airwaves Eucalyptus', TRUE, 'https://www.airwaves.de', 'Deutschland', 'Kann bei empfindlichen Personen Mundreizungen verursachen'),
     (23, 'Himbeere', 'https://images.unsplash.com/photo-1577069861033-55d04cec4ef5?w=800', 'Kaumasse, Xylit, Himbeeraroma', 'PUR Gum', 'PUR Raspberry', TRUE, 'https://thepurgum.com', 'Kanada', 'Kann bei übermäßigem Verzehr abführend wirken'),
     (24, 'Mango', 'https://images.unsplash.com/photo-1553279768-865429fa0078?w=800', 'Kaumasse, Sorbit, Mangoaroma', '5 Gum', '5 Gum Mango', TRUE, 'https://www.5gum.com', 'Mexiko', 'Kann bei übermäßigem Verzehr abführend wirken')
-ON DUPLICATE KEY UPDATE
-    geschmack = VALUES(geschmack),
-    image_url = VALUES(image_url),
-    inhaltsstoffe = VALUES(inhaltsstoffe),
-    marke = VALUES(marke),
-    name = VALUES(name),
-    zuckerfrei = VALUES(zuckerfrei),
-    shop_url = VALUES(shop_url),
-    herstellungsland = VALUES(herstellungsland),
-    nebenwirkungen = VALUES(nebenwirkungen);
+;
 
-INSERT INTO benutzer (benutzername, email, passwort, role, dtype)
+INSERT IGNORE INTO benutzer (benutzername, email, passwort, role, dtype)
 VALUES
     ('Vincent', 'vincentdiergardt12@gmail.com', '$2a$10$4IGrR3G.5g7FLQoUWaW0tO0vNKYQlFIuOCknGbmODhhHnOOa7bBuO', 'ADMIN', 'Admin'),
     ('Elias', 'eljourka@gmail.com', '$2a$10$7uO2OK4s8huQxh19dhXx7eGgK4HXBwY7kZC3ssS6J/8OlzQb0mO2u', 'ADMIN', 'Admin')
-ON DUPLICATE KEY UPDATE
-    benutzername = VALUES(benutzername),
-    passwort = VALUES(passwort),
-    role = VALUES(role),
-    dtype = VALUES(dtype);
+;
