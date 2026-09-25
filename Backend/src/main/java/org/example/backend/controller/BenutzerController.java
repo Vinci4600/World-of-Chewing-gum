@@ -21,6 +21,7 @@ public class BenutzerController {
         this.benutzerService = benutzerService;
 
     }
+    /// Alle Benutzer Anzeigen (Kunden und Admin)
     @GetMapping("/all")
     public ResponseEntity<List<BenutzerDTO>> alleBenutzerAnzeigen() {
         return ResponseEntity.ok(benutzerService.alleBenutzerAnzeigen());
