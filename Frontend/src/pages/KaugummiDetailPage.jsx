@@ -225,9 +225,13 @@
                                     required
                                 />
 
-                                    <button className="kaugummi-comment-button" type="submit">
+                                    <button
+                                        className="kaugummi-icon-button"
+                                        type="submit"
+                                        aria-label="Kommentar schreiben"
+                                        title="Kommentar schreiben"
+                                    >
                                         <img src={commentButtonIcon} alt=""/>
-                                        Kommentar schreiben
                                     </button>
                                 </form>
 
