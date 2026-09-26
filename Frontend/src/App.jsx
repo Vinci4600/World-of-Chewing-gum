@@ -10,7 +10,8 @@ import ProtectedRoute from "./pages/components/ProtectedRoute.jsx";
 import {useAuth} from "./context/AuthContext.jsx";
 import ForgotPassword from "./pages/ForgotPassword.jsx";
 import VerifyCode from "./pages/VerifyCode.jsx";
-import Kundenprofil from "./pages/Kundenprofil.jsx";
+import BenutzerAngaben from "./pages/BenutzerAngaben.jsx";
+
 import Datenschutzerklärung from "./pages/Datenschutzerklärung.jsx";
 
 function App() {
@@ -38,10 +39,13 @@ function App() {
                     {isAuthenticated ? (
                         <>
                             <Link to="/kaugummiPage">Kaugummis</Link>
-                            <Link to="/customerprofile">Kundenansicht</Link>
+                            
 
                             {isAdmin && (
-                                <Link to="/kaugummiadd">Kaugummi hinzufügen</Link>
+                                <>
+                                    <Link to="/kaugummiadd">Kaugummi hinzufügen</Link>
+                                    <Link to="/benutzerangaben">Benutzerangaben</Link>
+                                </>
                             )}
 
                             <button onClick={handleLogout} className="logout-btn">
@@ -69,15 +73,11 @@ function App() {
                     <Route path="/kaugummi/:id" element={<KaugummiDetailPage/>}/>
                     <Route path="/" element={<HomePage/>}/>
 
-                    {/* 1. Normale geschützte Routen (für alle eingeloggten User) */}
-                    <Route element={<ProtectedRoute />}>
-                        <Route path="/customerprofile" element={<Kundenprofil />}/>
-                    </Route>
-
-                    {/* 2. Admin-geschützte Routen (nur für Admins) */}
+                    {/* Geschützte Admin-Routen */}
                     <Route element={<ProtectedRoute requiredRole="ADMIN" />}>
                         <Route path="/kaugummiadd" element={<KaugummiAddPage/>}/>
                         <Route path="/kaugummiedit/:id" element={<KaugummiEditPage/>}/>
+                        <Route path="/benutzerangaben" element={<BenutzerAngaben/>}/>
 
                     </Route>
                 </Routes>

@@ -707,31 +707,6 @@ label {
     resize: vertical;
 }
 
-.kaugummi-comment-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    width: fit-content;
-    border: 1px solid #ff2bd6;
-    border-radius: 5px;
-    padding: 9px 14px;
-    color: white;
-    background: #241c42;
-    cursor: pointer;
-    font-size: 0.95rem;
-}
-
-.kaugummi-comment-button img {
-    width: 24px;
-    height: 24px;
-    object-fit: contain;
-}
-
-.kaugummi-comment-button:hover {
-    background: #5d1f64;
-}
-
 .comments-list {
     display: grid;
     gap: 12px;

@@ -1,0 +1,34 @@
+.benutzer-angaben {
+    width: min(100% - 2rem, 1100px);
+    margin: 2rem auto;
+    color: #ffffff;
+}
+
+.benutzer-angaben h1 {
+    margin-bottom: 1.5rem;
+}
+
+.benutzer-tabelle-wrapper {
+    overflow-x: auto;
+}
+
+.benutzer-tabelle {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(21, 21, 43, 0.9);
+}
+
+.benutzer-tabelle th,
+.benutzer-tabelle td {
+    padding: 0.9rem 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    text-align: left;
+}
+
+.benutzer-tabelle th {
+    background: rgba(247, 37, 133, 0.8);
+}
+
+.benutzer-angaben-fehler {
+    color: #ffb5b5;
+}
