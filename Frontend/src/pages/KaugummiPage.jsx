@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../api.js"; // Pfad ggf. anpassen
+import { useAuth } from "../context/AuthContext.jsx";
 
 import {Link} from "react-router-dom";
 import "./components/Styles/Home.css";
@@ -10,16 +11,22 @@ import deleteIcon from "./components/Bilder/Deletebtn.png";
 
 function KaugummiPage() {
     const [kaugummi, setKaugummi] = useState([]);
+    const { isAuthenticated, role } = useAuth();
+    const isAdmin = role === "ADMIN" || role === "ROLE_ADMIN";
 
     const navigate = useNavigate();
 
-    // Alle Kaugummis laden
+    /**
+     * Kaugummis laden asynchon mit Fetch-Methode des Endpoints /api/kaugummi/all(promise-based AJAX-Call)
+     * 
+     * @returns {Promise<void>}
+     */
     const fetchKaugummi = async () => {
         try {
             const response = await API.get("/api/kaugummi/all");
             setKaugummi(response.data);
         } catch (error) {
-            console.error("Fehler beim Laden der Kaugummis:", error);
+            console.error("Fehler beim Laden der Kaugummiss:", error);
         }
     };
 
@@ -61,32 +68,37 @@ function KaugummiPage() {
                         onClick={() => handleKaugummiClick(gum.id)}
                     >
 
-                        <div className="kaugummi-card-actions">
-                            <Link
-                                className="kaugummi-icon-button"
-                                to={`/kaugummiedit/${gum.id}`}
-                                onClick={(event) => event.stopPropagation()}
-                                aria-label={`${gum.name} bearbeiten`}
-                                title="Bearbeiten"
-                            >
-                                <img src={editIcon} alt="" />
-                            </Link>
-                            <button
-                                className="kaugummi-icon-button"
-                                type="button"
-                                onClick={(event) => handleDelete(event, gum.id)}
-                                aria-label={`${gum.name} löschen`}
-                                title="Löschen"
-                            >
-                                <img src={deleteIcon} alt="" />
-                            </button>
-                        </div>
+                        {isAuthenticated && isAdmin && (
+                            <div className="kaugummi-card-actions">
+                                <Link
+                                    className="kaugummi-icon-button"
+                                    to={`/kaugummiedit/${gum.id}`}
+                                    onClick={(event) => event.stopPropagation()}
+                                    aria-label={`${gum.name} bearbeiten`}
+                                    title="Bearbeiten"
+                                >
+                                    <img src={editIcon} alt="" />
+                                </Link>
+                                <button
+                                    className="kaugummi-icon-button"
+                                    type="button"
+                                    onClick={(event) => handleDelete(event, gum.id)}
+                                    aria-label={`${gum.name} löschen`}
+                                    title="Löschen"
+                                >
+                                    <img src={deleteIcon} alt="" />
+                                </button>
+                            </div>
+                        )}
 
 
                         <img
-                            src={gum.imageUrl}
+                            src={gum.imageUrl?.includes("via.placeholder.com") ? "/Last.png" : gum.imageUrl || "/Last.png"}
                             alt={gum.name}
                             className="kaugummi-image"
+                            onError={(event) => {
+                                event.currentTarget.src = "/Last.png";
+                            }}
                         />
 
                         <div className="kaugummi-card-content">
@@ -108,6 +120,11 @@ function KaugummiPage() {
                             <p>
                                 <strong>Inhaltsstoffe:</strong>
                                 {gum.inhaltsstoffe}
+                            </p>
+
+                            <p>
+                                <strong>Nebenwirkungen:</strong>{" "}
+                                {gum.nebenwirkungen || "Keine Angaben"}
                             </p>
 
                             {gum.zuckerfrei && (

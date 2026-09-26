@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import org.example.backend.Model.Kommentar;
 
 @Entity
 @Table(name = "kaugummi")
@@ -29,6 +30,8 @@ public class Kaugummi {
     private String inhaltsstoffe;
 
     private String shopUrl;
+    private String herstellungsland;
+    private String nebenwirkungen;
 
     // Ein Kaugummi kann mehrere Bewertungen haben
     @OneToMany(
@@ -42,6 +45,17 @@ public class Kaugummi {
     @ManyToMany(mappedBy = "favoriten")
     private Set<Benutzer> favorisiertVon = new HashSet<>();
 
+    // Ein Kaugummi kann mehrere Komenare haben
+    @OneToMany(mappedBy = "kaugummi", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Kommentar> kommentare = new ArrayList<>();
+
+    public List<Kommentar> getKommentare() {
+        return kommentare;
+    }
+
+    public void setKommentare(List<Kommentar> kommentare) {
+        this.kommentare = kommentare;
+    }
 
     // Standard-Konstruktor für JPA
     public Kaugummi() {
@@ -56,7 +70,9 @@ public class Kaugummi {
             String geschmack,
             Boolean zuckerfrei,
             String inhaltsstoffe,
-            String shopUrl
+            String shopUrl,
+            String herstellungsland,
+            String nebenwirkungen
     ) {
         this.id = id;
         this.name = name;
@@ -66,10 +82,28 @@ public class Kaugummi {
         this.zuckerfrei = zuckerfrei;
         this.inhaltsstoffe = inhaltsstoffe;
         this.shopUrl = shopUrl;
+        this.herstellungsland = herstellungsland;
+        this.nebenwirkungen = nebenwirkungen;
     }
 
 
     // Getter und Setter
+
+    public String getNebenwirkungen() {
+        return nebenwirkungen;
+    }
+
+    public void setNebenwirkungen(String nebenwirkungen) {
+        this.nebenwirkungen = nebenwirkungen;
+    }
+
+    public String getHerstellungsland() {
+        return herstellungsland;
+    }
+
+    public void setHerstellungsland(String herstellungsland) {
+        this.herstellungsland = herstellungsland;
+    }
 
     public Long getId() {
         return id;

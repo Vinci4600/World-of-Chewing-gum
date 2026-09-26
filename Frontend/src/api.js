@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const API = axios.create({
-    baseURL: "/",
+
+
 });
 
 // Fügt automatisch das Bearer-Token bei jeder Anfrage hinzu

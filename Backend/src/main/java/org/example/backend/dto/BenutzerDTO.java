@@ -4,7 +4,7 @@ public record BenutzerDTO (
         Long id,
         String benutzername,
         String email,
-        String passwort
+        org.example.backend.Model.Role role
 )
 
 {

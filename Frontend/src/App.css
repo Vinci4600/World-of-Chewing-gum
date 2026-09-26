@@ -11,18 +11,18 @@ body,
   min-height: 100vh;
   width: 100%;
 
-  background-color: #17152b;
+    background-color: #08051a;
 
 
   background-image:
           radial-gradient(
                   circle at 20% 25%,
-                  #7209B7,
+                  rgba(114, 9, 183, 0.72),
                   transparent 35%
           ),
           radial-gradient(
                   circle at 80% 75%,
-                  #F72585,
+                  rgba(247, 37, 133, 0.55),
                   transparent 35%
           );
 
@@ -33,7 +33,7 @@ body,
 }}
 
 .Background:hover {
-    background-color: #F72585;
+    background-color: #110726;
     --grad1-x: 35%;
     --grad1-y: 40%;
     --grad2-x: 65%;
@@ -51,7 +51,7 @@ body,
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #17152b;
+    background-color: #08051a;
 }
 
 
@@ -63,7 +63,7 @@ body,
 .lg-card {
     position: relative;
     text-align: center;
-    background-color: #70e000;
+    background: linear-gradient(145deg, rgba(36, 18, 66, 0.96), rgba(12, 8, 32, 0.96));
     padding: 2rem 2rem 5rem 2rem; /* Platz unten für den Button */
     text-shadow: #f72585 1px 1px 1px;
     border-radius: 12px;
@@ -77,7 +77,7 @@ body,
 /* Texte */
 .lg-title {
     margin: 0;
-    color: #17152b;
+    color: #ffffff;
     font-size: 1.8rem;
     font-weight: bold;
 }
@@ -105,8 +105,25 @@ body,
 
 .lg-sub {
     margin: 0.5rem 0 1.5rem 0;
-    color: #17152b;
+    color: #ffb5e8;
     font-size: 0.9rem;
+}
+
+.lg-footer {
+    margin-top: 24px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.lg-footer a {
+    color: #87CEEB;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.lg-footer a:hover {
+    color: #6fc2e3;
+    text-decoration: underline;
 }
 
 .lg-error {
@@ -123,10 +140,51 @@ body,
     margin-bottom: 1rem;
 }
 
+.footer {
+    background: linear-gradient(90deg, #08051a, #241242, #08051a);
+    color: #ffffff;
+
+    padding: 0.8rem 1rem;
+
+    text-align: center;
+    overflow: hidden;
+}
+
+
+
+
+
+.footer-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100px;
+    marx-width:100px;
+    background-color: transparent;
+}
+.copyright-text {
+    font-size: 0.9rem;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 2s ease forwards;
+    animation-delay: 0.3s; /* Startet kurz nach dem Laden */
+    text-shadow: #f72585 1px 1px 1px;
+
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .lg-input {
     width: 100%;
     padding: 0.75rem;
-    border: 2px solid #17152b;
+    border: 2px solid #7b2cbf;
+    background: #15102d;
+    color: #ffffff;
     border-radius: 6px;
     box-sizing: border-box;
     font-family: sans-serif;
@@ -146,10 +204,10 @@ body,
 .lg-btn{
 
 
-    background-color: #eb4634;
+    background: linear-gradient(135deg, #f72585, #b5179e);
     color: #ffffff;
     border-radius: 12px;
-    text-shadow: #FFBE0B 1px 1px 1px;
+    text-shadow: 0 0 10px rgba(255, 190, 11, 0.7);
     border: none;
     padding: 12px 24px;
     font-size: 16px;
@@ -183,8 +241,10 @@ Body {
 
        padding: 15px 30px;
 
-       background-color: #3886FF;
-       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(90deg, #08051a, #241242, #08051a);
+    border-bottom: 1px solid rgba(0, 229, 255, 0.45);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45), 0 0 18px rgba(0, 229, 255, 0.12);
+
 
        position: sticky;
        top: 0;
@@ -195,13 +255,15 @@ Body {
     font-size: 24px;
     font-weight: bold;
     text-decoration: none;
-    color: #333;
+    color: #ffffff;
+    margin-right: 5rem;
 }
 .navbar-logo img {
     width: 60px;
     height: auto;
     display: block;
     object-fit: contain;
+    margin-right: 3rem;
 }
 
 .navbar-links {
@@ -212,30 +274,33 @@ Body {
 
 .navbar-links a {
     text-decoration: none;
-    color: #333;
+    color: #f5e9ff;
     font-size: 16px;
 
     transition: color 0.2s;
 }
 
 .navbar-links a:hover {
-    color: #e85aad;
+    color: #00e5ff;
 }
 
 .logout-button {
     border: none;
-    background-color: #e85aad;
-    color: white;
+    background: #f72585;
+
+    color: #ffffff;
 
     padding: 8px 16px;
     border-radius: 8px;
 
     font-size: 16px;
+    transition: background-color 0.2s ease;
     cursor: pointer;
 }
 
 .logout-button:hover {
-    background-color: #d63f99;
+    background-color: #b5179e
+
 }
 
 

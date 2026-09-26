@@ -2,6 +2,7 @@ package org.example.backend.Model;
 
 import jakarta.persistence.*;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "benutzer")
@@ -23,7 +24,7 @@ public abstract class Benutzer {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private org.example.backend.model.Role role;
+    private org.example.backend.Model.Role role;
 
 
     @OneToMany(mappedBy = "benutzer", cascade = CascadeType.ALL)
@@ -40,7 +41,7 @@ public abstract class Benutzer {
     protected Benutzer() {
     }
 
-    public Benutzer(Long id, String benutzername, String email, String passwort, org.example.backend.model.Role role) {
+    public Benutzer(Long id, String benutzername, String email, String passwort, org.example.backend.Model.Role role) {
         this.id = id;
         this.benutzername = benutzername;
         this.email = email;
@@ -85,17 +86,19 @@ public abstract class Benutzer {
         this.passwort = passwort;
     }
 
-    public org.example.backend.model.Role getRole() {
+    public org.example.backend.Model.Role getRole() {
         return role;
     }
 
-    public void setRole(org.example.backend.model.Role role) {
+    public void setRole(org.example.backend.Model.Role role) {
         this.role = role;
     }
 
-    public List<org.example.backend.Model.Kommentar> getKommentare() {
+    @JsonIgnore
+    public List<Kommentar> getKommentare() {
         return kommentare;
     }
+
 
     public void setKommentare(List<org.example.backend.Model.Kommentar> kommentare) {
         this.kommentare = kommentare;
@@ -108,4 +111,15 @@ public abstract class Benutzer {
     public void setFavoriten(List<org.example.backend.Model.Kaugummi> favoriten) {
         this.favoriten = favoriten;
     }
+
+	@Override
+	public String toString() {
+		return "Benutzer [id=" + id + ", benutzername=" + benutzername + ", email=" + email + ", passwort=" + passwort
+				+ ", role=" + role + ", kommentare=" + kommentare + ", favoriten=" + favoriten + ", getId()=" + getId()
+				+ ", getBenutzername()=" + getBenutzername() + ", getEmail()=" + getEmail() + ", getPasswort()="
+				+ getPasswort() + ", getRole()=" + getRole() + ", getKommentare()=" + getKommentare()
+				+ ", getFavoriten()=" + getFavoriten() + "]";
+	}
+
+    
 }

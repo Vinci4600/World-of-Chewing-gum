@@ -4,13 +4,17 @@ import org.example.backend.Model.Kaugummi;
 import org.example.backend.Model.Kunde;
 import org.example.backend.service.KaugummiService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/kunde")
-@CrossOrigin(origins = "http://localhost:5173") // Für React Frontend
+@PreAuthorize("hasRole('KUNDE')")
+
+@CrossOrigin(origins = "http://localhost:5174", allowedHeaders = "*", allowCredentials = "true")
+
 public class KundeController {
 
     private final KaugummiService kaugummiService;
@@ -19,17 +23,8 @@ public class KundeController {
         this.kaugummiService = kaugummiService;
     }
 
-    // GET - Alle Kaugummis anschauen
-    @GetMapping("/kaugummis")
-    public ResponseEntity<List<Kaugummi>> alleKaugummisAnschauen() {
-        return ResponseEntity.ok(kaugummiService.alleKaugummisAnzeigen());
-    }
 
-    // GET - Einzelnen Kaugummi anschauen
-    @GetMapping("/kaugummis/{id}")
-    public ResponseEntity<Kaugummi> kaugummiAnschauen(@PathVariable Long id) {
-        return ResponseEntity.ok(kaugummiService.kaugummiAnzeigen(id));
-    }
+
 
     // POST - Kaugummi zu Favoriten hinzufügen
     @PostMapping("/{kundeId}/favoriten/{kaugummiId}")
