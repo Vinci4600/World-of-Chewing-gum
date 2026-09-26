@@ -77,9 +77,10 @@ describe("KaugummiDetailPage Component", () => {
         renderComponent();
 
         await waitFor(() => {
-            expect(screen.getByText("Name:Airwaves Menthol")).toBeInTheDocument();
             expect(screen.getByText("Marke: Wrigley")).toBeInTheDocument();
             expect(screen.getByText("Geschmack: Menthol")).toBeInTheDocument();
+            expect(screen.getByText('heading',{level:1,name:/airwaves mentol/i})).toBeInTheDocument();
+            expect(screen.getByText('Wrigley')).toBeInTheDocument();
         });
     });
 

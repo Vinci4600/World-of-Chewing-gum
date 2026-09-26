@@ -163,7 +163,7 @@
 
                         <div className="kaugummi-detail-content">
                             <p className="kaugummi-eyebrow">Marke: {gum.marke || "Keine Angaben"}</p>
-                            <h1>{gum.name}</h1>
+                            <h1>Kaugumminame:{gum.name}</h1>
                             <p className="kaugummi-detail-taste">Geschmack: {gum.geschmack || "Keine Angaben"}</p>
 
                             <div className="kaugummi-detail-facts">

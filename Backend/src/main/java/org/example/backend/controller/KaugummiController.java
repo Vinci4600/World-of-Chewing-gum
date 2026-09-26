@@ -20,6 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/kaugummi")
+
 @CrossOrigin(origins = "http://localhost:5174", allowedHeaders = "*", allowCredentials = "true")
 
 public class KaugummiController {

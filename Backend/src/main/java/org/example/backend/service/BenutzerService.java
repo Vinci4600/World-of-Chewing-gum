@@ -31,6 +31,24 @@ public class BenutzerService {
                 .orElseThrow(() -> new RuntimeException("Benutzer mit ID " + id + " nicht gefunden"));
         return toDto(benutzer);
     }
+
+    /**
+     * Benutzer Löshcne  Mehtode anhand Id mit Excpeion Hanldung wenn Benuter mit Id nicht existier tin Liste
+     * @param id
+     */
+
+    @Transactional
+    public void benutzerLoeschen(Long id) {
+        if (!benutzerRepository.existsById(id)) {
+            throw new RuntimeException("Benutzer mit ID " + id + " nicht gefunden");
+        }
+        benutzerRepository.deleteById(id);
+    }
+
+
+
+
+
    //Benutzer Löschen Funktion
 
 
