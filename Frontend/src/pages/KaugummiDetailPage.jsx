@@ -9,6 +9,7 @@
         const { id } = useParams();
         const navigate = useNavigate();
         const { isAuthenticated } = useAuth();
+        const {user}=useParams();
         const [gum, setGum] = useState(null);
         const [error, setError] = useState("");
         const [commentText, setCommentText] = useState("");
@@ -74,26 +75,45 @@
             }, [id]);
 
         const toggleFavorite = async () => {
+            // 1. Versuche die ID aus dem AuthContext zu lesen
+            // 2. Fallback: Lese den User direkt aus dem localStorage aus
+            const localUser = JSON.parse(localStorage.getItem("user") || "{}");
+
+            // Unterstüzung für verschiedene Eigenschaftsnamen (id, benutzerId, kundeId)
+            const userId =
+                user?.id || user?.benutzerId || user?.kundeId ||
+                localUser?.id || localUser?.benutzerId || localUser?.kundeId;
+
+            const kaugummiId = id || kaugummi?.id;
+
+            console.log("Verwendete IDs -> userId:", userId, "kaugummiId:", kaugummiId);
+
+            if (!userId) {
+                alert("Bitte melde dich an, um Favoriten zu speichern.");
+                return;
+            }
+
+            if (!kaugummiId) {
+                alert("Kaugummi-ID konnte nicht ermittelt werden.");
+                return;
+            }
+
             try {
                 if (isFavorite) {
-                    // Aus Favoriten entfernen (Pfad an eurer API anpassen, falls nötig)
-                    await API.delete(`/api/favoriten/${id}`);
+                    await API.delete(`/api/favoriten/${userId}/favoriten/${kaugummiId}`);
                     setIsFavorite(false);
                     console.log("Aus Favoriten entfernt");
                 } else {
-                    // Zu Favoriten hinzufügen (Pfad an eurer API anpassen, falls nötig)
-                    await API.post(`/api/favoriten/${id}`);
+                    await API.post(`/api/favoriten/${userId}/favoriten/${kaugummiId}`);
                     setIsFavorite(true);
                     console.log("Zu Favoriten hinzugefügt");
                 }
             } catch (err) {
-                // Detaillierte Fehlerausgabe genau wie bei deinem fetch
                 const errorMsg = err.response?.data?.message || err.response?.data || err.message;
                 console.error("Fehler beim Aktualisieren des Favoriten:", err.response || err);
                 alert(`Konnte den Favoritenstatus nicht ändern: ${errorMsg}`);
             }
         };
-
             // KommentarHinzufügen
             const handleCommentSubmit = async (event) => {
                 event.preventDefault();
