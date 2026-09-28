@@ -1,4 +1,12 @@
 services:
+
+  banner:
+    image: alpine:3.21
+    volumes:
+      - ./ASCII_Art_OneShot.txt:/ascii.txt:ro
+    command: ["cat", "/ascii.txt"]
+    restart: "no"
+
   mysql:
     image: mysql:8.4
     container_name: woc-mysql
@@ -33,6 +41,8 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
+      banner:
+        condition: service_completed_successfully
     ports:
       - "8080:8080"
 
