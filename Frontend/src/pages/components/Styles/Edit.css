@@ -1,0 +1,148 @@
+.edit-page {
+    min-height: calc(100vh - 112px);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 48px 20px 64px;
+    box-sizing: border-box;
+}
+
+.edit-card {
+    width: min(100%, 760px);
+    padding: 34px clamp(22px, 5vw, 56px) 42px;
+    background: rgba(21, 21, 43, 0.88);
+    border: 2px solid #f72585;
+    border-radius: 22px;
+    box-shadow: 0 0 14px #7209b7, 0 0 36px rgba(247, 37, 133, 0.35);
+    box-sizing: border-box;
+}
+
+.edit-title {
+    margin: 0 0 28px;
+    text-align: center;
+    color: #ffffff;
+    font-size: clamp(1.7rem, 4vw, 2.4rem);
+}
+
+.edit-form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 22px;
+}
+
+.edit-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.edit-field-full {
+    grid-column: 1 / -1;
+}
+
+.edit-field label,
+.edit-checkbox-field label {
+    color: #ff7ad9;
+    font-weight: 600;
+}
+
+.edit-field input {
+    width: 100%;
+    min-width: 0;
+    height: 46px;
+    padding: 8px 13px;
+    color: #ffffff;
+    background: #15152b;
+    border: 2px solid #ff00aa;
+    border-radius: 10px;
+    box-shadow: 0 0 5px #ff00aa, 0 0 10px rgba(255, 0, 170, 0.35);
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+.edit-field input:focus {
+    outline: 2px solid #00e5ff;
+    outline-offset: 2px;
+}
+
+.edit-checkbox-field {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 2px;
+}
+
+.edit-checkbox-field input {
+    width: 18px;
+    height: 18px;
+    accent-color: #f72585;
+}
+
+.edit-error {
+    margin-bottom: 20px;
+    padding: 12px 14px;
+    color: #ffffff;
+    background: rgba(247, 37, 133, 0.9);
+    border-radius: 8px;
+}
+
+.edit-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 10px;
+}
+
+.edit-actions button {
+    min-width: 150px;
+    padding: 12px 22px;
+    border: 0;
+    border-radius: 8px;
+    color: #ffffff;
+    background: #d41485;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.edit-actions button:hover {
+    background: #f72585;
+}
+
+.edit-actions .edit-cancel-button {
+    background: #00a8b8;
+}
+
+.edit-loading {
+    min-height: calc(100vh - 112px);
+    display: grid;
+    place-items: center;
+    color: #ffffff;
+    font-size: 1.1rem;
+}
+
+@media (max-width: 640px) {
+    .edit-page {
+        padding: 28px 12px 44px;
+    }
+
+    .edit-card {
+        padding: 26px 18px 30px;
+        border-radius: 16px;
+    }
+
+    .edit-form {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .edit-actions {
+        flex-direction: column;
+    }
+
+    .edit-actions button {
+        width: 100%;
+    }
+}

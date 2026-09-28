@@ -1,6 +1,7 @@
 package org.example.backend.Model;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -30,7 +31,6 @@ public class Kommentar {
     }
 
     public Kommentar() {
-
     }
 
     public Long getId() {
@@ -58,11 +58,16 @@ public class Kommentar {
         this.benutzer = benutzer;
     }
 
+    @JsonIgnore
     public Kaugummi getKaugummi() {
         return kaugummi;
     }
 
+
     public void setKaugummi(Kaugummi kaugummi) {
         this.kaugummi = kaugummi;
     }
+
+    
 }
+    

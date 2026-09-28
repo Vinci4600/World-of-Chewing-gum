@@ -8,7 +8,9 @@ public record KaugummiDTO(
         String geschmack,
         Boolean zuckerfrei,
         String inhaltsstoffe,
-        String shopUrl
+        String shopUrl,
+        String herstellungsland,
+        String nebenwirkungen
 ) {
 
 }

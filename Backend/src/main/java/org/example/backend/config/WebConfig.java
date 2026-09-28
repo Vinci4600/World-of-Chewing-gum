@@ -9,13 +9,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
 
 
-    private static final String[] ALLOWED_ORIGINS = new String[]{"http://localhost:5173"};
+    private static final String[] ALLOWED_ORIGINS = new String[]{"http://localhost:5173", "http://localhost:5174"};
     private static final String[] ALLOWED_METHODS = new String[]{"GET", "POST", "PUT", "DELETE", "OPTIONS"};
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
 
-        registry.addMapping("/api/admin/*")
+        registry.addMapping("/api/admin/**")
                 .allowedOrigins(ALLOWED_ORIGINS)
                 .allowedMethods(ALLOWED_METHODS)
                 .allowedHeaders("*")
@@ -40,7 +40,22 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedMethods(ALLOWED_METHODS)
                 .allowedHeaders("*")
                 .allowCredentials(false)
+                        .maxAge(3600);
+                
+
+        registry.addMapping("/api/kommentar/**")
+                .allowedOrigins(ALLOWED_ORIGINS)
+                .allowedMethods(ALLOWED_METHODS)
+                .allowedHeaders("*")
+                .allowCredentials(false)
+                        .maxAge(3600);
+        registry.addMapping("/api/favoriten/**")
+                .allowedOrigins(ALLOWED_ORIGINS)
+                .allowedMethods(ALLOWED_METHODS)
+                .allowedHeaders("*")
+                .allowCredentials(false)
                 .maxAge(3600);
+
     }
 
 

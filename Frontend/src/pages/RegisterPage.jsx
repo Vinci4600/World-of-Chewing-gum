@@ -44,13 +44,23 @@ function RegistrierungPage() {
         {
             label: "Passwörter stimmen überein",
             valid:
-                password.length > 0 &&
+                password.length >=7&&
                 password === confirmPassword
         }
     ];
 
     // E-Mail-Anforderungen
     const emailRequirements = [
+        {
+            label: "Mindestens 8 Zeichen lang",
+            valid: email.length >= 8
+        },
+
+        {
+            label: "Mindestens 1 Kleinbuchstabe (a-z)",
+            valid: /[a-z]/.test(email)
+        },
+
         {
             label: "Muss ein @ enthalten",
             valid: email.includes("@")
@@ -75,6 +85,10 @@ function RegistrierungPage() {
             return;
         }
 
+
+        /**
+         * registrierung mit Usernam eudn Konto
+         */
         try {
             const response = await fetch("/api/auth/register", {
                 method: "POST",
@@ -82,18 +96,26 @@ function RegistrierungPage() {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    username,
+                    username: username.trim(),
                     password,
-                    email
+                    email: email.trim()
                 })
             });
 
             if (!response.ok) {
-                const errorData = await response.json();
+                const responseText = await response.text();
+                let errorData = responseText;
+
+                try {
+                    errorData = JSON.parse(responseText);
+                } catch {
+                    // Das Backend kann Fehler auch als einfachen Text senden.
+                }
 
                 throw new Error(
-                    errorData.error ||
-                    errorData ||
+                    (typeof errorData === "string"
+                        ? errorData
+                        : errorData.error || errorData.message) ||
                     "Registrierung fehlgeschlagen"
                 );
             }
@@ -249,13 +271,10 @@ function RegistrierungPage() {
                 </form>
 
                 {/* Login-Link */}
-                <p className="lg-sub">
-                    Bereits ein Konto?
-                </p>
+                <div className="lg-footer">
+                    <Link to="/login">Bereits ein Konto? Hier Anmelden</Link>
+                </div>
 
-                <Link to="/login">
-                    Hier anmelden
-                </Link>
                 <br></br>
 
                 {/* Anforderungen öffnen */}

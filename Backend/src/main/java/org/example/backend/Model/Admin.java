@@ -11,7 +11,7 @@ public class Admin extends Benutzer {
         super();
     }
 
-    public Admin(Long id, String benutzername, String email, String passwort, org.example.backend.model.Role role) {
+    public Admin(Long id, String benutzername, String email, String passwort, org.example.backend.Model.Role role) {
         super(id, benutzername, email, passwort, role);
     }
 }

@@ -1,5 +1,6 @@
 package org.example.backend.security;
 
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -47,50 +48,30 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         // "Bearer eyJhbGc..." → "eyJhbGc..." (ohne "Bearer ")
         final String jwt = authHeader.substring(7);
 
-        // SCHRITT 4: Username aus dem Token extrahieren
-        // Der Token enthält im Payload: { "sub": "testuser", ... }
-        final String username = jwtService.extractUsername(jwt);
+        try {
+            final String username = jwtService.extractUsername(jwt);
 
-        // SCHRITT 5: Prüfen ob User existiert UND
-        // noch nicht authentifiziert ist
-        // SecurityContextHolder.getContext()
-        //     .getAuthentication() == null bedeutet:
-        // "Dieser User ist noch nicht eingeloggt in diesem Request"
-        if (username != null && SecurityContextHolder
+            if (username != null && SecurityContextHolder
                 .getContext()
                 .getAuthentication() == null) {
-
-            // SCHRITT 6: User-Details aus Datenbank laden
-            // UserDetailsService ruft AppUserRepository.findByUsername() auf
             UserDetails userDetails = userDetailsService
-                    .loadUserByUsername(username);
+                .loadUserByUsername(username);
 
-            // SCHRITT 7: Token validieren (Signatur + Ablaufdatum prüfen)
             if (jwtService.validateToken(jwt, username)) {
-
-                // SCHRITT 8: Authentication Object erstellen
-                // Das ist wie ein "interner Ausweis" für Spring Security
-                // Sagt: "Dieser User ist authentifiziert und hat diese Rollen"
                 UsernamePasswordAuthenticationToken authToken =
-                        new UsernamePasswordAuthenticationToken(
-                                userDetails,   // Principal (der User)
-                                null,          // Credentials (brauchen wir nicht mehr)
-                                userDetails.getAuthorities()
-                                // Rollen (ROLE_ADMIN, ROLE_PLAYER)
-                        );
-
-                // SCHRITT 9: Request-Details hinzufügen
-                //            (IP-Adresse, Session-ID, etc.)
+                    new UsernamePasswordAuthenticationToken(
+                        userDetails,
+                        null,
+                        userDetails.getAuthorities()
+                    );
                 authToken.setDetails(
-                        new WebAuthenticationDetailsSource().buildDetails(request)
+                    new WebAuthenticationDetailsSource().buildDetails(request)
                 );
-
-                // SCHRITT 10: User in SecurityContext setzen
-                // Ab jetzt weiss Spring Security: "Dieser User ist eingeloggt!"
-                // Alle weiteren Checks (@PreAuthorize, .authenticated())
-                // funktionieren jetzt!
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
+            }
+        } catch (JwtException | IllegalArgumentException exception) {
+            SecurityContextHolder.clearContext();
         }
 
         // SCHRITT 11: Weiter zum nächsten Filter in der Chain

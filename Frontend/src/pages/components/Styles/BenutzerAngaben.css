@@ -1,0 +1,70 @@
+.benutzer-angaben {
+    width: min(100% - 2rem, 1100px);
+    margin: 3rem auto;
+    color: #ffffff;
+    font-family: "Arial Black", sans-serif;
+}
+
+.benutzer-angaben h1 {
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 0 8px #00bfff, 0 0 20px #f72585;
+}
+
+.benutzer-tabelle-wrapper {
+    overflow-x: auto;
+    padding: 0.35rem;
+    border: 2px solid #00bfff;
+    background: rgba(8, 5, 26, 0.88);
+    box-shadow: 0 0 10px #00bfff, 0 0 25px rgba(247, 37, 133, 0.7);
+}
+
+.benutzer-tabelle {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 680px;
+    background-color: rgba(21, 21, 43, 0.96);
+    background-image: linear-gradient(rgba(0, 191, 255, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 191, 255, 0.07) 1px, transparent 1px);
+    background-size: 22px 22px;
+}
+
+.benutzer-tabelle th,
+.benutzer-tabelle td {
+    padding: 0.9rem 1rem;
+    border: 1px solid rgba(0, 191, 255, 0.35);
+    text-align: left;
+}
+
+.benutzer-tabelle th {
+    color: #ffffff;
+    background: linear-gradient(90deg, rgba(247, 37, 133, 0.9), rgba(181, 23, 158, 0.9));
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-shadow: 0 0 6px #ffffff;
+}
+
+.benutzer-tabelle tbody tr {
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.benutzer-tabelle tbody tr:hover {
+    color: #ffffff;
+    background-color: rgba(247, 37, 133, 0.3);
+    box-shadow: inset 4px 0 #00bfff;
+}
+
+.benutzer-angaben-fehler {
+    color: #ffb5b5;
+}
+
+@media (max-width: 700px) {
+    .benutzer-angaben {
+        width: min(100% - 1rem, 1100px);
+        margin: 2rem auto;
+    }
+
+    .benutzer-tabelle-wrapper {
+        padding: 0.2rem;
+    }
+}

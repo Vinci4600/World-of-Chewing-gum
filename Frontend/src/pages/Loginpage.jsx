@@ -1,12 +1,13 @@
 
-import './components/Styles/Home.css'
+import './components/Styles/Home.css';
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext.jsx";
 
-
-function Loginpage() {
+function Loginpage({onLoginSuccess}) {
 
     const navigate = useNavigate();
+    const { login } = useAuth();
 
     const [formData, setFormData] = useState({
         username: "",
@@ -17,6 +18,7 @@ function Loginpage() {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -42,7 +44,7 @@ function Loginpage() {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    usernameOrEmail: formData.username.trim(),
+                    usernameOrEmail: formData.username,
                     password: formData.password,
                 }),
             });
@@ -53,11 +55,7 @@ function Loginpage() {
                 throw new Error(data.error || "Login fehlgeschlagen");
             }
 
-            if (formData.rememberMe) {
-                localStorage.setItem("token", data.token);
-            } else {
-                sessionStorage.setItem("token", data.token);
-            }
+            login(data.token, data.role, formData.rememberMe);
 
             // Navbar über Login informieren
             if (onLoginSuccess) onLoginSuccess(data.token);
@@ -70,13 +68,44 @@ function Loginpage() {
         }
     };
 
+    /**
+     * Google-Login ist aktuell deaktiviert.
+     * Zum Reaktivieren diesen Kommentar entfernen und den Button unten wieder einfügen.
+     *
+     * const handleGoogleLogin = async (googleIdToken) => {
+     *     try {
+     *         setLoading(true);
+     *         const response = await fetch("http://localhost:8080/api/auth/google", {
+     *             method: "POST",
+     *             headers: { "Content-Type": "application/json" },
+     *             body: JSON.stringify({ token: googleIdToken }),
+     *         });
+     *         const data = await response.json();
+     *         if (!response.ok) {
+     *             throw new Error(data.error || "Google-Login fehlgeschlagen");
+     *         }
+     *         if (formData.rememberMe) {
+     *             localStorage.setItem("token", data.token);
+     *         } else {
+     *             sessionStorage.setItem("token", data.token);
+     *         }
+     *         if (onLoginSuccess) onLoginSuccess(data.token);
+     *         navigate("/");
+     *     } catch (error) {
+     *         setError(error.message || "Fehler beim Google-Login");
+     *     } finally {
+     *         setLoading(false);
+     *     }
+     * };
+     */
+
     return (
         <div className="Background-Intro">
 
 
             <div className="kaugummi-form-container">
                 <h1>Login</h1>
-                <p className="lg-sub">Melde dich an, um fortzufahren</p>
+                <p className="lg-sub">Melde dich an, um  fortzufahren</p>
 
                 {error && <div className="lg-error" role="alert">{error}</div>}
 
@@ -106,9 +135,19 @@ function Loginpage() {
 
                         />
 
+
+
+                    <button
+                        type="button"
+                        className="lg-toggle"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                    >
+                        {showPassword ? "Hide" : "Show"}
+                    </button>
+
                     </div>
 
-                    <label className="lg-remember">
+                    <label className="form-group checkbox-group">
                         <input
                             type="checkbox"
                             name="rememberMe"
@@ -124,11 +163,25 @@ function Loginpage() {
                     </button>
                 </form>
 
+                {/* Google-Login aktuell deaktiviert:
+                <div className="lg-divider" style={{ margin: "15px 0", textAlign: "center" }}>
+                    <span>oder</span>
+                </div>
+
+                <button
+                    type="button"
+                    className="button-google"
+                    onClick={() => handleGoogleLogin()}
+                >
+                    Mit deinem Google Account anmelden
+                </button>
+                */}
+
                 <div className="lg-footer">
-                    <p>Passwort vergessen?</p> <Link to="/forgotpassword">Passwort vergessen?</Link>
+                     <Link to="/forgotpassword">Passwort vergessen?</Link>
                 </div>
                 <div className="lg-footer">
-                    <p>Noch kein Konto vorhanden?</p> <Link to="/register">Registrieren</Link>
+                     <Link to="/register">Noch kein Konto vorhanden? Registrieren</Link>
                 </div>
             </div>
         </div>

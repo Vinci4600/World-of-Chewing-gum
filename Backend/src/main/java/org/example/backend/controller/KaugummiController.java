@@ -1,6 +1,7 @@
 package org.example.backend.controller;
 
 import jakarta.validation.Valid;
+import org.example.backend.Model.Kommentar;
 import org.example.backend.dto.KaugummiDTO;
 import org.example.backend.Model.Kaugummi;
 import org.example.backend.service.KaugummiService;
@@ -9,13 +10,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+
+import org.example.backend.dto.KommentarRequestDTO;
+import org.springframework.security.core.Authentication;
+
+
+
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/kaugummi")
-@CrossOrigin(origins = "http://localhost:5173") // Für React Frontend
+
+@CrossOrigin(origins = "http://localhost:5174", allowedHeaders = "*", allowCredentials = "true")
 
 public class KaugummiController {
+
 
 
     private final KaugummiService kaugummiService;
@@ -38,6 +47,7 @@ public class KaugummiController {
      * @return aktualisiertes KaugummiDTO
      */
     @PutMapping({"/{id}", "/update/{id}"})
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<KaugummiDTO> updateKaugummi(
             @PathVariable Long id,
             @Valid @RequestBody KaugummiDTO kaugummiDTO) {
@@ -60,6 +70,7 @@ public class KaugummiController {
 
 
 
+
     @PostMapping("/{id}/bewertung")
     public ResponseEntity<org.example.backend.Model.Bewertung> bewertungAbgeben(@PathVariable Long id,
                                                                                 @RequestParam Long benutzerId,
@@ -67,18 +78,19 @@ public class KaugummiController {
         return ResponseEntity.ok(kaugummiService.bewertungAbgeben(id, benutzerId, bewertungData));
     }
 
-    /**
-     *  Kommentar hinzufügen
-     * @param id
-     * @param benutzerId
-     * @param text
-     * @return
-     */
+//
     @PostMapping("/{id}/kommentar")
-    public ResponseEntity<org.example.backend.Model.Kommentar> kommentarHinzufuegen(@PathVariable Long id,
-                                                                                    @RequestParam Long benutzerId,
-                                                                                    @RequestBody String text) {
-        return ResponseEntity.ok(kaugummiService.kommentarHinzufuegen(id, benutzerId, text));
+    public ResponseEntity<Kommentar> kommentarHinzufuegen(
+            @PathVariable Long id,
+            @Valid @RequestBody KommentarRequestDTO request,
+            Authentication authentication) {
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(kaugummiService.kommentarHinzufuegen(
+                        id,
+                        authentication.getName(),
+                        request.text()
+                ));
     }
 
     /**
@@ -105,6 +117,7 @@ public class KaugummiController {
         return ResponseEntity.ok(createdKaugummi);
     }
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> deleteKaugummi(@PathVariable Long id) {
 
         if (!kaugummiService.existsById(id)) {

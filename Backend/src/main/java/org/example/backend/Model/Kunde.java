@@ -14,7 +14,7 @@ public class Kunde extends Benutzer {
         super();
     }
 
-    public Kunde(Long id, String benutzername, String email, String passwort, org.example.backend.model.Role role, String kundennummer) {
+    public Kunde(Long id, String benutzername, String email, String passwort, org.example.backend.Model.Role role, String kundennummer) {
         super(id, benutzername, email, passwort, role);
         this.kundennummer = kundennummer;
     }
