@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import API from "../api";
 import "./components/Styles/BenutzerAngaben.css";
 
-async function BenutzerAngaben() {
+function BenutzerAngaben() {
     const [benutzer, setBenutzer] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
