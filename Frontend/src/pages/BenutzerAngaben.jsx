@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import API from "../api";
 import "./components/Styles/BenutzerAngaben.css";
-
+import Deletebtn from "./components/Bilder/Deletebtn.png"
+import "./components/Styles/Home.css";
+import "./components/Styles/Add.css";
 function BenutzerAngaben() {
     const [benutzer, setBenutzer] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -63,7 +65,10 @@ function BenutzerAngaben() {
                                 <td>{eintrag.email}</td>
                                 <td>{eintrag.role}</td>
                                 <td>
-                                    <button className="btn-delete" onClick={() => deleteBenztzer(eintrag.id)}>Benutzer löschen</button>
+
+                                   <button className="kaugummi-icon-button" onClick={() => deleteBenztzer(eintrag.id)}>
+                                       <img src={Deletebtn} alt="Löschen Button"
+                                       Benutzer löschen/></button>
                                 </td>
 
                             </tr>
