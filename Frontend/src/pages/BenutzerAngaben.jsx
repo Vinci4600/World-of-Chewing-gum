@@ -23,16 +23,17 @@ function BenutzerAngaben() {
     }, []);
 
     const deleteBenztzer = async (id) => {
-        if (!window.confirm('Möchtests du den User mit der id' + id + 'tatsächlich endgültig löschen!')) ;
-        return;
-    }
+        if (!window.confirm('Möchtests du den User mit der id' + id + 'tatsächlich endgültig löschen!')) {
+            return;
+        }
 
-    try {
-        await API.delete(`/api/benutzer/${id}`);
-        setBenutzer((prevBenutzer) => prevBenutzer.filter((eintrag) => eintrag.id !== id));
-    } catch {
-        alert("Fehler beim Löschen des Benutzers.");
-    }
+        try {
+            await API.delete(`/api/benutzer/${id}`);
+            setBenutzer((prevBenutzer) => prevBenutzer.filter((eintrag) => eintrag.id !== id));
+        } catch {
+            alert("Fehler beim Löschen des Benutzers.");
+        }
+    };
 // Html Part
     return (
         <main className="benutzer-angaben">
@@ -62,7 +63,7 @@ function BenutzerAngaben() {
                                 <td>{eintrag.email}</td>
                                 <td>{eintrag.role}</td>
                                 <td>
-                                    <button className="btn-delete" onClick={deleteBenztzer(eintrag.id)}>Benutzer löschen</button>
+                                    <button className="btn-delete" onClick={() => deleteBenztzer(eintrag.id)}>Benutzer löschen</button>
                                 </td>
 
                             </tr>
