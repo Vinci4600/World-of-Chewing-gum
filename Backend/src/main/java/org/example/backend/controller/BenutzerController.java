@@ -49,7 +49,7 @@ public class BenutzerController {
      * @param id
      * @return
      */
-    @DeleteMapping("/benutzer/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> benutzerLöschen(@PathVariable Long id) {
         benutzerService.benutzerLoeschen(id);
         return ResponseEntity.noContent().build();
