@@ -26,56 +26,53 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         this.userDetailsService = userDetailsService;
     }
 
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        String path = request.getRequestURI();
+        // Überspringt den Filter für alle Auth-Pfade und Preflight (OPTIONS) Requests
+        return path.startsWith("/api/auth") || "OPTIONS".equalsIgnoreCase(request.getMethod());
+    }
+
+    @Override
     protected void doFilterInternal(
             HttpServletRequest request,
             HttpServletResponse response,
             FilterChain filterChain
     ) throws ServletException, IOException {
-        // SCHRITT 1: Authorization Header aus Request holen
-        // Beispiel: "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6I..."
+
         final String authHeader = request.getHeader("Authorization");
 
-        // SCHRITT 2: Prüfen ob Header existiert und mit "Bearer " startet
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            // Kein Token gefunden → Filter überspringen,
-            // weiter zum nächsten Filter
-            // Analogie: Kein Ausweis vorhanden → Person kommt nicht durch
             filterChain.doFilter(request, response);
             return;
         }
 
-        // SCHRITT 3: Token aus dem Header extrahieren
-        // "Bearer eyJhbGc..." → "eyJhbGc..." (ohne "Bearer ")
         final String jwt = authHeader.substring(7);
 
         try {
             final String username = jwtService.extractUsername(jwt);
 
-            if (username != null && SecurityContextHolder
-                .getContext()
-                .getAuthentication() == null) {
-            UserDetails userDetails = userDetailsService
-                .loadUserByUsername(username);
+            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-            if (jwtService.validateToken(jwt, username)) {
-                UsernamePasswordAuthenticationToken authToken =
-                    new UsernamePasswordAuthenticationToken(
-                        userDetails,
-                        null,
-                        userDetails.getAuthorities()
+                if (jwtService.validateToken(jwt, username)) {
+                    UsernamePasswordAuthenticationToken authToken =
+                            new UsernamePasswordAuthenticationToken(
+                                    userDetails,
+                                    null,
+                                    userDetails.getAuthorities()
+                            );
+                    authToken.setDetails(
+                            new WebAuthenticationDetailsSource().buildDetails(request)
                     );
-                authToken.setDetails(
-                    new WebAuthenticationDetailsSource().buildDetails(request)
-                );
-                SecurityContextHolder.getContext().setAuthentication(authToken);
-            }
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
+                }
             }
         } catch (JwtException | IllegalArgumentException exception) {
             SecurityContextHolder.clearContext();
         }
 
-        // SCHRITT 11: Weiter zum nächsten Filter in der Chain
-        // Der Request geht jetzt weiter zu SecurityConfig, dann zum Controller
         filterChain.doFilter(request, response);
     }
 }

@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/api/kunde")
 @PreAuthorize("hasRole('KUNDE')")
 
-@CrossOrigin(origins = "http://localhost:5174", allowedHeaders = "*", allowCredentials = "true")
+@CrossOrigin(origins = "http://localhost:5175", allowedHeaders = "*", allowCredentials = "true")
 
 public class KundeController {
 

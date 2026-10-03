@@ -17,7 +17,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 @RestController
 @RequestMapping("/api/admin")
 @PreAuthorize("hasRole('ADMIN')")
-@CrossOrigin(origins = "http://localhost:5173") // Für React Frontend
+@CrossOrigin(origins = "http://localhost:5175") // Für React Frontend
 
 public class AdminController {
 

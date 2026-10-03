@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/benutzer")
-@CrossOrigin(origins = "http://localhost:5173") // Für React Frontend
+@CrossOrigin(origins = "http://localhost:5175") // Für React Frontend
 @PreAuthorize("hasRole('ADMIN')")
 public class BenutzerController {
 
