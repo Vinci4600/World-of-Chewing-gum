@@ -9,8 +9,11 @@ import KaugummiEditPage from "./pages/KaugummiEditPage.jsx";
 import ProtectedRoute from "./pages/components/ProtectedRoute.jsx";
 import {useAuth} from "./context/AuthContext.jsx";
 import ForgotPassword from "./pages/ForgotPassword.jsx";
+import FavoritePage from "./pages/FavoritePage.jsx";
 import VerifyCode from "./pages/VerifyCode.jsx";
 import BenutzerAngaben from "./pages/BenutzerAngaben.jsx";
+import   './App.css';
+import  Herz from './pages/components/Bilder/Herz.png';
 
 import Datenschutzerklärung from "./pages/Datenschutzerklärung.jsx";
 
@@ -39,7 +42,7 @@ function App() {
                     {isAuthenticated ? (
                         <>
                             <Link to="/kaugummiPage">Kaugummis</Link>
-                            
+
 
                             {isAdmin && (
                                 <>
@@ -70,6 +73,7 @@ function App() {
                     <Route path="/forgotpassword" element={<ForgotPassword/>}/>
                     <Route path="/verify-code" element={<VerifyCode/>}/>
                     <Route path="/kaugummiPage" element={<KaugummiPage/>}/>
+                    <Route path="/favorites" element={<FavoritePage />} />
                     <Route path="/kaugummi/:id" element={<KaugummiDetailPage/>}/>
                     <Route path="/" element={<HomePage/>}/>
 
@@ -87,12 +91,17 @@ function App() {
 
             <footer className="footer">
                 <div className="footer-content">
-                    <p className="copyright-text">&copy; {new Date().getFullYear()} World of Chewing Gum., a Fullstack
-                        Applikation made the One Shot Team, consisting of Elias Kaiser and Vincent Diergardt. All Rights
-                        reserved</p>
+                    <p className="copyright-text">
+                        &copy; {new Date().getFullYear()} One Shot – a fullstack-web app made with
+                    </p>
+                    <img src={Herz} alt="Herz-Icon" className="herz" />
+                    <p className="copyright-text">by  Elias Kaiser and Vincent Diergardt</p>
+
                 </div>
+
             </footer>
         </div>
+
     );
 }
 

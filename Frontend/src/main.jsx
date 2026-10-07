@@ -7,8 +7,8 @@ import { AuthProvider } from './context/AuthContext.jsx'; // Importieren
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
         <BrowserRouter>
-            {/* AuthProvider MUSS um die App herumliegen */}
             <AuthProvider>
+            {/* AuthProvider MUSS um die App herumliegen */}
                 <App />
             </AuthProvider>
         </BrowserRouter>
