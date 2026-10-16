@@ -26,7 +26,7 @@ jobs:
       # HIER WICHTIG: Passe 'mein-react-template' an den echten Ordnernamen an,
       # in dem deine package.json liegt!
       - name: Abhängigkeiten installieren & bauen
-        working-directory: ./mein-react-template
+        working-directory: .
         run: |
           npm install --legacy-peer-deps --no-audit --no-fund
           npm run build
