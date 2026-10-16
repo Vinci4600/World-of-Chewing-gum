@@ -1,0 +1,81 @@
+name: Environement Variables - World of Chewing Gum
+
+on:
+  push:
+    branches: [ "main", "master", "develop" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  # -------------------------------------------------------------
+  # Job 1: Build & Test Stage (Frontend & Backend)
+  # -------------------------------------------------------------
+  test-and-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Code auschecken
+        uses: actions/checkout@v4
+
+      - name: Node.js Umgebung einrichten
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Frontend-Abhängigkeiten installieren und bauen
+        run: |
+          npm install --legacy-peer-deps --no-audit --no-fund
+          npm run build
+        env:
+          # Platzhalter/Secrets für Frontend-Build-Zeit
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+
+  # -------------------------------------------------------------
+  # Job 2: Docker Build & Push auf GHCR
+  # -------------------------------------------------------------
+  docker-build:
+    needs: test-and-build
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Code auschecken
+        uses: actions/checkout@v4
+
+      - name: Bei GHCR anmelden
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Docker Metadaten generieren
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=latest
+            type=sha,format=short
+
+      - name: Docker Image bauen und pushen
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          # Übergabe der Secrets als Build-Args (falls Dockerfile sie benötigt)
+          build-args: |
+            MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}
+            MYSQL_USER=${{ secrets.MYSQL_USER }}
+            MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}
+            MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}
+            JWT_SECRET=${{ secrets.JWT_SECRET }}
