@@ -24,9 +24,6 @@ jobs:
           node-version: 22
 
       - name: Abhängigkeiten installieren & bauen
-        # WICHTIG: Ersetze 'mein-react-template' durch den echten Ordnernamen, 
-        # in dem deine package.json auf GitHub liegt!
-        working-directory: ./mein-react-template 
         run: |
           npm install --legacy-peer-deps --no-audit --no-fund
           npm run build
