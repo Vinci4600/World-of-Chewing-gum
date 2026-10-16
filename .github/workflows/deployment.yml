@@ -24,8 +24,9 @@ jobs:
           node-version: 22
 
       - name: Abhängigkeiten installieren & bauen
+        working-directory: ./src
         run: |
-          npm install --legacy-peer-deps --no-audit --no-fund
+          npm ci --legacy-peer-deps --no-audit --no-fund
           npm run build
 
   docker-build:
@@ -59,7 +60,8 @@ jobs:
       - name: Docker Image bauen und pushen
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./src
+          file: ./src/Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
