@@ -1,19 +1,16 @@
-name: Environement Variables - World of Chewing Gum
+name: CI/CD Pipeline - World of Chewing Gum
 
 on:
   push:
-    branches: [ "main", "master", "develop" ]
+    branches: [ "**" ]
   pull_request:
-    branches: [ "main", "master" ]
+    branches: [ "**" ]
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  # -------------------------------------------------------------
-  # Job 1: Build & Test Stage (Frontend & Backend)
-  # -------------------------------------------------------------
   test-and-build:
     runs-on: ubuntu-latest
 
@@ -26,17 +23,14 @@ jobs:
         with:
           node-version: 22
 
-      - name: Frontend-Abhängigkeiten installieren und bauen
+      - name: Abhängigkeiten installieren & bauen
+        # WICHTIG: Ersetze 'mein-react-template' durch den echten Ordnernamen, 
+        # in dem deine package.json auf GitHub liegt!
+        working-directory: ./mein-react-template 
         run: |
           npm install --legacy-peer-deps --no-audit --no-fund
           npm run build
-        env:
-          # Platzhalter/Secrets für Frontend-Build-Zeit
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
 
-  # -------------------------------------------------------------
-  # Job 2: Docker Build & Push auf GHCR
-  # -------------------------------------------------------------
   docker-build:
     needs: test-and-build
     if: github.event_name == 'push'
@@ -68,14 +62,7 @@ jobs:
       - name: Docker Image bauen und pushen
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./mein-react-template  # Falls auch das Dockerfile dort liegt, anpassen!
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          # Übergabe der Secrets als Build-Args (falls Dockerfile sie benötigt)
-          build-args: |
-            MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}
-            MYSQL_USER=${{ secrets.MYSQL_USER }}
-            MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}
-            MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}
-            JWT_SECRET=${{ secrets.JWT_SECRET }}
