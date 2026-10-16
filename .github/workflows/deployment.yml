@@ -1,4 +1,4 @@
-name: CI/CD Pipeline - World of Chewing Gum
+name: Deployment CI/CD-Pipeline - World of Chewing Gum
 
 on:
   push:
@@ -57,11 +57,13 @@ jobs:
             type=raw,value=latest
             type=sha,format=short
 
-      - name: Docker Image bauen und pushen
+      - name: Docker Image Deployment  bauen und pushen
         uses: docker/build-push-action@v5
         with:
-          context: ./src
-          file: ./src/Dockerfile
+          context: ./Frontend
+          file: ./Frontend/Dockerfile
+          # Falls das Dockerfile im src-Ordner liegt (wie in deinem Snippet):
+          # file: ./Frontend/src/Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
