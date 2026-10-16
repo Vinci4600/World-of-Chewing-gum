@@ -23,10 +23,7 @@ jobs:
         with:
           node-version: 22
 
-      # HIER WICHTIG: Passe 'mein-react-template' an den echten Ordnernamen an,
-      # in dem deine package.json liegt!
       - name: Abhängigkeiten installieren & bauen
-        working-directory: .
         run: |
           npm install --legacy-peer-deps --no-audit --no-fund
           npm run build
@@ -59,12 +56,10 @@ jobs:
             type=raw,value=latest
             type=sha,format=short
 
-      # HIER WICHTIG: context muss auf denselben Unterordner zeigen, 
-      # damit Docker das Dockerfile dort findet!
       - name: Docker Image bauen und pushen
         uses: docker/build-push-action@v5
         with:
-          context: ./mein-react-template
+          context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
