@@ -2,9 +2,14 @@ name: CI/CD Pipeline - World of Chewing Gum
 
 on:
   push:
-    branches: [ "**" ]
+    branches: [ "main","dev" ]
   pull_request:
-    branches: [ "**" ]
+    branches: [ "main","dev" ]
+
+# Erlaubt dem GITHUB_TOKEN, Packages zu schreiben (nötig für GHCR push)
+permissions:
+  contents: read
+  packages: write
 
 env:
   REGISTRY: ghcr.io
@@ -32,6 +37,8 @@ jobs:
     needs: test-and-build
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
+
+    # Optional: klarere Job-Berechtigungen (Workflow-Ebene reicht meist)
     permissions:
       contents: read
       packages: write
@@ -59,7 +66,10 @@ jobs:
       - name: Docker Image bauen und pushen
         uses: docker/build-push-action@v5
         with:
-          context: ./mein-react-template  # Falls auch das Dockerfile dort liegt, anpassen!
+          # Wichtig: passe den Kontext an. Wenn dein Dockerfile im Repo-Root liegt, verwende "./".
+          # Wenn dein Dockerfile in einem Unterordner liegt (z.B. "mein-react-template"), setze den Pfad hier.
+          context: .
+          # Wenn dein Dockerfile anders heißt oder nicht im Kontext-Root liegt, kannst du z.B. file: './Pfad/Dockerfile' hinzufügen
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
