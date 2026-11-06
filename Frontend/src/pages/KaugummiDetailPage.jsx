@@ -102,10 +102,12 @@
                 if (isFavorite) {
                     await API.delete(`/api/favoriten/${userId}/favoriten/${kaugummiId}`);
                     setIsFavorite(false);
+                    alert("Favoriten entfernen");
                     console.log("Aus Favoriten entfernt");
                 } else {
                     await API.post(`/api/favoriten/${userId}/favoriten/${kaugummiId}`);
                     setIsFavorite(true);
+                    alert("User mit der Favoite Id gelöscht");
                     console.log("Zu Favoriten hinzugefügt");
                 }
             } catch (err) {

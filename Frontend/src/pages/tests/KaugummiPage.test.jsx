@@ -5,11 +5,11 @@ import KaugummiPage from '../KaugummiPage.jsx';
 import { AuthProvider } from '../../context/AuthContext.jsx';
 import API from '../../api.js';
 
-jest.mock('../../api.js');
+vi.mock('../../api.js');
 
 describe('KaugummiPage Component', () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     test('1. Lädt und rendert Airwaves Menthol (ID 1)', async () => {
@@ -124,7 +124,7 @@ describe('KaugummiPage Component', () => {
 
     describe('KaugummiPage Component', () => {
         beforeEach(() => {
-            jest.clearAllMocks();
+            vi.clearAllMocks();
         });
 
 

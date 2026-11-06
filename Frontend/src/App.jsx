@@ -95,7 +95,7 @@ function App() {
                         &copy; {new Date().getFullYear()} One Shot – a fullstack-web app made with
                     </p>
                     <img src={Herz} alt="Herz-Icon" className="herz" />
-                    <p className="copyright-text">by  Elias Kaiser and Vincent Diergardt</p>
+                    <p className="copyright-text"> A Fullstack App made by  Elias Kaiser and Vincent Diergardt</p>
 
                 </div>
 

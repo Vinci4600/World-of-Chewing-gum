@@ -181,6 +181,8 @@ body,
     animation: fadeInUp 2s ease forwards;
     animation-delay: 0.3s; /* Startet kurz nach dem Laden */
     text-shadow: #f72585 1px 1px 1px;
+    font-family: "Arial Black", sans-serif;
+    color: red;
 
 }
 

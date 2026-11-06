@@ -3,28 +3,27 @@ import { MemoryRouter, Route, Routes } from "react-router-dom";
 import KaugummiDetailPage from "../KaugummiDetailPage.jsx";
 import API from "../../api.js";
 import { useAuth } from "../../context/AuthContext.jsx";
-import "@testing-library/jest-dom";
 
 // 1. API Mock einrichten
-jest.mock("../../api.js", () => ({
+vi.mock("../../api.js", () => ({
     __esModule: true,
     default: {
-        get: jest.fn(),
-        post: jest.fn(),
+        get: vi.fn(),
+        post: vi.fn(),
     },
 }));
 
 // 2. AuthContext Mock
-jest.mock("../../context/AuthContext.jsx", () => ({
+vi.mock("../../context/AuthContext.jsx", () => ({
     __esModule: true,
-    useAuth: jest.fn(),
+    useAuth: vi.fn(),
 }));
 
-const mockNavigate = jest.fn();
-jest.mock("react-router-dom", () => {
-    const actual = jest.requireActual("react-router-dom");
+// 3. React Router Mock
+const mockNavigate = vi.fn();
+vi.mock("react-router-dom", async () => {
+    const actual = await vi.importActual("react-router-dom");
     return {
-        __esModule: true,
         ...actual,
         useNavigate: () => mockNavigate,
     };
@@ -59,7 +58,7 @@ const renderComponent = (id = "1") => {
 
 describe("KaugummiDetailPage Component", () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
         // Standardmäßig als eingeloggt setzen
         useAuth.mockReturnValue({ isAuthenticated: true });
     });
@@ -79,8 +78,17 @@ describe("KaugummiDetailPage Component", () => {
         await waitFor(() => {
             expect(screen.getByText("Marke: Wrigley")).toBeInTheDocument();
             expect(screen.getByText("Geschmack: Menthol")).toBeInTheDocument();
-            expect(screen.getByText('heading',{level:1,name:/airwaves mentol/i})).toBeInTheDocument();
+            expect(screen.getByRole('heading', { level: 1, name: /airwaves menthol/i })).toBeInTheDocument();
             expect(screen.getByText('Wrigley')).toBeInTheDocument();
+            expect(screen.getByText("Deutschland")).toBeInTheDocument();
+            expect(screen.getByText("Airwaves Methol")).toBeInTheDocument();
+            expect(screen.getByText("Kann bei übermäßigem Verzehr abführend wirken")).toBeInTheDocument();
+            expect(screen.getByText("1")).toBeInTheDocument();
+            expect(screen.getByText("Süßungsmittel, Kaumasse")).toBeInTheDocument();
+            expect(screen.getByText("/images/airwaves.png")).toBeInTheDocument();
+            expect(screen.getByText("https://example.com/shop")).toBeInTheDocument();
+            expect(screen.getByText("zuckerfrei:true")).toBeInTheDocument();
+            expect(screen.getByText("Sehr erfrischend!")).toBeInTheDocument();
         });
     });
 
@@ -102,7 +110,7 @@ describe("KaugummiDetailPage Component", () => {
         API.get.mockResolvedValueOnce({ data: mockGumData });
 
         // window.alert mocken
-        const alertSpy = jest.spyOn(window, "alert").mockImplementation(() => {});
+        const alertSpy = vi.spyOn(window, "alert").mockImplementation(() => {});
 
         renderComponent();
 

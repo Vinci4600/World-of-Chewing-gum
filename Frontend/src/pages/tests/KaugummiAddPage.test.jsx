@@ -1,24 +1,30 @@
 import React from "react";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor, } from "@testing-library/react";
 import "@testing-library/jest-dom";
+import {BrowserRouter} from "react-router-dom";
 import KaugummiAddPage from "../KaugummiAddPage";
 import API from "../../api.js";
 
 // Vitest Mock anstelle von jest.mock
-jest.mock("../../api.js", () => ({
+vi.mock("../../api.js", () => ({
     __esModule: true,
     default: {
-        post: jest.fn(),
+        post: vi.fn(),
     },
 }));
 
 describe("KaugummiAddPage Component", () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     test("rendert das Formular mit allen Inputs und dem Submit-Button", () => {
-        render(<KaugummiAddPage />);
+
+        render(
+            <BrowserRouter>
+                <KaugummiAddPage />
+            </BrowserRouter>
+        );
 
         expect(screen.getByRole("heading", { name: /kaugummi hinzufügen/i })).toBeInTheDocument();
         expect(screen.getByLabelText(/name/i)).toBeInTheDocument();
@@ -57,7 +63,7 @@ describe("KaugummiAddPage Component", () => {
     });
 
     test("behandelt Fehler bei fehlgeschlagenem API-Aufruf ab", async () => {
-        const consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+        const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
         API.post.mockRejectedValueOnce(new Error("Netzwerkfehler"));
 
         render(<KaugummiAddPage />);
